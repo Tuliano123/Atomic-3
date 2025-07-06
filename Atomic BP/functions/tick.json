@@ -7,6 +7,7 @@
     "General3/Muertes",
     "General3/Spawns",
     "General3/Tiempo",
-    "General3/NpcFacingPlayer"
+    "General3/NpcFacingPlayer",
+    "General3/On_Join"
   ]
 }
