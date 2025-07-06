@@ -2,7 +2,7 @@
 
 
 ##Fill Beehive
-Scoreboard players set @r[tag=SX] FillBeeHiveNest 1
+Scoreboard players set @r[tag=!SX] FillBeeHiveNest 1
 execute at @a[scores={FillBeeHiveNest=1}] run fill ~8~8~8 ~-8~-1~-8 composter ["composter_fill_level"=8] replace beehive
 tag @e[type=item,name="Bone Meal"] add NoBee
 execute at @a[scores={FillBeeHiveNest=1}] run fill ~8~8~8 ~-8~-1~-8 beehive replace composter ["composter_fill_level"=8]
