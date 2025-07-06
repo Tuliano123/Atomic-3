@@ -113,6 +113,7 @@ clear @a[tag=!SX,hasitem={item=grindstone}] grindstone
 clear @a[tag=!SX,hasitem={item=barrel}] barrel
 clear @a[tag=!SX,hasitem={item=smoker}] smoker
 clear @a[tag=!SX,hasitem={item=blast_furnace}] blast_furnace
+clear @a[tag=!SX,hasitem={item=furnace}] furnace
 clear @a[tag=!SX,hasitem={item=piston}] piston
 clear @a[tag=!SX,hasitem={item=sticky_piston}] sticky_piston
 
