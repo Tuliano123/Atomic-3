@@ -157,3 +157,4 @@ clear @a[tag=!SX,hasitem={item=minecart}] minecart
 clear @a[tag=!SX,hasitem={item=brown_egg}] brown_egg
 clear @a[tag=!SX,hasitem={item=blue_egg}] blue_egg
 clear @a[tag=!SX,hasitem={item=lead}] lead
+clear @a[tag=!SX,hasitem={item=structure_void}] structure_void
