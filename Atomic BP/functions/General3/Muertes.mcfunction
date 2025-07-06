@@ -24,8 +24,8 @@ tellraw @a[scores={limbo=3,dhlim=1}] {"rawtext":[{"text":"§bLa Claurina ha func
 tp @a[scores={limbo=3,dhlim=1}] 0 30 0
 ###Clear Playsounds Y Reset Sistema
 clear @a[scores={limbo=2..3,dhlim=1}] silence_armor_trim_smithing_template 0 1
-execute as @a[scores={limbo=2,dhlim=1}] at @s run playsound item.trident.thunder @s ~~~
-execute as @a[scores={limbo=3,dhlim=1}] at @s run playsound shriek.sculk_shrieker @s ~~~
+execute as @a[scores={limbo=2,dhlim=1}] at @s run playsound item.trident.thunder @s -2 5 -191
+execute as @a[scores={limbo=3,dhlim=1}] at @s run playsound shriek.sculk_shrieker @s 0 29 0
 scoreboard players set @a[scores={limbo=2..3,dhlim=1}] limbo 0
 
 ##Reset Sistema Muerte
