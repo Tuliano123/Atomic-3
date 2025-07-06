@@ -15,18 +15,19 @@ execute as @a[scores={muerto=0,limbo=2..3},hasitem={item=silence_armor_trim_smit
 ###Spawnpoints Limbo
 spawnpoint @a[scores={limbo=2}] -2 5 -191
 spawnpoint @a[scores={limbo=3}] 0 29 0
-scoreboard players remove @a[scores={dhlim=1..}] dhlim 1
+scoreboard players remove @a[scores={dhlim=2..}] dhlim 1
 ###Limbo2
-tellraw @a[scores={limbo=2,dhlim=1}] {"rawtext":[{"text":"§uLa Claurina no ha funcionado"}]}
-tp @a[scores={limbo=2,dhlim=1}] -2 5 -191
+tellraw @a[scores={limbo=2,dhlim=2}] {"rawtext":[{"text":"§uLa Claurina no ha funcionado"}]}
+tp @a[scores={limbo=2,dhlim=2}] -2 5 -191
 ###Limbo 3
-tellraw @a[scores={limbo=3,dhlim=1}] {"rawtext":[{"text":"§bLa Claurina ha funcionado..."}]}
-tp @a[scores={limbo=3,dhlim=1}] 0 30 0
+tellraw @a[scores={limbo=3,dhlim=2}] {"rawtext":[{"text":"§bLa Claurina ha funcionado..."}]}
+tp @a[scores={limbo=3,dhlim=2}] 0 29 0
 ###Clear Playsounds Y Reset Sistema
-clear @a[scores={limbo=2..3,dhlim=1}] silence_armor_trim_smithing_template 0 1
-execute as @a[scores={limbo=2,dhlim=1}] run playsound item.trident.thunder @s -2 5 -191
-execute as @a[scores={limbo=3,dhlim=1}] run playsound shriek.sculk_shrieker @s 0 29 0
+clear @a[scores={limbo=2..3,dhlim=2}] silence_armor_trim_smithing_template 0 1
+execute as @a[scores={limbo=2,dhlim=1}] at @s run playsound item.trident.thunder @s ~~~
+execute as @a[scores={limbo=3,dhlim=1}] at @s run playsound shriek.sculk_shrieker @s ~~~
 scoreboard players set @a[scores={limbo=2..3,dhlim=1}] limbo 0
+scoreboard players set @a[scores={dhlim=1}] dhlim 0
 
 ##Reset Sistema Muerte
 scoreboard players set @a[scores={muerto=0}] muerto 2
