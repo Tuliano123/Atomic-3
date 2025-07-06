@@ -1,0 +1,12 @@
+{
+  "values": [
+    "Seguridad1/ID",
+    "Seguridad1/AntiHacks/FillBeeHiveNest",
+    "Seguridad1/AntiHacks/BanItem",
+    "Seguridad1/AntiHacks/Clears",
+    "General3/Muertes",
+    "General3/Spawns",
+    "General3/AddRemove_Scores/Segundos",
+    "General3/NpcFacingPlayer"
+  ]
+}
