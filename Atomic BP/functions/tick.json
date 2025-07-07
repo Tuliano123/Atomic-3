@@ -10,6 +10,7 @@
     "General3/NpcFacingPlayer",
     "General3/On_Join",
     "General3/LobbyTitle",
-    "General3/LobbyTitleMulticolor"
+    "General3/LobbyTitleMulticolor",
+    "General3/FMBE"
   ]
 }
