@@ -130,6 +130,7 @@ clear @a[tag=!SX,hasitem={item=iron_shovel}] iron_shovel
 clear @a[tag=!SX,hasitem={item=golden_shovel}] golden_shovel
 clear @a[tag=!SX,hasitem={item=diamond_shovel}] diamond_shovel
 clear @a[tag=!SX,hasitem={item=netherite_shovel}] netherite_shovel
+clear @a[tag=!SX,hasitem={item=flint_and_steel}] flint_and_steel
 
 ##Otros Items
 clear @a[tag=!SX,hasitem={item=bundle}] bundle
@@ -158,3 +159,11 @@ clear @a[tag=!SX,hasitem={item=brown_egg}] brown_egg
 clear @a[tag=!SX,hasitem={item=blue_egg}] blue_egg
 clear @a[tag=!SX,hasitem={item=lead}] lead
 clear @a[tag=!SX,hasitem={item=structure_void}] structure_void
+clear @a[tag=!SX,hasitem={item=bed}] bed
+clear @a[tag=!SX,hasitem={item=empty_map}] empty_map
+clear @a[tag=!SX,hasitem={item=armor_stand}] armor_stand
+clear @a[tag=!SX,hasitem={item=lava_bucket}] lava_bucket
+clear @a[tag=!SX,hasitem={item=bucket}] bucket
+clear @a[tag=!SX,hasitem={item=water_bucket}] water_bucket
+clear @a[tag=!SX,hasitem={item=respawn_anchor}] respawn_anchor
+clear @a[tag=!SX,hasitem={item=chest}] chest
