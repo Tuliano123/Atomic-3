@@ -11,6 +11,8 @@
     "General3/On_Join",
     "General3/LobbyTitle",
     "General3/LobbyTitleMulticolor",
-    "General3/FMBE"
+    "General3/FMBE",
+    "Seguridad1/MonsterEffects",
+    "Seguridad1/DenyTp"
   ]
 }
