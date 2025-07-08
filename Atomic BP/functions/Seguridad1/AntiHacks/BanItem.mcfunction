@@ -382,3 +382,24 @@ Clear @a[hasitem={item=light_block_14},tag=!SX] light_block_14
 execute if entity @a[hasitem={item=light_block_15},tag=!SX] run Tellraw @a {"rawtext":[{"text":"§e"},{"selector":"@a[hasitem={item=light_block_15},tag=!SX]"},{"text":" ha usado hacks y sera §4Baneado, §f43.15"}]}
 Tag @a[hasitem={item=light_block_15},tag=!SX] add BANhacks
 Clear @a[hasitem={item=light_block_15},tag=!SX] light_block_15
+
+##Light Block 44
+execute if entity @a[hasitem={item=spawn_egg,data=51},tag=!SX] run Tellraw @a {"rawtext":[{"text":"§e"},{"selector":"@a[hasitem={item=spawn_egg,data=51},tag=!SX]"},{"text":" ha usado hacks y sera §4Baneado, §f44"}]}
+Tag @a[hasitem={item=spawn_egg,data=51},tag=!SX] add BANhacks
+Clear @a[hasitem={item=spawn_egg,data=51},tag=!SX] spawn_egg 51
+
+##Deny 45
+execute if entity @a[hasitem={item=deny},tag=!SX] run Tellraw @a {"rawtext":[{"text":"§e"},{"selector":"@a[hasitem={item=deny},tag=!SX]"},{"text":" ha usado hacks y sera §4Baneado, §f45"}]}
+Tag @a[hasitem={item=deny},tag=!SX] add BANhacks
+Clear @a[hasitem={item=deny},tag=!SX] deny
+
+##Allow 46
+execute if entity @a[hasitem={item=allow},tag=!SX] run Tellraw @a {"rawtext":[{"text":"§e"},{"selector":"@a[hasitem={item=allow},tag=!SX]"},{"text":" ha usado hacks y sera §4Baneado, §f46"}]}
+Tag @a[hasitem={item=allow},tag=!SX] add BANhacks
+Clear @a[hasitem={item=allow},tag=!SX] allow
+
+##Structure Block 47
+execute if entity @a[hasitem={item=structure_block},tag=!SX] run Tellraw @a {"rawtext":[{"text":"§e"},{"selector":"@a[hasitem={item=structure_block},tag=!SX]"},{"text":" ha usado hacks y sera §4Baneado, §f47"}]}
+Tag @a[hasitem={item=structure_block},tag=!SX] add BANhacks
+Clear @a[hasitem={item=structure_block},tag=!SX] structure_block
+
