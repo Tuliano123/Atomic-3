@@ -383,7 +383,7 @@ execute if entity @a[hasitem={item=light_block_15},tag=!SX] run Tellraw @a {"raw
 Tag @a[hasitem={item=light_block_15},tag=!SX] add BANhacks
 Clear @a[hasitem={item=light_block_15},tag=!SX] light_block_15
 
-##Light Block 44
+##Npc Spawn Egg 44
 execute if entity @a[hasitem={item=spawn_egg,data=51},tag=!SX] run Tellraw @a {"rawtext":[{"text":"§e"},{"selector":"@a[hasitem={item=spawn_egg,data=51},tag=!SX]"},{"text":" ha usado hacks y sera §4Baneado, §f44"}]}
 Tag @a[hasitem={item=spawn_egg,data=51},tag=!SX] add BANhacks
 Clear @a[hasitem={item=spawn_egg,data=51},tag=!SX] spawn_egg 51
