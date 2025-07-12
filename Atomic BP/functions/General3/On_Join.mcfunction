@@ -2,7 +2,7 @@
 
 
 ##No Hacer Tp Si Esta En El Limbo
-/scoreboard players set @a[x=50,y=0,z=-130,dx=-100,dy=35,dz=-100] NoTpUnido 1
+scoreboard players set @a[x=50,y=0,z=-130,dx=-100,dy=35,dz=-100] NoTpUnido 1
 execute as @a unless entity @s[x=50,y=0,z=-130,dx=-100,dy=35,dz=-100] run /scoreboard players set @s NoTpUnido 0
 ##Sistema De Tp
 scoreboard players add @a unido 0
