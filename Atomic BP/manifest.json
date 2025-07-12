@@ -1,17 +1,17 @@
 {
     "format_version": 2,
     "header": {
-        "description": "Atomic tres",
+        "description": "Atomic tres 1.0",
         "name": "Atomic3 Functions",
-        "uuid": "6a513b98-780d-45fd-9c53-070e8867d7ed",
+        "uuid": "21bf0072-c1c9-4d89-a9c2-2665016f86be",
         "version": [ 1, 0, 0 ],
-        "min_engine_version": [ 1, 21, 23 ]
+        "min_engine_version": [ 1, 21, 93 ]
     },
     "modules": [
         {
             "description": "§r",
             "type": "data",
-            "uuid": "c57e642c-2e2d-4f19-a80b-9fc9991742ef",
+            "uuid": "7a60a7ed-cf5e-4e7d-b530-5d5f72846562",
             "version": [1, 0, 0 ]
         }
     ]
