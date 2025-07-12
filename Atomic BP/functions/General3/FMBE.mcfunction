@@ -2,7 +2,7 @@
 
 
 ##Tp a si mismo
-/execute as @e[type=fox,tag=FMBE] at @s run /tp @s ~~~~
+execute as @e[type=fox,tag=FMBE] at @s run /tp @s ~~~~
 
 ##Stopsound
 stopsound @a mob.fox.spit
