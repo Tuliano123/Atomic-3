@@ -10,3 +10,4 @@ scoreboard players add @a[scores={lt=9,ltsuperior=1..4}] ltsuperior 1
 scoreboard players set @a[scores={lt=9,ltsuperior=5}] ltsuperior 1
 scoreboard players set @a[scores={lt=9}] lt 1
 scoreboard players set @a[scores={lt=4..6,ltsuperior=2}] lt 7
+scoreboard players add @a ltsuperior 0
