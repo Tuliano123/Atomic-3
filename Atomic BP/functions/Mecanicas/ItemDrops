@@ -1,0 +1,19 @@
+
+##Drop de los Minerales dentro del Modo Historia 
+
+## Mineral de Carbon 
+
+execute as @r[type=item,name=Cobblestone] at @s align xz run tp @s ~0.5~-0.1~0.5
+execute as @e[name="Cobblestone",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run scoreboard players set @s Coo 2
+execute as @e[name="Cobblestone",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run scoreboard players add @s SkillMExp 3
+execute as @e[name="Cobblestone",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run titleraw @s actionbar {"rawtext":[{"text":"§3+3 Mineria ("},{"score":{"name":"@s","objective":"SkillMExp"}},{"text":"/"},{"score":{"name":"@s","objective":"SkillMRequisito"}},{"text":")"}]}
+execute as @e[name="Coblestone",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p at @s run playsound random.orb @s ~~~ 5 1.7
+execute as @e[name="Cobblestone",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run scoreboard players random @s SkillMRandom 1 100
+execute as @e[name="Coal",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run scoreboard players add @s D 5
+execute as @e[name="Coal",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run scoreboard players add @s Coll3 1
+execute as @e[name="Coal",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p run scoreboard players add @s Bo 1
+execute as @e[name="Coal",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p unless score @s SkillMProb matches 100.. if score @s SkillMRandom > @s SkillMProb run structure load Mineria1 ~~0.5~ 0_degrees none true false false
+execute as @e[name="Coal",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554,c=1] at @s as @p unless score @s SkillMProb matches 100.. if score @s SkillMRandom <= @s SkillMProb run structure load Mineria1-2 ~~0.5~ 0_degrees none true false false
+Kill @e[name="Coal",type=item,x=-264,y=-100,z=-457,dx=844,dy=100000,dz=-554]
+
+
