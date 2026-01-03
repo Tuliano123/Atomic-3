@@ -1,0 +1,46 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "Atomic tres 1.0",
+    "name": "Atomic3 Functions",
+    "uuid": "21bf0072-c1c9-4d89-a9c2-2665016f86be",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 93]
+  },
+  "metadata": {
+    "authors": [
+      "antheuss",
+      "YKJulio"
+    ]
+  },
+  "modules": [
+    {
+      "description": "§r",
+      "type": "data",
+      "uuid": "7a60a7ed-cf5e-4e7d-b530-5d5f72846562",
+      "version": [1, 0, 0]
+    },
+    {
+      "description": "Atomic3 Scripts",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "54ef1c6b-02e4-4260-b23b-a627c14792c5",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+			"uuid": "aef8207d-0922-4a65-acca-208ec3dd4642",
+			"version": [ 1, 5, 0 ]
+		},
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.4.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "2.0.0"
+    }
+  ]
+}

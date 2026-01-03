@@ -1,0 +1,27 @@
+{
+  "version": 1,
+	"blocks": [
+		{ "id": 0, "typeId": "minecraft:bedrock", "name": "Bedrock" },
+
+		{ "id": 10, "typeId": "minecraft:mob_spawner", "name": "Mob Spawner" },
+		{ "id": 11, "typeId": "minecraft:end_portal_frame", "name": "End Portal Frame" },
+
+		{ "id": 45, "typeId": "minecraft:deny", "name": "Deny" },
+		{ "id": 46, "typeId": "minecraft:allow", "name": "Allow" },
+		{ "id": 47, "typeId": "minecraft:structure_block", "name": "Structure Block" },
+
+		{ "id": 60.0, "typeId": "minecraft:end_gateway", "name": "End Gateway" },
+		{ "id": 60.1, "typeId": "minecraft:nether_portal", "name": "Nether Portal" },
+		{ "id": 60.2, "typeId": "minecraft:portal", "name": "Portal" },
+    
+		{ "id": 61.2, "typeId": "minecraft:invisible_bedrock", "name": "Invisible Bedrock" },
+		{ "id": 61.3, "typeId": "minecraft:moving_block", "name": "Moving Block" },
+		{ "id": 61.4, "typeId": "minecraft:piston_arm_collision", "name": "Piston Arm Collision" },
+
+		{ "id": 2000.0, "typeId": "minecraft:info_update", "name": "Info Update" },
+		{ "id": 2000.1, "typeId": "minecraft:info_update2", "name": "Info Update2" },
+		{ "id": 2000.2, "typeId": "minecraft:reserved5", "name": "Reserved5" },
+		{ "id": 2000.3, "typeId": "minecraft:reserved6", "name": "Reserved6" },
+		{ "id": 2000.4, "typeId": "minecraft:unknown", "name": "Unknown" }
+	]
+}

@@ -1,0 +1,19 @@
+{
+  "values": [
+    "Seguridad1/ID",
+    "Seguridad1/AntiHacks/Fill",
+    "Seguridad1/AntiHacks/BanItem",
+    "Seguridad1/AntiHacks/Clears",
+    "General3/Muertes",
+    "General3/Spawns",
+    "General3/Tiempo",
+    "General3/NpcFacingPlayer",
+    "General3/On_Join",
+    "General3/LobbyTitle",
+    "General3/LobbyTitleMulticolor",
+    "General3/FMBE",
+    "Seguridad1/MonsterEffects",
+    "Seguridad1/DenyTp",
+    "Seguridad1/EntityCramming"
+  ]
+}
