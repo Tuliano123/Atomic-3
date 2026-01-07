@@ -40,7 +40,7 @@ export const commandConfig = {
 		namespace: "atomic3",
 		enabled: true,
 		name: "setlore",
-		description: "agrega o sobreescriba el Lore del objeto en la mano principal",
+		description: "Agrega o sobreescriba el Lore del objeto en la mano principal",
 		permission: "Admin",
 	},
 	getlore: {
