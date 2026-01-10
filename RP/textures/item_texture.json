@@ -1,0 +1,105 @@
+{
+  "resource_pack_name": "atomic",
+  "texture_data": {
+    "wooden_pickaxe": {
+      "textures": "textures/items/wood_pickaxe"
+    },
+    "stone_pickaxe": {
+      "textures": "textures/items/stone_pickaxe"
+    },
+    "copper_pickaxe": {
+      "textures": "textures/items/copper_pickaxe"
+    },
+    "iron_pickaxe": {
+      "textures": "textures/items/iron_pickaxe"
+    },
+    "golden_pickaxe": {
+      "textures": "textures/items/gold_pickaxe"
+    },
+    "gold_pickaxe": {
+      "textures": "textures/items/gold_pickaxe"
+    },
+    "diamond_pickaxe": {
+      "textures": "textures/items/diamond_pickaxe"
+    },
+    "netherite_pickaxe": {
+      "textures": "textures/items/netherite_pickaxe"
+    },
+
+    "wooden_axe": {
+      "textures": "textures/items/wood_axe"
+    },
+    "stone_axe": {
+      "textures": "textures/items/stone_axe"
+    },
+    "copper_axe": {
+      "textures": "textures/items/copper_axe"
+    },
+    "iron_axe": {
+      "textures": "textures/items/iron_axe"
+    },
+    "golden_axe": {
+      "textures": "textures/items/gold_axe"
+    },
+    "gold_axe": {
+      "textures": "textures/items/gold_axe"
+    },
+    "diamond_axe": {
+      "textures": "textures/items/diamond_axe"
+    },
+    "netherite_axe": {
+      "textures": "textures/items/netherite_axe"
+    },
+
+    "wooden_hoe": {
+      "textures": "textures/items/wood_hoe"
+    },
+    "stone_hoe": {
+      "textures": "textures/items/stone_hoe"
+    },
+    "copper_hoe": {
+      "textures": "textures/items/copper_hoe"
+    },
+    "iron_hoe": {
+      "textures": "textures/items/iron_hoe"
+    },
+    "golden_hoe": {
+      "textures": "textures/items/gold_hoe"
+    },
+    "gold_hoe": {
+      "textures": "textures/items/gold_hoe"
+    },
+    "diamond_hoe": {
+      "textures": "textures/items/diamond_hoe"
+    },
+    "netherite_hoe": {
+      "textures": "textures/items/netherite_hoe"
+    },
+
+    "wooden_sword": {
+      "textures": "textures/items/wood_sword"
+    },
+    "stone_sword": {
+      "textures": "textures/items/stone_sword"
+    },
+    "copper_sword": {
+      "textures": "textures/items/copper_sword"
+    },
+    "iron_sword": {
+      "textures": "textures/items/iron_sword"
+    },
+    "golden_sword": {
+      "textures": "textures/items/gold_sword"
+    },
+    "gold_sword": {
+      "textures": "textures/items/gold_sword"
+    },
+    "diamond_sword": {
+      "textures": "textures/items/diamond_sword"
+    },
+    "netherite_sword": {
+      "textures": "textures/items/netherite_sword"
+    }
+  },
+  "texture_name": "atlas.items"
+}

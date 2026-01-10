@@ -1,0 +1,886 @@
+﻿{
+    "generatedAt":  "2026-01-05T04:43:36.592Z",
+    "source":  "tools/custom-emojis/java-symbols.txt",
+    "puaStartReservedForEssential":  "E300..E31B",
+    "skippedMultiCodepointTokensCount":  52,
+    "skippedMultiCodepointTokens":  [
+                                        "..۩۩๑",
+                                        "~.~◕",
+                                        "‿-｡☀☂☁",
+                                        "￡❤｡◕‿",
+                                        "【】┱┲❣",
+                                        "₪™",
+                                        "≈๑۩",
+                                        "▤▥▦▩",
+                                        "▪▫☼♦♦◊",
+                                        "►◄▧▨",
+                                        "◕｡✎✟ஐ",
+                                        "◔ʊ",
+                                        "◦☼♠♣▣",
+                                        "◠◡╭╮╯╰",
+                                        "⇨❝",
+                                        "©®¿¡½⅓",
+                                        "☆✮",
+                                        "★☆⊙¤㊣",
+                                        "★☆♀◆♂♀",
+                                        "☏⊙◎☺☻",
+                                        "☮۞۩",
+                                        "☺☹",
+                                        "☼☀☁☂☃☻",
+                                        "♥♡☜☞☎",
+                                        "♨◐◑↔↕",
+                                        "♨๑❀✿",
+                                        "♩♫℘ℑ",
+                                        "♬♪♩♭♪",
+                                        "✆✦✧♱♰♂♀☿❤❥❦❧",
+                                        "✧♱",
+                                        "✯☄☾☽",
+                                        "✲❈➹",
+                                        "۩..",
+                                        "۩εїз",
+                                        "⅔¼¾⅛⅜⅝⅞℅",
+                                        "๑۩۞۩๑",
+                                        "➉Ⓐ",
+                                        "℃∃",
+                                        "№⇨❝❞",
+                                        "ℜℵηα",
+                                        "™®©♡♦♢♔♕♚♛★",
+                                        "ʊϟღツ回",
+                                        "ⓩ｡^◕‿◕^(◕^^◕)✖✗✘♬✄",
+                                        "Ⓩⓐ",
+                                        "Ƹ̵̡Ӝ̵̨̄Ʒ",
+                                        "εжз",
+                                        "εїз☎☏¢♠♤♣♧♥",
+                                        "ξЖЗ",
+                                        "Π➀",
+                                        "ψ☪☭♪",
+                                        "ぃ◘◙◈♫",
+                                        "の☆→あ"
+                                    ],
+    "skippedCircledTokensCount":  56,
+    "skippedCircledTokens":  [
+                                 "➁",
+                                 "➂",
+                                 "➃",
+                                 "➄",
+                                 "➅",
+                                 "➆",
+                                 "➇",
+                                 "➈",
+                                 "Ⓑ",
+                                 "ⓑ",
+                                 "Ⓒ",
+                                 "ⓒ",
+                                 "ⓓ",
+                                 "Ⓓ",
+                                 "Ⓔ",
+                                 "ⓔ",
+                                 "Ⓕ",
+                                 "ⓕ",
+                                 "Ⓖ",
+                                 "ⓖ",
+                                 "ⓗ",
+                                 "Ⓗ",
+                                 "Ⓘ",
+                                 "ⓘ",
+                                 "Ⓙ",
+                                 "ⓙ",
+                                 "Ⓚ",
+                                 "ⓚ",
+                                 "Ⓛ",
+                                 "ⓛ",
+                                 "ⓜ",
+                                 "Ⓜ",
+                                 "ⓝ",
+                                 "Ⓝ",
+                                 "ⓞ",
+                                 "Ⓞ",
+                                 "Ⓟ",
+                                 "ⓟ",
+                                 "ⓠ",
+                                 "Ⓠ",
+                                 "ⓡ",
+                                 "Ⓡ",
+                                 "ⓢ",
+                                 "Ⓢ",
+                                 "ⓣ",
+                                 "Ⓣ",
+                                 "Ⓤ",
+                                 "ⓤ",
+                                 "ⓥ",
+                                 "Ⓥ",
+                                 "Ⓦ",
+                                 "ⓦ",
+                                 "Ⓧ",
+                                 "ⓧ",
+                                 "Ⓨ",
+                                 "ⓨ"
+                             ],
+    "sheets":  [
+                   "E3"
+               ],
+    "entries":  [
+                    {
+                        "token":  "✮",
+                        "puaHex":  "E300",
+                        "sheet":  "E3",
+                        "cell":  "00"
+                    },
+                    {
+                        "token":  "✯",
+                        "puaHex":  "E301",
+                        "sheet":  "E3",
+                        "cell":  "01"
+                    },
+                    {
+                        "token":  "☠",
+                        "puaHex":  "E302",
+                        "sheet":  "E3",
+                        "cell":  "02"
+                    },
+                    {
+                        "token":  "☮",
+                        "puaHex":  "E303",
+                        "sheet":  "E3",
+                        "cell":  "03"
+                    },
+                    {
+                        "token":  "☯",
+                        "puaHex":  "E304",
+                        "sheet":  "E3",
+                        "cell":  "04"
+                    },
+                    {
+                        "token":  "۞",
+                        "puaHex":  "E305",
+                        "sheet":  "E3",
+                        "cell":  "05"
+                    },
+                    {
+                        "token":  "☂",
+                        "puaHex":  "E306",
+                        "sheet":  "E3",
+                        "cell":  "06"
+                    },
+                    {
+                        "token":  "☁",
+                        "puaHex":  "E307",
+                        "sheet":  "E3",
+                        "cell":  "07"
+                    },
+                    {
+                        "token":  "❀",
+                        "puaHex":  "E308",
+                        "sheet":  "E3",
+                        "cell":  "08"
+                    },
+                    {
+                        "token":  "✿",
+                        "puaHex":  "E309",
+                        "sheet":  "E3",
+                        "cell":  "09"
+                    },
+                    {
+                        "token":  "✦",
+                        "puaHex":  "E310",
+                        "sheet":  "E3",
+                        "cell":  "10"
+                    },
+                    {
+                        "token":  "❥",
+                        "puaHex":  "E312",
+                        "sheet":  "E3",
+                        "cell":  "12"
+                    },
+                    {
+                        "token":  "❦",
+                        "puaHex":  "E313",
+                        "sheet":  "E3",
+                        "cell":  "13"
+                    },
+                    {
+                        "token":  "❧",
+                        "puaHex":  "E314",
+                        "sheet":  "E3",
+                        "cell":  "14"
+                    },
+                    {
+                        "token":  "♠",
+                        "puaHex":  "E31C",
+                        "sheet":  "E3",
+                        "cell":  "1C"
+                    },
+                    {
+                        "token":  "Ω",
+                        "puaHex":  "E31D",
+                        "sheet":  "E3",
+                        "cell":  "1D"
+                    },
+                    {
+                        "token":  "♣",
+                        "puaHex":  "E31E",
+                        "sheet":  "E3",
+                        "cell":  "1E"
+                    },
+                    {
+                        "token":  "♧",
+                        "puaHex":  "E31F",
+                        "sheet":  "E3",
+                        "cell":  "1F"
+                    },
+                    {
+                        "token":  "♥",
+                        "puaHex":  "E320",
+                        "sheet":  "E3",
+                        "cell":  "20"
+                    },
+                    {
+                        "token":  "♡",
+                        "puaHex":  "E321",
+                        "sheet":  "E3",
+                        "cell":  "21"
+                    },
+                    {
+                        "token":  "♦",
+                        "puaHex":  "E322",
+                        "sheet":  "E3",
+                        "cell":  "22"
+                    },
+                    {
+                        "token":  "♢",
+                        "puaHex":  "E323",
+                        "sheet":  "E3",
+                        "cell":  "23"
+                    },
+                    {
+                        "token":  "♔",
+                        "puaHex":  "E324",
+                        "sheet":  "E3",
+                        "cell":  "24"
+                    },
+                    {
+                        "token":  "♕",
+                        "puaHex":  "E325",
+                        "sheet":  "E3",
+                        "cell":  "25"
+                    },
+                    {
+                        "token":  "♚",
+                        "puaHex":  "E326",
+                        "sheet":  "E3",
+                        "cell":  "26"
+                    },
+                    {
+                        "token":  "♛",
+                        "puaHex":  "E327",
+                        "sheet":  "E3",
+                        "cell":  "27"
+                    },
+                    {
+                        "token":  "★",
+                        "puaHex":  "E328",
+                        "sheet":  "E3",
+                        "cell":  "28"
+                    },
+                    {
+                        "token":  "☆",
+                        "puaHex":  "E329",
+                        "sheet":  "E3",
+                        "cell":  "29"
+                    },
+                    {
+                        "token":  "☾",
+                        "puaHex":  "E32A",
+                        "sheet":  "E3",
+                        "cell":  "2A"
+                    },
+                    {
+                        "token":  "☽",
+                        "puaHex":  "E32B",
+                        "sheet":  "E3",
+                        "cell":  "2B"
+                    },
+                    {
+                        "token":  "☼",
+                        "puaHex":  "E32C",
+                        "sheet":  "E3",
+                        "cell":  "2C"
+                    },
+                    {
+                        "token":  "☀",
+                        "puaHex":  "E32D",
+                        "sheet":  "E3",
+                        "cell":  "2D"
+                    },
+                    {
+                        "token":  "☃",
+                        "puaHex":  "E330",
+                        "sheet":  "E3",
+                        "cell":  "30"
+                    },
+                    {
+                        "token":  "☻",
+                        "puaHex":  "E331",
+                        "sheet":  "E3",
+                        "cell":  "31"
+                    },
+                    {
+                        "token":  "☺",
+                        "puaHex":  "E332",
+                        "sheet":  "E3",
+                        "cell":  "32"
+                    },
+                    {
+                        "token":  "☹",
+                        "puaHex":  "E333",
+                        "sheet":  "E3",
+                        "cell":  "33"
+                    },
+                    {
+                        "token":  "♪",
+                        "puaHex":  "E336",
+                        "sheet":  "E3",
+                        "cell":  "36"
+                    },
+                    {
+                        "token":  "♫",
+                        "puaHex":  "E337",
+                        "sheet":  "E3",
+                        "cell":  "37"
+                    },
+                    {
+                        "token":  "∞",
+                        "puaHex":  "E33A",
+                        "sheet":  "E3",
+                        "cell":  "3A"
+                    },
+                    {
+                        "token":  "❤",
+                        "puaHex":  "E33B",
+                        "sheet":  "E3",
+                        "cell":  "3B"
+                    },
+                    {
+                        "token":  "✖",
+                        "puaHex":  "E33C",
+                        "sheet":  "E3",
+                        "cell":  "3C"
+                    },
+                    {
+                        "token":  "✗",
+                        "puaHex":  "E33D",
+                        "sheet":  "E3",
+                        "cell":  "3D"
+                    },
+                    {
+                        "token":  "●",
+                        "puaHex":  "E33E",
+                        "sheet":  "E3",
+                        "cell":  "3E"
+                    },
+                    {
+                        "token":  "○",
+                        "puaHex":  "E33F",
+                        "sheet":  "E3",
+                        "cell":  "3F"
+                    },
+                    {
+                        "token":  "▲",
+                        "puaHex":  "E340",
+                        "sheet":  "E3",
+                        "cell":  "40"
+                    },
+                    {
+                        "token":  "△",
+                        "puaHex":  "E341",
+                        "sheet":  "E3",
+                        "cell":  "41"
+                    },
+                    {
+                        "token":  "▼",
+                        "puaHex":  "E342",
+                        "sheet":  "E3",
+                        "cell":  "42"
+                    },
+                    {
+                        "token":  "▽",
+                        "puaHex":  "E343",
+                        "sheet":  "E3",
+                        "cell":  "43"
+                    },
+                    {
+                        "token":  "◆",
+                        "puaHex":  "E344",
+                        "sheet":  "E3",
+                        "cell":  "44"
+                    },
+                    {
+                        "token":  "◇",
+                        "puaHex":  "E345",
+                        "sheet":  "E3",
+                        "cell":  "45"
+                    },
+                    {
+                        "token":  "■",
+                        "puaHex":  "E346",
+                        "sheet":  "E3",
+                        "cell":  "46"
+                    },
+                    {
+                        "token":  "□",
+                        "puaHex":  "E347",
+                        "sheet":  "E3",
+                        "cell":  "47"
+                    },
+                    {
+                        "token":  "☢",
+                        "puaHex":  "E348",
+                        "sheet":  "E3",
+                        "cell":  "48"
+                    },
+                    {
+                        "token":  "☣",
+                        "puaHex":  "E349",
+                        "sheet":  "E3",
+                        "cell":  "49"
+                    },
+                    {
+                        "token":  "⚜",
+                        "puaHex":  "E34A",
+                        "sheet":  "E3",
+                        "cell":  "4A"
+                    },
+                    {
+                        "token":  "☄",
+                        "puaHex":  "E34B",
+                        "sheet":  "E3",
+                        "cell":  "4B"
+                    },
+                    {
+                        "token":  "☎",
+                        "puaHex":  "E34C",
+                        "sheet":  "E3",
+                        "cell":  "4C"
+                    },
+                    {
+                        "token":  "☏",
+                        "puaHex":  "E34D",
+                        "sheet":  "E3",
+                        "cell":  "4D"
+                    },
+                    {
+                        "token":  "¢",
+                        "puaHex":  "E34E",
+                        "sheet":  "E3",
+                        "cell":  "4E"
+                    },
+                    {
+                        "token":  "☚",
+                        "puaHex":  "E34F",
+                        "sheet":  "E3",
+                        "cell":  "4F"
+                    },
+                    {
+                        "token":  "☛",
+                        "puaHex":  "E350",
+                        "sheet":  "E3",
+                        "cell":  "50"
+                    },
+                    {
+                        "token":  "☜",
+                        "puaHex":  "E351",
+                        "sheet":  "E3",
+                        "cell":  "51"
+                    },
+                    {
+                        "token":  "☝",
+                        "puaHex":  "E352",
+                        "sheet":  "E3",
+                        "cell":  "52"
+                    },
+                    {
+                        "token":  "☞",
+                        "puaHex":  "E353",
+                        "sheet":  "E3",
+                        "cell":  "53"
+                    },
+                    {
+                        "token":  "☟",
+                        "puaHex":  "E354",
+                        "sheet":  "E3",
+                        "cell":  "54"
+                    },
+                    {
+                        "token":  "✍",
+                        "puaHex":  "E355",
+                        "sheet":  "E3",
+                        "cell":  "55"
+                    },
+                    {
+                        "token":  "✌",
+                        "puaHex":  "E356",
+                        "sheet":  "E3",
+                        "cell":  "56"
+                    },
+                    {
+                        "token":  "♨",
+                        "puaHex":  "E357",
+                        "sheet":  "E3",
+                        "cell":  "57"
+                    },
+                    {
+                        "token":  "๑",
+                        "puaHex":  "E358",
+                        "sheet":  "E3",
+                        "cell":  "58"
+                    },
+                    {
+                        "token":  "ψ",
+                        "puaHex":  "E359",
+                        "sheet":  "E3",
+                        "cell":  "59"
+                    },
+                    {
+                        "token":  "▢",
+                        "puaHex":  "E35A",
+                        "sheet":  "E3",
+                        "cell":  "5A"
+                    },
+                    {
+                        "token":  "☪",
+                        "puaHex":  "E35B",
+                        "sheet":  "E3",
+                        "cell":  "5B"
+                    },
+                    {
+                        "token":  "♩",
+                        "puaHex":  "E35C",
+                        "sheet":  "E3",
+                        "cell":  "5C"
+                    },
+                    {
+                        "token":  "♬",
+                        "puaHex":  "E35D",
+                        "sheet":  "E3",
+                        "cell":  "5D"
+                    },
+                    {
+                        "token":  "✄",
+                        "puaHex":  "E35E",
+                        "sheet":  "E3",
+                        "cell":  "5E"
+                    },
+                    {
+                        "token":  "✂",
+                        "puaHex":  "E35F",
+                        "sheet":  "E3",
+                        "cell":  "5F"
+                    },
+                    {
+                        "token":  "✆",
+                        "puaHex":  "E360",
+                        "sheet":  "E3",
+                        "cell":  "60"
+                    },
+                    {
+                        "token":  "✉",
+                        "puaHex":  "E361",
+                        "sheet":  "E3",
+                        "cell":  "61"
+                    },
+                    {
+                        "token":  "◎",
+                        "puaHex":  "E362",
+                        "sheet":  "E3",
+                        "cell":  "62"
+                    },
+                    {
+                        "token":  "♂",
+                        "puaHex":  "E363",
+                        "sheet":  "E3",
+                        "cell":  "63"
+                    },
+                    {
+                        "token":  "◯",
+                        "puaHex":  "E364",
+                        "sheet":  "E3",
+                        "cell":  "64"
+                    },
+                    {
+                        "token":  "Δ",
+                        "puaHex":  "E365",
+                        "sheet":  "E3",
+                        "cell":  "65"
+                    },
+                    {
+                        "token":  "™",
+                        "puaHex":  "E366",
+                        "sheet":  "E3",
+                        "cell":  "66"
+                    },
+                    {
+                        "token":  "®",
+                        "puaHex":  "E367",
+                        "sheet":  "E3",
+                        "cell":  "67"
+                    },
+                    {
+                        "token":  "©",
+                        "puaHex":  "E368",
+                        "sheet":  "E3",
+                        "cell":  "68"
+                    },
+                    {
+                        "token":  "№",
+                        "puaHex":  "E369",
+                        "sheet":  "E3",
+                        "cell":  "69"
+                    },
+                    {
+                        "token":  "¿",
+                        "puaHex":  "E36A",
+                        "sheet":  "E3",
+                        "cell":  "6A"
+                    },
+                    {
+                        "token":  "¡",
+                        "puaHex":  "E36B",
+                        "sheet":  "E3",
+                        "cell":  "6B"
+                    },
+                    {
+                        "token":  "½",
+                        "puaHex":  "E36C",
+                        "sheet":  "E3",
+                        "cell":  "6C"
+                    },
+                    {
+                        "token":  "⅓",
+                        "puaHex":  "E36D",
+                        "sheet":  "E3",
+                        "cell":  "6D"
+                    },
+                    {
+                        "token":  "⅔",
+                        "puaHex":  "E36E",
+                        "sheet":  "E3",
+                        "cell":  "6E"
+                    },
+                    {
+                        "token":  "¼",
+                        "puaHex":  "E36F",
+                        "sheet":  "E3",
+                        "cell":  "6F"
+                    },
+                    {
+                        "token":  "¾",
+                        "puaHex":  "E370",
+                        "sheet":  "E3",
+                        "cell":  "70"
+                    },
+                    {
+                        "token":  "⅛",
+                        "puaHex":  "E371",
+                        "sheet":  "E3",
+                        "cell":  "71"
+                    },
+                    {
+                        "token":  "⅜",
+                        "puaHex":  "E372",
+                        "sheet":  "E3",
+                        "cell":  "72"
+                    },
+                    {
+                        "token":  "⅝",
+                        "puaHex":  "E373",
+                        "sheet":  "E3",
+                        "cell":  "73"
+                    },
+                    {
+                        "token":  "⅞",
+                        "puaHex":  "E374",
+                        "sheet":  "E3",
+                        "cell":  "74"
+                    },
+                    {
+                        "token":  "∧",
+                        "puaHex":  "E375",
+                        "sheet":  "E3",
+                        "cell":  "75"
+                    },
+                    {
+                        "token":  "∨",
+                        "puaHex":  "E376",
+                        "sheet":  "E3",
+                        "cell":  "76"
+                    },
+                    {
+                        "token":  "℅",
+                        "puaHex":  "E377",
+                        "sheet":  "E3",
+                        "cell":  "77"
+                    },
+                    {
+                        "token":  "∪",
+                        "puaHex":  "E378",
+                        "sheet":  "E3",
+                        "cell":  "78"
+                    },
+                    {
+                        "token":  "∀",
+                        "puaHex":  "E379",
+                        "sheet":  "E3",
+                        "cell":  "79"
+                    },
+                    {
+                        "token":  "#",
+                        "puaHex":  "E37A",
+                        "sheet":  "E3",
+                        "cell":  "7A"
+                    },
+                    {
+                        "token":  "\u0026",
+                        "puaHex":  "E37B",
+                        "sheet":  "E3",
+                        "cell":  "7B"
+                    },
+                    {
+                        "token":  "∠",
+                        "puaHex":  "E37D",
+                        "sheet":  "E3",
+                        "cell":  "7D"
+                    },
+                    {
+                        "token":  "⊥",
+                        "puaHex":  "E383",
+                        "sheet":  "E3",
+                        "cell":  "83"
+                    },
+                    {
+                        "token":  "Ξ",
+                        "puaHex":  "E385",
+                        "sheet":  "E3",
+                        "cell":  "85"
+                    },
+                    {
+                        "token":  "Γ",
+                        "puaHex":  "E386",
+                        "sheet":  "E3",
+                        "cell":  "86"
+                    },
+                    {
+                        "token":  "ɐ",
+                        "puaHex":  "E387",
+                        "sheet":  "E3",
+                        "cell":  "87"
+                    },
+                    {
+                        "token":  "ə",
+                        "puaHex":  "E388",
+                        "sheet":  "E3",
+                        "cell":  "88"
+                    },
+                    {
+                        "token":  "ɘ",
+                        "puaHex":  "E389",
+                        "sheet":  "E3",
+                        "cell":  "89"
+                    },
+                    {
+                        "token":  "ε",
+                        "puaHex":  "E38A",
+                        "sheet":  "E3",
+                        "cell":  "8A"
+                    },
+                    {
+                        "token":  "β",
+                        "puaHex":  "E38B",
+                        "sheet":  "E3",
+                        "cell":  "8B"
+                    },
+                    {
+                        "token":  "ɟ",
+                        "puaHex":  "E38C",
+                        "sheet":  "E3",
+                        "cell":  "8C"
+                    },
+                    {
+                        "token":  "ɥ",
+                        "puaHex":  "E38D",
+                        "sheet":  "E3",
+                        "cell":  "8D"
+                    },
+                    {
+                        "token":  "ɯ",
+                        "puaHex":  "E38E",
+                        "sheet":  "E3",
+                        "cell":  "8E"
+                    },
+                    {
+                        "token":  "ɔ",
+                        "puaHex":  "E38F",
+                        "sheet":  "E3",
+                        "cell":  "8F"
+                    },
+                    {
+                        "token":  "и",
+                        "puaHex":  "E390",
+                        "sheet":  "E3",
+                        "cell":  "90"
+                    },
+                    {
+                        "token":  "๏",
+                        "puaHex":  "E391",
+                        "sheet":  "E3",
+                        "cell":  "91"
+                    },
+                    {
+                        "token":  "ɹ",
+                        "puaHex":  "E392",
+                        "sheet":  "E3",
+                        "cell":  "92"
+                    },
+                    {
+                        "token":  "ʁ",
+                        "puaHex":  "E393",
+                        "sheet":  "E3",
+                        "cell":  "93"
+                    },
+                    {
+                        "token":  "я",
+                        "puaHex":  "E394",
+                        "sheet":  "E3",
+                        "cell":  "94"
+                    },
+                    {
+                        "token":  "ʌ",
+                        "puaHex":  "E395",
+                        "sheet":  "E3",
+                        "cell":  "95"
+                    },
+                    {
+                        "token":  "ʍ",
+                        "puaHex":  "E396",
+                        "sheet":  "E3",
+                        "cell":  "96"
+                    },
+                    {
+                        "token":  "λ",
+                        "puaHex":  "E397",
+                        "sheet":  "E3",
+                        "cell":  "97"
+                    },
+                    {
+                        "token":  "ч",
+                        "puaHex":  "E398",
+                        "sheet":  "E3",
+                        "cell":  "98"
+                    },
+                    {
+                        "token":  "Σ",
+                        "puaHex":  "E399",
+                        "sheet":  "E3",
+                        "cell":  "99"
+                    }
+                ]
+}

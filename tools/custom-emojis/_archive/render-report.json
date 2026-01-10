@@ -1,0 +1,621 @@
+﻿{
+    "generatedAt":  "2026-01-05T00:27:14.6947905-06:00",
+    "examplesDir":  "c:\\Users\\anthe\\Desktop\\Desarrollo\\RP\\font\\examples",
+    "javaFontJson":  "c:\\Users\\anthe\\Desktop\\Desarrollo\\RP\\font\\examples\\font_examples\\include\\default.json",
+    "outGlyph":  "c:\\Users\\anthe\\Desktop\\Desarrollo\\RP\\font\\glyph_E3.png",
+    "importedCount":  107,
+    "manualDrawnCount":  129,
+    "missingCount":  122,
+    "missing":  [
+                    {
+                        "token":  "✮",
+                        "codePoint":  "272E",
+                        "pua":  "E300"
+                    },
+                    {
+                        "token":  "✯",
+                        "codePoint":  "272F",
+                        "pua":  "E301"
+                    },
+                    {
+                        "token":  "۞",
+                        "codePoint":  "06DE",
+                        "pua":  "E305"
+                    },
+                    {
+                        "token":  "❀",
+                        "codePoint":  "2740",
+                        "pua":  "E308"
+                    },
+                    {
+                        "token":  "✿",
+                        "codePoint":  "273F",
+                        "pua":  "E309"
+                    },
+                    {
+                        "token":  "✚",
+                        "codePoint":  "271A",
+                        "pua":  "E30B"
+                    },
+                    {
+                        "token":  "✪",
+                        "codePoint":  "272A",
+                        "pua":  "E30C"
+                    },
+                    {
+                        "token":  "✣",
+                        "codePoint":  "2723",
+                        "pua":  "E30D"
+                    },
+                    {
+                        "token":  "✤",
+                        "codePoint":  "2724",
+                        "pua":  "E30E"
+                    },
+                    {
+                        "token":  "✥",
+                        "codePoint":  "2725",
+                        "pua":  "E30F"
+                    },
+                    {
+                        "token":  "✦",
+                        "codePoint":  "2726",
+                        "pua":  "E310"
+                    },
+                    {
+                        "token":  "❉",
+                        "codePoint":  "2749",
+                        "pua":  "E311"
+                    },
+                    {
+                        "token":  "❥",
+                        "codePoint":  "2765",
+                        "pua":  "E312"
+                    },
+                    {
+                        "token":  "❦",
+                        "codePoint":  "2766",
+                        "pua":  "E313"
+                    },
+                    {
+                        "token":  "❧",
+                        "codePoint":  "2767",
+                        "pua":  "E314"
+                    },
+                    {
+                        "token":  "❃",
+                        "codePoint":  "2743",
+                        "pua":  "E315"
+                    },
+                    {
+                        "token":  "❂",
+                        "codePoint":  "2742",
+                        "pua":  "E316"
+                    },
+                    {
+                        "token":  "❁",
+                        "codePoint":  "2741",
+                        "pua":  "E317"
+                    },
+                    {
+                        "token":  "【",
+                        "codePoint":  "3010",
+                        "pua":  "E318"
+                    },
+                    {
+                        "token":  "】",
+                        "codePoint":  "3011",
+                        "pua":  "E319"
+                    },
+                    {
+                        "token":  "┱",
+                        "codePoint":  "2531",
+                        "pua":  "E31A"
+                    },
+                    {
+                        "token":  "┲",
+                        "codePoint":  "2532",
+                        "pua":  "E31B"
+                    },
+                    {
+                        "token":  "♔",
+                        "codePoint":  "2654",
+                        "pua":  "E324"
+                    },
+                    {
+                        "token":  "♕",
+                        "codePoint":  "2655",
+                        "pua":  "E325"
+                    },
+                    {
+                        "token":  "♚",
+                        "codePoint":  "265A",
+                        "pua":  "E326"
+                    },
+                    {
+                        "token":  "♛",
+                        "codePoint":  "265B",
+                        "pua":  "E327"
+                    },
+                    {
+                        "token":  "☾",
+                        "codePoint":  "263E",
+                        "pua":  "E32A"
+                    },
+                    {
+                        "token":  "☼",
+                        "codePoint":  "263C",
+                        "pua":  "E32C"
+                    },
+                    {
+                        "token":  "✧",
+                        "codePoint":  "2727",
+                        "pua":  "E339"
+                    },
+                    {
+                        "token":  "✖",
+                        "codePoint":  "2716",
+                        "pua":  "E33C"
+                    },
+                    {
+                        "token":  "✗",
+                        "codePoint":  "2717",
+                        "pua":  "E33D"
+                    },
+                    {
+                        "token":  "☢",
+                        "codePoint":  "2622",
+                        "pua":  "E348"
+                    },
+                    {
+                        "token":  "☣",
+                        "codePoint":  "2623",
+                        "pua":  "E349"
+                    },
+                    {
+                        "token":  "⚜",
+                        "codePoint":  "269C",
+                        "pua":  "E34A"
+                    },
+                    {
+                        "token":  "☎",
+                        "codePoint":  "260E",
+                        "pua":  "E34C"
+                    },
+                    {
+                        "token":  "☏",
+                        "codePoint":  "260F",
+                        "pua":  "E34D"
+                    },
+                    {
+                        "token":  "☚",
+                        "codePoint":  "261A",
+                        "pua":  "E34F"
+                    },
+                    {
+                        "token":  "☛",
+                        "codePoint":  "261B",
+                        "pua":  "E350"
+                    },
+                    {
+                        "token":  "☝",
+                        "codePoint":  "261D",
+                        "pua":  "E352"
+                    },
+                    {
+                        "token":  "☟",
+                        "codePoint":  "261F",
+                        "pua":  "E354"
+                    },
+                    {
+                        "token":  "✍",
+                        "codePoint":  "270D",
+                        "pua":  "E355"
+                    },
+                    {
+                        "token":  "✌",
+                        "codePoint":  "270C",
+                        "pua":  "E356"
+                    },
+                    {
+                        "token":  "♨",
+                        "codePoint":  "2668",
+                        "pua":  "E357"
+                    },
+                    {
+                        "token":  "๑",
+                        "codePoint":  "0E51",
+                        "pua":  "E358"
+                    },
+                    {
+                        "token":  "♆",
+                        "codePoint":  "2646",
+                        "pua":  "E35A"
+                    },
+                    {
+                        "token":  "☪",
+                        "codePoint":  "262A",
+                        "pua":  "E35B"
+                    },
+                    {
+                        "token":  "✄",
+                        "codePoint":  "2704",
+                        "pua":  "E35E"
+                    },
+                    {
+                        "token":  "✆",
+                        "codePoint":  "2706",
+                        "pua":  "E360"
+                    },
+                    {
+                        "token":  "☿",
+                        "codePoint":  "263F",
+                        "pua":  "E365"
+                    },
+                    {
+                        "token":  "∪",
+                        "codePoint":  "222A",
+                        "pua":  "E378"
+                    },
+                    {
+                        "token":  "▢",
+                        "codePoint":  "25A2",
+                        "pua":  "E381"
+                    },
+                    {
+                        "token":  "◯",
+                        "codePoint":  "25EF",
+                        "pua":  "E383"
+                    },
+                    {
+                        "token":  "◕",
+                        "codePoint":  "25D5",
+                        "pua":  "E385"
+                    },
+                    {
+                        "token":  "ϟ",
+                        "codePoint":  "03DF",
+                        "pua":  "E386"
+                    },
+                    {
+                        "token":  "ツ",
+                        "codePoint":  "30C4",
+                        "pua":  "E388"
+                    },
+                    {
+                        "token":  "回",
+                        "codePoint":  "56DE",
+                        "pua":  "E389"
+                    },
+                    {
+                        "token":  "℅",
+                        "codePoint":  "2105",
+                        "pua":  "E38B"
+                    },
+                    {
+                        "token":  "❞",
+                        "codePoint":  "275E",
+                        "pua":  "E38C"
+                    },
+                    {
+                        "token":  "๏",
+                        "codePoint":  "0E4F",
+                        "pua":  "E39C"
+                    },
+                    {
+                        "token":  "℘",
+                        "codePoint":  "2118",
+                        "pua":  "E3A6"
+                    },
+                    {
+                        "token":  "ℑ",
+                        "codePoint":  "2111",
+                        "pua":  "E3A7"
+                    },
+                    {
+                        "token":  "ℜ",
+                        "codePoint":  "211C",
+                        "pua":  "E3A8"
+                    },
+                    {
+                        "token":  "ℵ",
+                        "codePoint":  "2135",
+                        "pua":  "E3A9"
+                    },
+                    {
+                        "token":  "◠",
+                        "codePoint":  "25E0",
+                        "pua":  "E3AC"
+                    },
+                    {
+                        "token":  "◡",
+                        "codePoint":  "25E1",
+                        "pua":  "E3AD"
+                    },
+                    {
+                        "token":  "╭",
+                        "codePoint":  "256D",
+                        "pua":  "E3AE"
+                    },
+                    {
+                        "token":  "╮",
+                        "codePoint":  "256E",
+                        "pua":  "E3AF"
+                    },
+                    {
+                        "token":  "╯",
+                        "codePoint":  "256F",
+                        "pua":  "E3B0"
+                    },
+                    {
+                        "token":  "╰",
+                        "codePoint":  "2570",
+                        "pua":  "E3B1"
+                    },
+                    {
+                        "token":  "۩",
+                        "codePoint":  "06E9",
+                        "pua":  "E3B2"
+                    },
+                    {
+                        "token":  "♱",
+                        "codePoint":  "2671",
+                        "pua":  "E3B3"
+                    },
+                    {
+                        "token":  "◔",
+                        "codePoint":  "25D4",
+                        "pua":  "E3B4"
+                    },
+                    {
+                        "token":  "⇨",
+                        "codePoint":  "21E8",
+                        "pua":  "E3B5"
+                    },
+                    {
+                        "token":  "❝",
+                        "codePoint":  "275D",
+                        "pua":  "E3B6"
+                    },
+                    {
+                        "token":  "℃",
+                        "codePoint":  "2103",
+                        "pua":  "E3B7"
+                    },
+                    {
+                        "token":  "☭",
+                        "codePoint":  "262D",
+                        "pua":  "E3B8"
+                    },
+                    {
+                        "token":  "►",
+                        "codePoint":  "25BA",
+                        "pua":  "E3BA"
+                    },
+                    {
+                        "token":  "◄",
+                        "codePoint":  "25C4",
+                        "pua":  "E3BB"
+                    },
+                    {
+                        "token":  "▧",
+                        "codePoint":  "25A7",
+                        "pua":  "E3BC"
+                    },
+                    {
+                        "token":  "▨",
+                        "codePoint":  "25A8",
+                        "pua":  "E3BD"
+                    },
+                    {
+                        "token":  "◐",
+                        "codePoint":  "25D0",
+                        "pua":  "E3BE"
+                    },
+                    {
+                        "token":  "◑",
+                        "codePoint":  "25D1",
+                        "pua":  "E3BF"
+                    },
+                    {
+                        "token":  "↕",
+                        "codePoint":  "2195",
+                        "pua":  "E3C1"
+                    },
+                    {
+                        "token":  "▪",
+                        "codePoint":  "25AA",
+                        "pua":  "E3C2"
+                    },
+                    {
+                        "token":  "▫",
+                        "codePoint":  "25AB",
+                        "pua":  "E3C3"
+                    },
+                    {
+                        "token":  "◊",
+                        "codePoint":  "25CA",
+                        "pua":  "E3C4"
+                    },
+                    {
+                        "token":  "▣",
+                        "codePoint":  "25A3",
+                        "pua":  "E3C6"
+                    },
+                    {
+                        "token":  "▤",
+                        "codePoint":  "25A4",
+                        "pua":  "E3C7"
+                    },
+                    {
+                        "token":  "▥",
+                        "codePoint":  "25A5",
+                        "pua":  "E3C8"
+                    },
+                    {
+                        "token":  "▦",
+                        "codePoint":  "25A6",
+                        "pua":  "E3C9"
+                    },
+                    {
+                        "token":  "▩",
+                        "codePoint":  "25A9",
+                        "pua":  "E3CA"
+                    },
+                    {
+                        "token":  "◙",
+                        "codePoint":  "25D9",
+                        "pua":  "E3CC"
+                    },
+                    {
+                        "token":  "◈",
+                        "codePoint":  "25C8",
+                        "pua":  "E3CD"
+                    },
+                    {
+                        "token":  "￡",
+                        "codePoint":  "FFE1",
+                        "pua":  "E3D0"
+                    },
+                    {
+                        "token":  "✏",
+                        "codePoint":  "270F",
+                        "pua":  "E3D2"
+                    },
+                    {
+                        "token":  "✐",
+                        "codePoint":  "2710",
+                        "pua":  "E3D3"
+                    },
+                    {
+                        "token":  "✑",
+                        "codePoint":  "2711",
+                        "pua":  "E3D4"
+                    },
+                    {
+                        "token":  "✒",
+                        "codePoint":  "2712",
+                        "pua":  "E3D5"
+                    },
+                    {
+                        "token":  "✟",
+                        "codePoint":  "271F",
+                        "pua":  "E3D6"
+                    },
+                    {
+                        "token":  "✞",
+                        "codePoint":  "271E",
+                        "pua":  "E3D7"
+                    },
+                    {
+                        "token":  "✝",
+                        "codePoint":  "271D",
+                        "pua":  "E3D8"
+                    },
+                    {
+                        "token":  "✠",
+                        "codePoint":  "2720",
+                        "pua":  "E3D9"
+                    },
+                    {
+                        "token":  "✲",
+                        "codePoint":  "2732",
+                        "pua":  "E3DA"
+                    },
+                    {
+                        "token":  "✳",
+                        "codePoint":  "2733",
+                        "pua":  "E3DB"
+                    },
+                    {
+                        "token":  "✱",
+                        "codePoint":  "2731",
+                        "pua":  "E3DC"
+                    },
+                    {
+                        "token":  "✴",
+                        "codePoint":  "2734",
+                        "pua":  "E3DD"
+                    },
+                    {
+                        "token":  "✵",
+                        "codePoint":  "2735",
+                        "pua":  "E3DE"
+                    },
+                    {
+                        "token":  "✶",
+                        "codePoint":  "2736",
+                        "pua":  "E3DF"
+                    },
+                    {
+                        "token":  "✷",
+                        "codePoint":  "2737",
+                        "pua":  "E3E0"
+                    },
+                    {
+                        "token":  "✸",
+                        "codePoint":  "2738",
+                        "pua":  "E3E1"
+                    },
+                    {
+                        "token":  "✹",
+                        "codePoint":  "2739",
+                        "pua":  "E3E2"
+                    },
+                    {
+                        "token":  "✺",
+                        "codePoint":  "273A",
+                        "pua":  "E3E3"
+                    },
+                    {
+                        "token":  "✻",
+                        "codePoint":  "273B",
+                        "pua":  "E3E4"
+                    },
+                    {
+                        "token":  "✼",
+                        "codePoint":  "273C",
+                        "pua":  "E3E5"
+                    },
+                    {
+                        "token":  "✽",
+                        "codePoint":  "273D",
+                        "pua":  "E3E6"
+                    },
+                    {
+                        "token":  "✾",
+                        "codePoint":  "273E",
+                        "pua":  "E3E7"
+                    },
+                    {
+                        "token":  "❇",
+                        "codePoint":  "2747",
+                        "pua":  "E3E8"
+                    },
+                    {
+                        "token":  "❈",
+                        "codePoint":  "2748",
+                        "pua":  "E3E9"
+                    },
+                    {
+                        "token":  "❊",
+                        "codePoint":  "274A",
+                        "pua":  "E3EA"
+                    },
+                    {
+                        "token":  "❋",
+                        "codePoint":  "274B",
+                        "pua":  "E3EB"
+                    },
+                    {
+                        "token":  "➹",
+                        "codePoint":  "27B9",
+                        "pua":  "E3EC"
+                    },
+                    {
+                        "token":  "✰",
+                        "codePoint":  "2730",
+                        "pua":  "E3ED"
+                    }
+                ]
+}

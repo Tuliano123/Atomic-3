@@ -1,0 +1,11 @@
+﻿{
+    "sheet":  "glyph_E4.png",
+    "cellSizePx":  32,
+    "grid":  "16x16",
+    "notes":  {
+                  "custom":  "(actualizado) glyph_E4.png (32x32) contiene iconos sin sombra migrados desde E3; escalados a area 16x16, centrados, Y=-1."
+              },
+    "customMap":  {
+
+                  }
+}

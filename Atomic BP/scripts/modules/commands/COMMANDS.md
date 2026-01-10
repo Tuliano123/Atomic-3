@@ -113,3 +113,66 @@ export function handleShowCommand(origin) {
 4. Registrar el comando dentro de `initCommands()`.
 
 Con esto, el proyecto mantiene orden, evita registros duplicados y facilita administrar comandos.
+
+---
+
+## Comando `setlore` (notas de implementación)
+
+La lógica vive en:
+- `scripts/modules/commands/handlers/setLore.js`
+
+### Sintaxis
+
+- `/setlore <texto>`
+- `/setlore clear` (alias: `borrar`, `remove`, `delete`, `none`, `-`) para eliminar el lore
+
+Notas sobre argumentos:
+
+
+- `setlore` usa **un solo argumento String** (es lo más estable para Bedrock/Realms).
+- Los subcomandos se escriben dentro del mismo string:
+  - `/atomic3:setlore "begin"`
+  - `/atomic3:setlore "add <texto>"`
+  - `/atomic3:setlore "apply"`
+  - `/atomic3:setlore "cancel"`
+  - `/atomic3:setlore "clear"`
+
+Si el texto contiene espacios o `\\n`, usa comillas.
+
+Modo por partes (recomendado para lores muy largos / evitar desconexiones):
+
+- `/atomic3:setlore "begin"` (inicia una edición temporal en memoria)
+- `/atomic3:setlore "add <texto>"` (agrega un bloque; puedes usar `\n` dentro)
+- `/atomic3:setlore "apply"` (aplica el lore acumulado)
+- `/atomic3:setlore "cancel"` (cancela/limpia la edición)
+
+Nota: estos subcomandos se procesan desde un único parámetro String; por eso se recomienda escribirlos siempre dentro de comillas cuando haya espacios.
+
+Comandos útiles:
+
+- `/atomic3:setlore "help"` o `/atomic3:setlore "?"` (muestra ayuda)
+- `/atomic3:setlore "status"` (muestra estado del buffer de edición)
+
+Nota: `add` inicia automáticamente el modo edición si no se hizo `begin`.
+
+### Saltos de línea
+
+- Usa `\n` para separar líneas.
+
+Ejemplo:
+
+`/setlore Primera línea\nSegunda línea`
+
+### Formato, color y herencia
+
+- Cada línea se **resetea internamente con `§r`** para evitar la itálica por defecto del lore.
+- El **color y formatos** (`k,l,m,n,o`) se **heredan entre líneas**.
+- Si una línea empieza con `§r`, se interpreta como “cortar herencia” desde esa línea.
+
+### Límites defensivos (anti-crash)
+
+- Máximo de líneas: 30.
+- Límite por línea se valida por caracteres **visibles** (no cuenta secuencias tipo `§9`).
+- También existe un límite duro de longitud total por línea y un límite de densidad de códigos `§`.
+
+Motivo: algunos clientes/builds pueden crashear con lore excesivo o con spam de `§r`.

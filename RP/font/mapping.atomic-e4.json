@@ -1,0 +1,27 @@
+﻿{
+    "sheet":  "glyph_E4.png",
+    "cellSizePx":  32,
+    "grid":  "16x16",
+    "notes":  {
+                  "custom":  "E4: sheet 512x512 (celdas 32x32). Fuente: glyph_E4.png utilizada directamente para íconos 32x32 ingame."
+              },
+    "customMap":  {
+                      "⚜":  "E404",
+                      "♆":  "E405",
+                      "☪":  "E406",
+                      "♱":  "E409",
+                      "♰":  "E40A",
+                      "✌":  "E40E",
+                      "☢":  "E40F",
+                      "☣":  "E410",
+                      "๑":  "E411",
+                      "☭":  "E414",
+                      "ツ":  "E415",
+                      "♨":  "E416",
+                      "✟":  "E417",
+                      "ஐ":  "E418",
+                      "✲":  "E419",
+                      "❈":  "E41A",
+                      "➹":  "E41B"
+                  }
+}

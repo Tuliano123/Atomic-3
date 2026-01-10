@@ -1,0 +1,46 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "atomic:wooden_pickaxe_plain",
+      "menu_category": {
+        "category": "equipment",
+        "is_hidden_in_commands": false
+      }
+    },
+    "components": {
+      "minecraft:tags": {
+        "tags": ["minecraft:is_pickaxe", "minecraft:is_tool", "minecraft:wooden_tier"]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:icon": {
+        "textures": {
+          "default": "wooden_pickaxe"
+        }
+      },
+      "minecraft:enchantable": {
+        "slot": "pickaxe",
+        "value": 15
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "q.any_tag('wooden_pick_diggable','wooden_pick_diggable','minecraft:wooden_pick_diggable')"
+            },
+            "speed": 2
+          }
+        ]
+      },
+      "minecraft:durability": {
+        "max_durability": 0,
+        "damage_chance": {
+          "min": 0,
+          "max": 0
+        }
+      }
+    }
+  }
+}

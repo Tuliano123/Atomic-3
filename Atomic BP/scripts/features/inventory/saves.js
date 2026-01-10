@@ -1,6 +1,6 @@
 import * as mc from "@minecraft/server";
 import { world, system, EquipmentSlot } from "@minecraft/server";
-
+//test
 const DEFAULT_OPTIONS = {
   slots: 10,
   loopTicks: 5,

@@ -1,0 +1,1202 @@
+﻿{
+    "generatedAt":  "2026-01-04T17:29:19.8026381-06:00",
+    "examplesDir":  "c:\\Users\\anthe\\Desktop\\Desarrollo\\RP\\font\\examples",
+    "outGlyph":  "c:\\Users\\anthe\\Desktop\\Desarrollo\\RP\\font\\glyph_E3.png",
+    "importedCount":  0,
+    "missingPages":  [
+                         "00",
+                         "02",
+                         "03",
+                         "04",
+                         "06",
+                         "0E",
+                         "10",
+                         "20",
+                         "21",
+                         "22",
+                         "24",
+                         "25",
+                         "26",
+                         "27",
+                         "30",
+                         "56"
+                     ],
+    "missingGlyphs":  [
+                          {
+                              "token":  "☠",
+                              "codePoint":  "2620",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☮",
+                              "codePoint":  "262E",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☯",
+                              "codePoint":  "262F",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♠",
+                              "codePoint":  "2660",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ω",
+                              "codePoint":  "03A9",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♤",
+                              "codePoint":  "2664",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♣",
+                              "codePoint":  "2663",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♧",
+                              "codePoint":  "2667",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♥",
+                              "codePoint":  "2665",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♡",
+                              "codePoint":  "2661",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♦",
+                              "codePoint":  "2666",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♢",
+                              "codePoint":  "2662",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♔",
+                              "codePoint":  "2654",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♕",
+                              "codePoint":  "2655",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♚",
+                              "codePoint":  "265A",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♛",
+                              "codePoint":  "265B",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⚜",
+                              "codePoint":  "269C",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✮",
+                              "codePoint":  "272E",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✯",
+                              "codePoint":  "272F",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☄",
+                              "codePoint":  "2604",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☾",
+                              "codePoint":  "263E",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☽",
+                              "codePoint":  "263D",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☼",
+                              "codePoint":  "263C",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☀",
+                              "codePoint":  "2600",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☁",
+                              "codePoint":  "2601",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☂",
+                              "codePoint":  "2602",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☃",
+                              "codePoint":  "2603",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☻",
+                              "codePoint":  "263B",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☺",
+                              "codePoint":  "263A",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☹",
+                              "codePoint":  "2639",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "۞",
+                              "codePoint":  "06DE",
+                              "page":  "06",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☎",
+                              "codePoint":  "260E",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☏",
+                              "codePoint":  "260F",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "¢",
+                              "codePoint":  "00A2",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☚",
+                              "codePoint":  "261A",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☛",
+                              "codePoint":  "261B",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☜",
+                              "codePoint":  "261C",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☝",
+                              "codePoint":  "261D",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☞",
+                              "codePoint":  "261E",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☟",
+                              "codePoint":  "261F",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✍",
+                              "codePoint":  "270D",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✌",
+                              "codePoint":  "270C",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☢",
+                              "codePoint":  "2622",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☣",
+                              "codePoint":  "2623",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♨",
+                              "codePoint":  "2668",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "๑",
+                              "codePoint":  "0E51",
+                              "page":  "0E",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "❀",
+                              "codePoint":  "2740",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✿",
+                              "codePoint":  "273F",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ψ",
+                              "codePoint":  "03C8",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♆",
+                              "codePoint":  "2646",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☪",
+                              "codePoint":  "262A",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♪",
+                              "codePoint":  "266A",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♩",
+                              "codePoint":  "2669",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♫",
+                              "codePoint":  "266B",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♬",
+                              "codePoint":  "266C",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✄",
+                              "codePoint":  "2704",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✂",
+                              "codePoint":  "2702",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✆",
+                              "codePoint":  "2706",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✉",
+                              "codePoint":  "2709",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✦",
+                              "codePoint":  "2726",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♰",
+                              "codePoint":  "2670",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∞",
+                              "codePoint":  "221E",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♂",
+                              "codePoint":  "2642",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "♀",
+                              "codePoint":  "2640",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "☿",
+                              "codePoint":  "263F",
+                              "page":  "26",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "❥",
+                              "codePoint":  "2765",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "❦",
+                              "codePoint":  "2766",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "❧",
+                              "codePoint":  "2767",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "™",
+                              "codePoint":  "2122",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "®",
+                              "codePoint":  "00AE",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "©",
+                              "codePoint":  "00A9",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✖",
+                              "codePoint":  "2716",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✗",
+                              "codePoint":  "2717",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "✘",
+                              "codePoint":  "2718",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "■",
+                              "codePoint":  "25A0",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "□",
+                              "codePoint":  "25A1",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "▢",
+                              "codePoint":  "25A2",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "▲",
+                              "codePoint":  "25B2",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "△",
+                              "codePoint":  "25B3",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "▼",
+                              "codePoint":  "25BC",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "▽",
+                              "codePoint":  "25BD",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "◆",
+                              "codePoint":  "25C6",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "◇",
+                              "codePoint":  "25C7",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "○",
+                              "codePoint":  "25CB",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "◎",
+                              "codePoint":  "25CE",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "●",
+                              "codePoint":  "25CF",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "◯",
+                              "codePoint":  "25EF",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Δ",
+                              "codePoint":  "0394",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "◕",
+                              "codePoint":  "25D5",
+                              "page":  "25",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ϟ",
+                              "codePoint":  "03DF",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ღ",
+                              "codePoint":  "10E6",
+                              "page":  "10",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ツ",
+                              "codePoint":  "30C4",
+                              "page":  "30",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "回",
+                              "codePoint":  "56DE",
+                              "page":  "56",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "₪",
+                              "codePoint":  "20AA",
+                              "page":  "20",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "¿",
+                              "codePoint":  "00BF",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "¡",
+                              "codePoint":  "00A1",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "½",
+                              "codePoint":  "00BD",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⅓",
+                              "codePoint":  "2153",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⅔",
+                              "codePoint":  "2154",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "¼",
+                              "codePoint":  "00BC",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "¾",
+                              "codePoint":  "00BE",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⅛",
+                              "codePoint":  "215B",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⅜",
+                              "codePoint":  "215C",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⅝",
+                              "codePoint":  "215D",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⅞",
+                              "codePoint":  "215E",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "℅",
+                              "codePoint":  "2105",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "№",
+                              "codePoint":  "2116",
+                              "page":  "21",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "❞",
+                              "codePoint":  "275E",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "#",
+                              "codePoint":  "0023",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "\u0026",
+                              "codePoint":  "0026",
+                              "page":  "00",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∧",
+                              "codePoint":  "2227",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∠",
+                              "codePoint":  "2220",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∨",
+                              "codePoint":  "2228",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∩",
+                              "codePoint":  "2229",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⊂",
+                              "codePoint":  "2282",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⊃",
+                              "codePoint":  "2283",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∪",
+                              "codePoint":  "222A",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "⊥",
+                              "codePoint":  "22A5",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "∀",
+                              "codePoint":  "2200",
+                              "page":  "22",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ξ",
+                              "codePoint":  "039E",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Γ",
+                              "codePoint":  "0393",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɐ",
+                              "codePoint":  "0250",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ə",
+                              "codePoint":  "0259",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɘ",
+                              "codePoint":  "0258",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ε",
+                              "codePoint":  "03B5",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "β",
+                              "codePoint":  "03B2",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɟ",
+                              "codePoint":  "025F",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɥ",
+                              "codePoint":  "0265",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɯ",
+                              "codePoint":  "026F",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɔ",
+                              "codePoint":  "0254",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "и",
+                              "codePoint":  "0438",
+                              "page":  "04",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "๏",
+                              "codePoint":  "0E4F",
+                              "page":  "0E",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ɹ",
+                              "codePoint":  "0279",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ʁ",
+                              "codePoint":  "0281",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "я",
+                              "codePoint":  "044F",
+                              "page":  "04",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ʌ",
+                              "codePoint":  "028C",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ʍ",
+                              "codePoint":  "028D",
+                              "page":  "02",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "λ",
+                              "codePoint":  "03BB",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ч",
+                              "codePoint":  "0447",
+                              "page":  "04",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Σ",
+                              "codePoint":  "03A3",
+                              "page":  "03",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➁",
+                              "codePoint":  "2781",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➂",
+                              "codePoint":  "2782",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➃",
+                              "codePoint":  "2783",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➄",
+                              "codePoint":  "2784",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➅",
+                              "codePoint":  "2785",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➆",
+                              "codePoint":  "2786",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➇",
+                              "codePoint":  "2787",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "➈",
+                              "codePoint":  "2788",
+                              "page":  "27",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓑ",
+                              "codePoint":  "24B7",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓒ",
+                              "codePoint":  "24B8",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓓ",
+                              "codePoint":  "24B9",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓔ",
+                              "codePoint":  "24BA",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓕ",
+                              "codePoint":  "24BB",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓖ",
+                              "codePoint":  "24BC",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓗ",
+                              "codePoint":  "24BD",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓘ",
+                              "codePoint":  "24BE",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓙ",
+                              "codePoint":  "24BF",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓚ",
+                              "codePoint":  "24C0",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓛ",
+                              "codePoint":  "24C1",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓜ",
+                              "codePoint":  "24C2",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓝ",
+                              "codePoint":  "24C3",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓞ",
+                              "codePoint":  "24C4",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓟ",
+                              "codePoint":  "24C5",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓠ",
+                              "codePoint":  "24C6",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓡ",
+                              "codePoint":  "24C7",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓢ",
+                              "codePoint":  "24C8",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓣ",
+                              "codePoint":  "24C9",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓤ",
+                              "codePoint":  "24CA",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓥ",
+                              "codePoint":  "24CB",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓦ",
+                              "codePoint":  "24CC",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓧ",
+                              "codePoint":  "24CD",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "Ⓨ",
+                              "codePoint":  "24CE",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓑ",
+                              "codePoint":  "24D1",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓒ",
+                              "codePoint":  "24D2",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓓ",
+                              "codePoint":  "24D3",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓔ",
+                              "codePoint":  "24D4",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓕ",
+                              "codePoint":  "24D5",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓖ",
+                              "codePoint":  "24D6",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓗ",
+                              "codePoint":  "24D7",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓘ",
+                              "codePoint":  "24D8",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓙ",
+                              "codePoint":  "24D9",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓚ",
+                              "codePoint":  "24DA",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓛ",
+                              "codePoint":  "24DB",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓜ",
+                              "codePoint":  "24DC",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓝ",
+                              "codePoint":  "24DD",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓞ",
+                              "codePoint":  "24DE",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓟ",
+                              "codePoint":  "24DF",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓠ",
+                              "codePoint":  "24E0",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓡ",
+                              "codePoint":  "24E1",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓢ",
+                              "codePoint":  "24E2",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓣ",
+                              "codePoint":  "24E3",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓤ",
+                              "codePoint":  "24E4",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓥ",
+                              "codePoint":  "24E5",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓦ",
+                              "codePoint":  "24E6",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓧ",
+                              "codePoint":  "24E7",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          },
+                          {
+                              "token":  "ⓨ",
+                              "codePoint":  "24E8",
+                              "page":  "24",
+                              "reason":  "missing_unicode_page"
+                          }
+                      ]
+}

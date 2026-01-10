@@ -147,6 +147,12 @@ export function initCommands() {
 							name: fullName,
 							description: commandConfig.setlore.description,
 							permissionLevel: CommandPermissionLevel.Any,
+							// Un solo argumento String (estable en Bedrock/Realms).
+							// Los subcomandos se pasan dentro del mismo string:
+							// - /setlore "begin"
+							// - /setlore "add <texto>"
+							// - /setlore "apply"
+							// - /setlore "clear"
 							mandatoryParameters: [
 								{
 									name: "lore",
@@ -154,7 +160,7 @@ export function initCommands() {
 								},
 							],
 						},
-						makePermissionWrapper("setlore", (origin, args) => handleSetLoreCommand(origin, args))
+						makePermissionWrapper("setlore", (origin, ...args) => handleSetLoreCommand(origin, ...args))
 					);
 				}
 			}
