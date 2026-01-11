@@ -1,2 +1,6 @@
 vanilla-packs/
 bedrock-samples/
+package-lock.json
+package.json
+node_modules/
+.vscode/

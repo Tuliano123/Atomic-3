@@ -7,6 +7,7 @@ import {
 import { handleShowCommand } from "./handlers/show.js";
 import { handleSetLoreCommand } from "./handlers/setLore.js";
 import { handleGetLoreCommand } from "./handlers/getLore.js";
+import { handleRenameCommand } from "./handlers/rename.js";
 import { sendNoPermissionMessage } from "./permissions.js";
 let didSubscribeStartup = false;
 let didRegisterCommands = false;
@@ -48,6 +49,13 @@ export const commandConfig = {
 		enabled: true,
 		name: "getlore",
 		description: "Emite el lore del item seleccionado en consola (Ctrl + H)",
+		permission: "Admin",
+	},
+	rename: {
+		namespace: "atomic3",
+		enabled: true,
+		name: "rename",
+		description: "Agrega o sobreescriba el nombre del objeto en la mano principal",
 		permission: "Admin",
 	},
 };
@@ -176,6 +184,27 @@ export function initCommands() {
 							permissionLevel: CommandPermissionLevel.Any,
 						},
 						makePermissionWrapper("getlore", (origin) => handleGetLoreCommand(origin))
+					);
+				}
+			}
+
+			// 4) rename
+			if (commandConfig.rename.enabled) {
+				const fullName = toNamespacedCommandName(commandConfig.rename);
+				if (fullName) {
+					event.customCommandRegistry.registerCommand(
+						{
+							name: fullName,
+							description: commandConfig.rename.description,
+							permissionLevel: CommandPermissionLevel.Any,
+							mandatoryParameters: [
+								{
+									name: "rename",
+									type: CustomCommandParamType.String,
+								},
+							],
+						},
+						makePermissionWrapper("rename", (origin, args) => handleRenameCommand(origin, args))
 					);
 				}
 			}
