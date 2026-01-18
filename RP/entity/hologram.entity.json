@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "atomic:hologram",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/cape_invisible"
+      },
+      "geometry": {
+        "default": "geometry.atomic_hologram"
+      },
+      "render_controllers": [
+        "controller.render.atomic.hologram"
+      ]
+    }
+  }
+}

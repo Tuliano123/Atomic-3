@@ -81,6 +81,23 @@ function normalizeSoundsList(value) {
 	return single ? [single] : [];
 }
 
+function normalizeAreaId(value) {
+	const v = String(value != null ? value : "").trim();
+	return v ? v.toLowerCase() : "";
+}
+
+function normalizeAreaIds(value) {
+	if (value == null) return [];
+	if (typeof value === "string") {
+		const id = normalizeAreaId(value);
+		return id ? [id] : [];
+	}
+	if (Array.isArray(value)) {
+		return value.map(normalizeAreaId).filter(Boolean);
+	}
+	return [];
+}
+
 function normalizeXpOrbs(value) {
 	if (!value || typeof value !== "object") return null;
 	const min = Number(value.min);
@@ -194,6 +211,7 @@ export function normalizeBlockDefinition(blockDef, config) {
 	const xpOrbs = normalizeXpOrbs(blockDef && blockDef.xpOrbs);
 	const particlesOnSilkTouch = normalizeParticlesOnSilkTouch(blockDef && blockDef.particlesOnSilkTouch);
 	const scoreboardAddsOnBreak = normalizeScoreboardAdds(blockDef && blockDef.scoreboardAddsOnBreak);
+	const areaIds = normalizeAreaIds(blockDef && blockDef.areas);
 
 	const drops = Array.isArray(blockDef && blockDef.drops) ? blockDef.drops : [];
 	const modifiers = normalizeModifiersObject(blockDef && blockDef.modifiers);
@@ -211,6 +229,7 @@ export function normalizeBlockDefinition(blockDef, config) {
 		xpOrbs,
 		particlesOnSilkTouch,
 		scoreboardAddsOnBreak,
+		areaIds,
 		drops,
 		modifiers,
 	};

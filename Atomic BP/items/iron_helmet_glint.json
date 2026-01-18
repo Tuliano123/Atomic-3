@@ -1,0 +1,36 @@
+{
+    "format_version":  "1.21.100",
+    "minecraft:item":  {
+                           "description":  {
+                                               "identifier":  "atomic:iron_helmet_glint",
+                                               "menu_category":  {
+                                                                     "is_hidden_in_commands":  false,
+                                                                     "category":  "equipment"
+                                                                 }
+                                           },
+                           "components":  {
+                                              "minecraft:max_stack_size":  1,
+                                              "minecraft:icon":  {
+                                                                     "textures":  {
+                                                                                      "default":  "iron_helmet"
+                                                                                  }
+                                                                 },
+                                              "minecraft:wearable":  {
+                                                                         "slot":  "slot.armor.head",
+                                                                         "protection":  0
+                                                                     },
+                                              "minecraft:enchantable":  {
+                                                                            "slot":  "armor_head",
+                                                                            "value":  9
+                                                                        },
+                                              "minecraft:durability":  {
+                                                                           "max_durability":  32000,
+                                                                           "damage_chance":  {
+                                                                                                 "min":  0,
+                                                                                                 "max":  0
+                                                                                             }
+                                                                       },
+                                              "minecraft:glint":  true
+                                          }
+                       }
+}

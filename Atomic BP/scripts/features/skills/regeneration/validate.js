@@ -26,6 +26,11 @@ function isSoundObjArray(v) {
 	return Array.isArray(v) && v.every((x) => isSoundObj(x));
 }
 
+function normalizeAreaId(value) {
+	const v = asStr(value);
+	return v ? v.toLowerCase() : "";
+}
+
 function isFiniteNumber(v) {
 	return Number.isFinite(Number(v));
 }
@@ -81,6 +86,7 @@ export function validateSkillRegenConfig(config) {
 
 	const areas = Array.isArray(config.areas) ? config.areas : [];
 	if (areas.length === 0) warnings.push("Config: areas está vacío (no aplicará en ningún lado)");
+	const definedAreaIds = new Set();
 	for (const [i, a] of areas.entries()) {
 		if (!isObj(a)) {
 			errors.push(`Area[${i}]: inválida (no es objeto)`);
@@ -88,6 +94,8 @@ export function validateSkillRegenConfig(config) {
 		}
 		if (!asStr(a.dimensionId)) errors.push(`Area[${i}]: dimensionId vacío`);
 		if (!isObj(a.min) || !isObj(a.max)) errors.push(`Area[${i}]: min/max inválidos`);
+		const areaId = normalizeAreaId(a.id ?? a.name);
+		if (areaId) definedAreaIds.add(areaId);
 	}
 
 	const isLegacy = Array.isArray(config.ores) && !Array.isArray(config.blocks);
@@ -96,6 +104,7 @@ export function validateSkillRegenConfig(config) {
 		warnings.push("Config: 'ores' está deprecado; usa 'blocks' (compat: seguirá funcionando)");
 	}
 	if (blocks.length === 0) warnings.push("Config: blocks está vacío (no hay bloques regenerables registrados)");
+	let usesAreaFilters = false;
 	for (const [i, b] of blocks.entries()) {
 		if (!isObj(b)) {
 			errors.push(`Block[${i}]: inválido (no es objeto)`);
@@ -109,6 +118,23 @@ export function validateSkillRegenConfig(config) {
 		const blockId = asStr(b.blockId || b.oreBlockId);
 		if (!blockId) errors.push(`Block[${i}] (${asStr(b.id) || "?"}): blockId vacío`);
 		// '*' soportado (exact/prefix/glob) por registry.js
+
+		// Areas por bloque (opcional)
+		if (b.areas != null) {
+			usesAreaFilters = true;
+			if (typeof b.areas !== "string" && !isStringArray(b.areas)) {
+				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): areas debería ser string o string[]`);
+			} else {
+				const list = typeof b.areas === "string" ? [b.areas] : b.areas;
+				for (const areaName of list) {
+					const areaId = normalizeAreaId(areaName);
+					if (!areaId) warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): areas contiene un id vacío`);
+					if (areaId && areaId !== "*" && !definedAreaIds.has(areaId)) {
+						warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): areas refiere a '${areaName}' no definido en config.areas`);
+					}
+				}
+			}
+		}
 
 		// Sonidos (opcional)
 		if (b.sound != null) {
@@ -181,6 +207,10 @@ export function validateSkillRegenConfig(config) {
 			if (minQty == null || maxQty == null) errors.push(`Block[${i}] drop[${j}]: min/max inválidos`);
 			if (chance == null || chance < 0 || chance > 100) errors.push(`Block[${i}] drop[${j}]: chancePct debe ser 0..100`);
 		}
+	}
+
+	if (usesAreaFilters && definedAreaIds.size === 0) {
+		warnings.push("Config: se usan areas por bloque pero no hay ids definidos en config.areas");
 	}
 
 	// Métricas (scoreboards)

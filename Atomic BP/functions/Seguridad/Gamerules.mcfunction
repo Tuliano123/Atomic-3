@@ -1,0 +1,6 @@
+gamerule commandblockoutput false
+gamerule keepinventory true
+Gamerule randomtickspeed 0
+gamerule showdeathmessages false
+gamerule mobgriefing false
+gamerule commandblocksenabled true

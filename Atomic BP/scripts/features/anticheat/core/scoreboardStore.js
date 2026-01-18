@@ -23,19 +23,9 @@ export function ensureObjectiveFromConfig(entry, fallbackName, fallbackDisplay) 
 		void e;
 		// ignore
 	}
-
-	try {
-		return world.scoreboard.addObjective(name, displayName);
-	} catch (e) {
-		void e;
-		// Si falla la creación (ej. ya existe en carrera), reintentar getObjective.
-		try {
-			return world.scoreboard.getObjective(name);
-		} catch (e2) {
-			void e2;
-			return null;
-		}
-	}
+	// Creación migrada a scripts/scoreboards (init central)
+	void displayName;
+	return null;
 }
 
 // Helpers "get-only": no crean objectives. Úsalos fuera de scoreboardsInit.js.

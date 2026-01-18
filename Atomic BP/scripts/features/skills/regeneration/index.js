@@ -578,19 +578,19 @@ export function initMiningRegen(userConfig) {
 				tell(player, `§8[mining] cfg areas=${areasCount} blocks=${blocksCount}`);
 			}
 
-			// Validación de área
-			const inArea = isInAnyArea(dimensionId, blockPos, config.areas);
-			if (!inArea) {
-				if (isTargetTrace) tell(player, "§c[mining] fuera de area (no aplica)");
-				return;
-			}
-			if (isTargetTrace) tell(player, "§a[mining] area=ok");
-
 			const blockDef = getBlockDefinition(registry, block.typeId);
 			if (!blockDef) {
 				if (isTargetTrace) tell(player, "§c[mining] ore NO registrado en config");
 				return;
 			}
+
+			// Validación de área (soporta áreas dinámicas por bloque)
+			const inArea = isInAnyArea(dimensionId, blockPos, config.areas, blockDef.areaIds);
+			if (!inArea) {
+				if (isTargetTrace) tell(player, "§c[mining] fuera de area (no aplica)");
+				return;
+			}
+			if (isTargetTrace) tell(player, "§a[mining] area=ok");
 			if (isTargetTrace) tell(player, `§a[mining] block=ok skill=${blockDef.skill} regen=${blockDef.regenSeconds}s mined=${blockDef.minedBlockId}`);
 
 			const key = makeKeyFromPos(dimensionId, blockPos);

@@ -1,0 +1,17 @@
+Kill @e[type=tnt]
+Kill @e[x=-517,y=1,z=193,dx=4,dy=4,dz=4]
+kill @e [type=boat]
+kill @e[type=chest_boat]
+Kill @e[type=item,name="§l§aRe§3glas",x=0,y=16,z=0,rm=3]
+Kill @e[type=item,name="Atomic 3 Info.",x=0,y=16,z=0,rm=3]
+Kill @e[type=item,name="Espada"]
+Kill @e[type=item,name="Pico"]
+Kill @e[type=item,name="Casco"]
+Kill @e[type=item,name="Bread"]
+kill @e[type=item,name=arrow]
+Kill @e[family=minecart]
+Kill @e[type=item,name="Trapped Chest"]
+kill @e[type=item,name=Barrier]
+Kill @e[type=item,name=E]
+
+tp @e[type=drowned,tag=!nok] -515 1 195

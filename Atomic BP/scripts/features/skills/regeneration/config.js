@@ -5,7 +5,7 @@
 
 /**
  * @typedef {{ x:number, y:number, z:number }} Vec3
- * @typedef {{ dimensionId: string, min: Vec3, max: Vec3 }} RegenArea
+ * @typedef {{ id?: string, dimensionId: string, min: Vec3, max: Vec3 }} RegenArea
  *
  * DropEntryTuple:
  * [dropId, itemId, minQty, maxQty, chancePct, nameTag, lore]
@@ -31,6 +31,11 @@
  *  // - todos: "*" (match any)
  *  // - prefijo: "minecraft:*" (match prefix)
  *  blockId?: string,
+ *  // Áreas habilitadas para este bloque (referencia por id)
+ *  // - string: "A"
+ *  // - array: ["A", "B"]
+ *  // - "*" para permitir todas
+ *  areas?: string | string[],
  *  // Compat (legacy): oreBlockId (equivalente a blockId exacto)
  *  oreBlockId?: string,
  *  regenSeconds?: number,
@@ -61,21 +66,21 @@ export const skillRegenConfig = {
 	// Modo del feature:
 	// - "dev": permite debug (console/tellPlayer/traceBreak)
 	// - "prod": fuerza debug OFF aunque debug.enabled=true
-	mode: "dev",
+	mode: "prod",
 	// Alias por compatibilidad (si prefieres boolean)
-	production: false,
+	production: true,
 
 	// Flag master
 	enabled: true,
 
 	// Diagnóstico para la primera prueba (no afecta gameplay si console=false)
 	debug: {
-		enabled: true,
-		console: true,
+		enabled: false,
+		console: false,
 		// Si lo activas, manda mensajes al jugador al minar (no recomendado en producción)
-		tellPlayer: true,
+		tellPlayer: false,
 		// Traza: manda info del bloque detectado en cada intento de minado dentro de áreas
-		traceBreak: true,
+		traceBreak: false,
 	},
 
 	// Métricas (scoreboard players add)
@@ -98,12 +103,19 @@ export const skillRegenConfig = {
 	// Áreas donde aplica el sistema (AABB inclusivo)
 	/** @type {RegenArea[]} */
 	areas: [
-		// MVP de prueba: área amplia en el overworld.
-		// Ajusta estos valores a tu mina para producción.
+		// Ejemplo A
 		{
+			id: "A",
 			dimensionId: "minecraft:overworld",
-			min: { x: -5000, y: -64, z: -5000 },
-			max: { x: 5000, y: 320, z: 5000 },
+			min: { x: 0, y: -64, z: 0 },
+			max: { x: 200, y: 120, z: 200 },
+		},
+		// Ejemplo B
+		{
+			id: "B",
+			dimensionId: "minecraft:overworld",
+			min: { x: 300, y: -64, z: 0 },
+			max: { x: 500, y: 120, z: 200 },
 		},
 	],
 
@@ -129,6 +141,8 @@ export const skillRegenConfig = {
 			id: "coal",
 			skill: "mining",
 			blockId: "minecraft:coal_ore",
+			// Área(s) habilitadas para este bloque
+			areas: ["A"],
 			// Métrica específica: al minar carbón suma 1 al objective CARBON
 			scoreboardAddsOnBreak: {
 				CARBON: 1,
@@ -198,6 +212,7 @@ export const skillRegenConfig = {
 			id: "oak log",
 			skill: "foraging",
 			blockId: "minecraft:oak_log",
+			areas: ["B"],
 			// mined-state específico para este bloque
 			minedBlockId: "minecraft:brown_terracotta",
 			regenSeconds: 15,
@@ -235,6 +250,7 @@ export const skillRegenConfig = {
 			id: "carrots",
 			skill: "farming",
 			blockId: "minecraft:carrots",
+			areas: ["A", "B"],
 			// mined-state específico: queremos que quede vacío mientras regenera
 			// Si por versión `minecraft:air` no se puede setear, usa "minecraft:structure_void".
 			minedBlockId: "minecraft:air",

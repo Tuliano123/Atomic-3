@@ -99,6 +99,109 @@
     },
     "netherite_sword": {
       "textures": "textures/items/netherite_sword"
+    },
+
+    "leather_helmet": {
+      "textures": "textures/items/leather_helmet"
+    },
+    "leather_chestplate": {
+      "textures": "textures/items/leather_chestplate"
+    },
+    "leather_leggings": {
+      "textures": "textures/items/leather_leggings"
+    },
+    "leather_boots": {
+      "textures": "textures/items/leather_boots"
+    },
+
+    "copper_helmet": {
+      "textures": "textures/items/copper_helmet"
+    },
+    "copper_chestplate": {
+      "textures": "textures/items/copper_chestplate"
+    },
+    "copper_leggings": {
+      "textures": "textures/items/copper_leggings"
+    },
+    "copper_boots": {
+      "textures": "textures/items/copper_boots"
+    },
+
+    "chainmail_helmet": {
+      "textures": "textures/items/chainmail_helmet"
+    },
+    "chainmail_chestplate": {
+      "textures": "textures/items/chainmail_chestplate"
+    },
+    "chainmail_leggings": {
+      "textures": "textures/items/chainmail_leggings"
+    },
+    "chainmail_boots": {
+      "textures": "textures/items/chainmail_boots"
+    },
+
+    "iron_helmet": {
+      "textures": "textures/items/iron_helmet"
+    },
+    "iron_chestplate": {
+      "textures": "textures/items/iron_chestplate"
+    },
+    "iron_leggings": {
+      "textures": "textures/items/iron_leggings"
+    },
+    "iron_boots": {
+      "textures": "textures/items/iron_boots"
+    },
+
+    "golden_helmet": {
+      "textures": "textures/items/gold_helmet"
+    },
+    "golden_chestplate": {
+      "textures": "textures/items/gold_chestplate"
+    },
+    "golden_leggings": {
+      "textures": "textures/items/gold_leggings"
+    },
+    "golden_boots": {
+      "textures": "textures/items/gold_boots"
+    },
+    "gold_helmet": {
+      "textures": "textures/items/gold_helmet"
+    },
+    "gold_chestplate": {
+      "textures": "textures/items/gold_chestplate"
+    },
+    "gold_leggings": {
+      "textures": "textures/items/gold_leggings"
+    },
+    "gold_boots": {
+      "textures": "textures/items/gold_boots"
+    },
+
+    "diamond_helmet": {
+      "textures": "textures/items/diamond_helmet"
+    },
+    "diamond_chestplate": {
+      "textures": "textures/items/diamond_chestplate"
+    },
+    "diamond_leggings": {
+      "textures": "textures/items/diamond_leggings"
+    },
+    "diamond_boots": {
+      "textures": "textures/items/diamond_boots"
+    },
+
+    "netherite_helmet": {
+      "textures": "textures/items/netherite_helmet"
+    },
+    "netherite_chestplate": {
+      "textures": "textures/items/netherite_chestplate"
+    },
+    "netherite_leggings": {
+      "textures": "textures/items/netherite_leggings"
+    },
+    "netherite_boots": {
+      "textures": "textures/items/netherite_boots"
     }
   },
   "texture_name": "atlas.items"

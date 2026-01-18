@@ -1,4 +1,5 @@
 import { system, world, EquipmentSlot } from "@minecraft/server";
+import { initCustomToolDurabilityFix } from "./durability-fix.js";
 
 let didInit = false;
 
@@ -114,6 +115,9 @@ function processPlayer(player, cfg) {
 export function initCustomItems(cfg) {
 	if (didInit) return;
 	didInit = true;
+
+	// Fix durabilidad por script (sin custom components)
+	initCustomToolDurabilityFix(cfg);
 
 	const every = Math.max(10, Number(cfg && cfg.scanEveryTicks != null ? cfg.scanEveryTicks : 40));
 

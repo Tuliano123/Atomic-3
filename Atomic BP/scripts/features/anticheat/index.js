@@ -6,7 +6,6 @@ import { createAntiCheatContext } from "./core/context.js";
 import { registerAntiCheatChecks } from "./checks/index.js";
 import { initAntiCheatScriptEvents } from "./core/scriptEvents.js";
 import { initFeatureFlagsDynamicProperties } from "./core/featureFlags.js";
-import { initAntiCheatScoreboards } from "./core/scoreboardsInit.js";
 
 let didInit = false;
 
@@ -22,7 +21,6 @@ export function initAntiCheat(customConfig) {
 
 	const ctx = createAntiCheatContext({ config });
 	// Inicializa TODOS los scoreboards en un solo lugar (post-worldLoad).
-	initAntiCheatScoreboards({ config, logger: ctx && ctx.logger ? ctx.logger : undefined });
 	initAntiCheatScriptEvents({ config: config, logger: ctx && ctx.logger ? ctx.logger : undefined });
 	const registry = new AntiCheatRegistry();
 	registerAntiCheatChecks(registry);

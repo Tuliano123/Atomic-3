@@ -1,6 +1,10 @@
 vanilla-packs/
 bedrock-samples/
+<<<<<<< HEAD
 package-lock.json
 package.json
 node_modules/
 .vscode/
+=======
+tools/
+>>>>>>> 7f6e83f (Features y cambio estructural fundamental en BP)
