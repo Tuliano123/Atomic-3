@@ -32,28 +32,41 @@ const HELP_MESSAGE = [
 	"§f- §a/atomic3:setlore \"clear\"§7 (elimina el lore del item)",
 ].join("\n");
 
-const MAX_LORE_LINES = 30;
+const MAX_LORE_LINES = 40;
 // Nota: el cliente y el motor pueden tener límites internos. Usamos caps defensivos.
-// - Visible: no cuenta secuencias §x (ej: §9), para ser menos invasivo.
+// - Visible: no cuenta secuencias §<código> (ej: §9), para ser menos invasivo.
 // - Total: cuenta todo, como límite duro anti-crash.
-const MAX_LORE_VISIBLE_LINE_LENGTH = 80;
-const MAX_LORE_TOTAL_LINE_LENGTH = 120;
-const MAX_LORE_TOTAL_VISIBLE_CHARS = 700;
-const MAX_FORMAT_CODES_PER_LINE = 24;
-const MAX_FORMAT_CODES_TOTAL = 220;
+const MAX_LORE_VISIBLE_LINE_LENGTH = 140;
+const MAX_LORE_TOTAL_LINE_LENGTH = 220;
+const MAX_LORE_TOTAL_VISIBLE_CHARS = 6000;
+const MAX_FORMAT_CODES_PER_LINE = 48;
+const MAX_FORMAT_CODES_TOTAL = 800;
 
 // Buffer temporal por jugador para evitar enviar comandos enormes (causa típica de desconexión).
 // No se persiste en archivos: vive solo en memoria mientras el servidor está activo.
 const DRAFT_TTL_MS = 5 * 60 * 1000;
-const MAX_DRAFT_CHARS = 6000;
+const MAX_DRAFT_CHARS = 24000;
 const loreDrafts = new Map();
 
 function isFormatCodeChar(ch) {
-	return typeof ch === "string" && ch.length === 1 && /[0-9a-fklmnor]/i.test(ch);
+	if (typeof ch !== "string" || ch.length !== 1) return false;
+	const code = ch.toLowerCase();
+	return isResetCodeChar(code) || isModifierCodeChar(code) || isColorCodeChar(code);
+}
+
+function isModifierCodeChar(ch) {
+	return typeof ch === "string" && ch.length === 1 && /[klmno]/i.test(ch);
 }
 
 function isColorCodeChar(ch) {
-	return typeof ch === "string" && ch.length === 1 && /[0-9a-f]/i.test(ch);
+	if (typeof ch !== "string" || ch.length !== 1) return false;
+	const code = ch.toLowerCase();
+	// Atomic usa códigos extendidos tipo §p, §q, §z, etc. en múltiples UIs.
+	// Para herencia entre líneas, tratamos cualquier alfanumérico como color
+	// EXCEPTO modificadores vanilla (k-o) y reset (r).
+	if (!/[0-9a-z]/i.test(code)) return false;
+	if (isResetCodeChar(code) || isModifierCodeChar(code)) return false;
+	return true;
 }
 
 function isResetCodeChar(ch) {
@@ -165,13 +178,23 @@ function stateAfterText(text, initialState) {
 
 function countVisibleChars(text) {
 	if (typeof text !== "string" || text.length === 0) return 0;
-	// Cuenta caracteres visibles ignorando secuencias "§" + code.
+	// Cuenta caracteres visibles ignorando secuencias "§" + <cualquier char>.
+	// Además, trata emojis (surrogate pairs) como 1 caracter visible.
 	let visible = 0;
 	for (let i = 0; i < text.length; i++) {
 		const ch = text[i];
-		if (ch === "§" && i + 1 < text.length && isFormatCodeChar(text[i + 1])) {
+		if (ch === "§" && i + 1 < text.length) {
 			i++;
 			continue;
+		}
+
+		// Surrogate pair (ej: 🪓) => cuenta como 1 y salta el low-surrogate.
+		const codeUnit = text.charCodeAt(i);
+		if (codeUnit >= 0xd800 && codeUnit <= 0xdbff && i + 1 < text.length) {
+			const nextUnit = text.charCodeAt(i + 1);
+			if (nextUnit >= 0xdc00 && nextUnit <= 0xdfff) {
+				i++;
+			}
 		}
 		visible++;
 	}
@@ -195,19 +218,14 @@ function countFormatCodes(text) {
 function sanitizeFormattingCodes(text, budget) {
 	// Normaliza códigos de formato para evitar crashes por spam (ej: muchos §r).
 	// - Elimina códigos inválidos (deja el texto sin el '§' problemático)
-	// - Colapsa duplicados adyacentes (ej: §r§r => §r)
 	// - Aplica límites por línea y global (budget)
 	if (typeof text !== "string" || text.length === 0) return "";
 	let out = "";
-	let lastEmittedWasCode = false;
-	let lastEmittedCode = "";
 
 	for (let i = 0; i < text.length; i++) {
 		const ch = text[i];
 		if (ch !== "§") {
 			out += ch;
-			lastEmittedWasCode = false;
-			lastEmittedCode = "";
 			continue;
 		}
 
@@ -219,7 +237,9 @@ function sanitizeFormattingCodes(text, budget) {
 		const next = text[i + 1];
 		const code = typeof next === "string" ? next.toLowerCase() : "";
 		if (!isFormatCodeChar(code)) {
-			// Código no válido: removemos solo el '§' para no introducir caracteres raros.
+			// Código no válido: removemos el '§' y el char siguiente.
+			// Esto evita que el lore termine mostrando el caracter suelto (ej: "§phola" => "phola").
+			i++;
 			continue;
 		}
 
@@ -228,15 +248,7 @@ function sanitizeFormattingCodes(text, budget) {
 		budget.line++;
 		if (budget.line > MAX_FORMAT_CODES_PER_LINE || budget.total > MAX_FORMAT_CODES_TOTAL) return null;
 
-		// Colapsa duplicados adyacentes (caso típico: §r§r§r...)
-		if (lastEmittedWasCode && lastEmittedCode === code) {
-			i++;
-			continue;
-		}
-
 		out += `§${code}`;
-		lastEmittedWasCode = true;
-		lastEmittedCode = code;
 		i++;
 	}
 
@@ -448,7 +460,7 @@ function parseLoreText(rawInput) {
 
 		const effectiveLine = `${prefix}${sanitizedLine}`;
 
-		// Validación menos invasiva: ignora códigos §x.
+		// Validación menos invasiva: ignora códigos §<código>.
 		const visibleLen = countVisibleChars(effectiveLine);
 		totalVisible += visibleLen;
 		if (visibleLen > MAX_LORE_VISIBLE_LINE_LENGTH) return { error: "lineTooLong" };

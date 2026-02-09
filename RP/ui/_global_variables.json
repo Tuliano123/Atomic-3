@@ -1,8 +1,6 @@
 {
-	"$show_inventory": false,
-	"$border_and_background_texture": "textures/ui/dialog_background_opaque",
-
-	"$disable_furnace_ui": false,
+	"$show_inventory": false, 
+	"$border_and_background_texture": "textures/ui/dialog_background_opaque", 
 
 	"$disable_1_slots_layout": true,
 
@@ -10,13 +8,23 @@
 
 	"$disable_9_slots_layout": false,
 
-	"$disable_18_slots_layout": true,
+	"$disable_18_slots_layout": false,
 
-	"$disable_27_slots_layout": true,
+	"$disable_27_slots_layout": false,
 
-	"$disable_36_slots_layout": true,
+	"$disable_36_slots_layout": false,
 
-	"$disable_45_slots_layout": true,
+	"$disable_45_slots_layout": false,
 
-	"$disable_54_slots_layout": false
-}
+	"$disable_54_slots_layout": false,
+
+	"$disable_63_slots_layout": false,
+
+	"$disable_72_slots_layout": false,
+
+	"$disable_81_slots_layout": true,
+	
+	"$disable_108_slots_layout": true,
+
+	"$disable_162_slots_layout": true
+}	

@@ -79,59 +79,65 @@ export function buildScoreboardCatalog() {
 	}
 
 	// --- Combat / Health ---
-	addObjective(list, seen, "H", "H");
-	addObjective(list, seen, "Vida", "Vida");
-	addObjective(list, seen, "VidaMaxH", "VidaMax Base");
-	addObjective(list, seen, "VidaMaxTotalH", "VidaMax Total");
-	addObjective(list, seen, "VidaAbsorcion", "Vida Absorcion");
+	addObjective(list, seen, "H", "H"); // Modo Historia (1 = Esta en el modo Historia, 0 = No.)
+	addObjective(list, seen, "Vida", "Vida"); // Vida actual del jugador
+	addObjective(list, seen, "VidaMaxH", "VidaMax Base"); // Vida maxima base (sin mejoras)
+	addObjective(list, seen, "VidaMaxTotalH", "VidaMax Total"); // Vida maxima total (con mejoras)
+	addObjective(list, seen, "VidaAbsorcion", "Vida Absorcion"); // Vida de absorcion (corazones dorados)
 	addObjective(list, seen, "HDead", "HDead");
 
 	// --- Combat / Damage Dealt ---
-	addObjective(list, seen, "DanoFinalSC", "Dano Final SC");
-	addObjective(list, seen, "DanoFinalCC", "Dano Final CC");
-	addObjective(list, seen, "ProbabilidadCriticaTotal", "Prob Crit Total");
-	addObjective(list, seen, "DtotalH", "Def Total");
-	addObjective(list, seen, "DMGH", "DMGH");
-	addObjective(list, seen, "LastKillerId", "Last Killer Id");
-	addObjective(list, seen, "LastKillTick", "Last Kill Tick");
+	addObjective(list, seen, "DanoFinalSC", "Dano Final SC"); // Daño final del jugador SIN critico sin contar defensa
+	addObjective(list, seen, "DanoFinalCC", "Dano Final CC"); // Daño final del jugador CON critico sin contar defensa
+	addObjective(list, seen, "ProbabilidadCriticaTotal", "Prob Crit Total"); // Probabilidad de critico total del jugador
+	addObjective(list, seen, "DtotalH", "Def Total"); // Defensa total del jugador o mob
+	addObjective(list, seen, "DMGH", "DMGH"); // Daño del jugador base
+	addObjective(list, seen, "LastKillerId", "Last Killer Id"); // Id del ultimo que mató al jugador
+	addObjective(list, seen, "LastKillTick", "Last Kill Tick"); // Tick de la ultima kill del jugador
+
+	// --- Combat / Effects (custom) ---
+	addObjective(list, seen, "EffVeneno", "Eff Veneno");
+	addObjective(list, seen, "EffCongelamiento", "Eff Congelamiento");
+	addObjective(list, seen, "EffCalor", "Eff Calor");
 
 	// --- mcfunction (General3 / Seguridad1) ---
-	addObjective(list, seen, "ticksegundos", "ticksegundos");
-	addObjective(list, seen, "segundos", "segundos");
-	addObjective(list, seen, "minutos", "minutos");
-	addObjective(list, seen, "horas", "horas");
-	addObjective(list, seen, "dias", "dias");
-	addObjective(list, seen, "muerto", "muerto");
-	addObjective(list, seen, "M", "M");
-	addObjective(list, seen, "MsgMuerte", "MsgMuerte");
-	addObjective(list, seen, "NoTpUnido", "NoTpUnido");
-	addObjective(list, seen, "unido", "unido");
-	addObjective(list, seen, "limbo", "limbo");
-	addObjective(list, seen, "ExcMuerte", "ExcMuerte");
-	addObjective(list, seen, "lobbytitle", "lobbytitle");
-	addObjective(list, seen, "lt", "lt");
-	addObjective(list, seen, "ltsuperior", "ltsuperior");
-	addObjective(list, seen, "Coo", "Coo");
-	addObjective(list, seen, "CooHelper", "CooHelper");
-	addObjective(list, seen, "D", "D");
-	addObjective(list, seen, "xptitle", "xptitle");
-	addObjective(list, seen, "XP", "XP");
-	addObjective(list, seen, "killtitle", "killtitle");
-	addObjective(list, seen, "Se", "Se");
-	addObjective(list, seen, "muertetitle", "muertetitle");
-	addObjective(list, seen, "almatitle", "almatitle");
-	addObjective(list, seen, "So", "So");
-	addObjective(list, seen, "versiontitle", "versiontitle");
-	addObjective(list, seen, "versiontitlevalor1", "versiontitlevalor1");
-	addObjective(list, seen, "versiontitlevalor2", "versiontitlevalor2");
-	addObjective(list, seen, "versiontitlevalor3", "versiontitlevalor3");
-	addObjective(list, seen, "ID", "ID");
-	addObjective(list, seen, "IDAsignada", "IDAsignada");
-	addObjective(list, seen, "TotalIDs", "TotalIDs");
-	addObjective(list, seen, "EntityCramming", "EntityCramming");
-	addObjective(list, seen, "FillBeeHiveNest", "FillBeeHiveNest");
-	addObjective(list, seen, "vip", "vip");
-	addObjective(list, seen, "spawnpoint", "spawnpoint");
+	addObjective(list, seen, "ticksegundos", "ticksegundos"); // Contador de ticks en segundos
+	addObjective(list, seen, "segundos", "segundos"); // Contador de segundos
+	addObjective(list, seen, "minutos", "minutos"); // Contador de minutos
+	addObjective(list, seen, "horas", "horas"); // Contador de horas
+	addObjective(list, seen, "dias", "dias"); // Contador de dias
+	addObjective(list, seen, "limbo", "limbo"); // Limbo status
+	addObjective(list, seen, "lobbytitle", "lobbytitle"); // Titulo de lobby
+	addObjective(list, seen, "lt", "lt"); // Lobby title multicolor
+	addObjective(list, seen, "ltsuperior", "ltsuperior"); // Lobby title multicolor superior
+	addObjective(list, seen, "Coo", "Coo"); // Cooldown general (IMPORTANTE!)
+	addObjective(list, seen, "CooHelper", "CooHelper"); // Cooldown de actionbar para helper
+	addObjective(list, seen, "D", "Dinero"); // Dinero del jugador
+	addObjective(list, seen, "DB", "DineroBanco"); // Dinero en el banco del jugador
+	addObjective(list, seen, "DBlimite", "DBlimite"); // Límite del banco del jugador
+	addObjective(list, seen, "Mejora", "MejoraBanco"); // Nivel de mejora del banco
+	addObjective(list, seen, "Acto", "Acto"); // Progreso de historia (Acto completado)
+	addObjective(list, seen, "xptitle", "xptitle"); // Titulo de XP
+	addObjective(list, seen, "XP", "XP"); // XP del jugador
+	addObjective(list, seen, "killtitle", "killtitle"); // Titulo de kills
+	addObjective(list, seen, "Se", "Se"); // Segador de kills
+	addObjective(list, seen, "muertetitle", "muertetitle"); // Titulo de muertes
+	addObjective(list, seen, "almatitle", "almatitle"); // Titulo de almas
+	addObjective(list, seen, "So", "So"); // Souls (Almas)
+	addObjective(list, seen, "versiontitle", "versiontitle"); // Titulo de version
+	addObjective(list, seen, "versiontitlevalor1", "versiontitlevalor1"); // Titulo de version valor 1
+	addObjective(list, seen, "versiontitlevalor2", "versiontitlevalor2"); // Titulo de version valor 2
+	addObjective(list, seen, "versiontitlevalor3", "versiontitlevalor3"); // Titulo de version valor 3
+	addObjective(list, seen, "ID", "ID"); // ID del jugador
+	addObjective(list, seen, "IDAsignada", "IDAsignada"); // ID Asignada del jugador
+	addObjective(list, seen, "TotalIDs", "TotalIDs"); // Total de IDs asignadas
+	addObjective(list, seen, "EntityCramming", "EntityCramming"); // Entity Cramming (para anticheat)
+	addObjective(list, seen, "FillBeeHiveNest", "FillBeeHiveNest"); // Fill Bee Hive Nest (para anticheat)
+	addObjective(list, seen, "vip", "vip"); // VIP status
+	addObjective(list, seen, "spawnpoint", "spawnpoint"); // Spawnpoint status
+
+	// systems/onJoinFirstTime ---
+	addObjective(list, seen, "nuevo", "nuevo");
 
 	// --- Archivements (LOGROS) ---
 	addObjective(list, seen, "mobs", "mobs");

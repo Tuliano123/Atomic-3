@@ -16,11 +16,14 @@ import { initVanillaDamageCancel } from "./features/skills/combat/damageCancel/i
 import { initCombatHealth } from "./features/skills/combat/health/index.js";
 import { initDamageDealt } from "./features/skills/combat/damage_dealt/index.js";
 import { initDamageTitle } from "./features/skills/combat/damage_title/index.js";
+import { initEffects } from "./features/skills/combat/effects/index.js";
 import { initAchievements } from "./features/achievements/index.js";
 import { initDeathSystem } from "./systems/death/index.js";
 import deathConfig from "./systems/death/config.js";
 import { initSpawnpointsSystem } from "./systems/spawnpoints/index.js";
 import spawnpointsConfig from "./systems/spawnpoints/config.js";
+import { initOnJoinFirstTime } from "./systems/onJoinFirstTime/index.js";
+import onJoinFirstTimeConfig from "./systems/onJoinFirstTime/config.js";
 
 initAllScoreboards();
 initChestUi();
@@ -34,10 +37,12 @@ initVanillaDamageCancel();
 initCombatHealth();
 initDamageCalc(damageCalcConfig);
 initDamageTitle();
+initEffects();
 initDamageDealt({ debug: false });
 initAchievements();
 initDeathSystem(deathConfig);
 initSpawnpointsSystem(spawnpointsConfig);
+initOnJoinFirstTime(onJoinFirstTimeConfig);
 initInventorySaves({
     slots: 10,
     loopTicks: 5,

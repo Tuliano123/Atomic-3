@@ -23,7 +23,6 @@
         "collection_name": "form_buttons",
         "layer": 1
     },
-    
     "chest_ui_template": {
         "type": "panel",
         "size": [
@@ -100,24 +99,6 @@
                                                             1
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "inventory_label@chest_ui_inventory_system.inventory_label": {}
-                                                },
-                                                {
-                                                    "inventory_items@chest_ui_inventory_system.inventory_items": {}
-                                                },
-                                                {
-                                                    "gap3@common.empty_panel": {
-                                                        "size": [
-                                                            0,
-                                                            3
-                                                        ],
-                                                        "ignored": "(not $show_inventory)"
-                                                    }
-                                                },
-                                                {
-                                                    "hotbar_items@chest_ui_inventory_system.hotbar_items": {}
                                                 }
                                             ]
                                         }
@@ -216,6 +197,56 @@
                     "$condition": "§c§h§e§s§t§5§4",
                     "ignored": "$disable_54_slots_layout"
                 }
+            },
+            {
+                "63@chest_ui.chest_ui_template": {
+                    "$grid_size": [
+                        9,
+                        7
+                    ],
+                    "$condition": "§c§h§e§s§t§6§3",
+                    "ignored": "$disable_63_slots_layout"
+                }
+            },
+            {
+                "72@chest_ui.chest_ui_template": {
+                    "$grid_size": [
+                        9,
+                        8
+                    ],
+                    "$condition": "§c§h§e§s§t§7§2",
+                    "ignored": "$disable_72_slots_layout"
+                }
+            },
+            {
+                "81@chest_ui.chest_ui_template": {
+                    "$grid_size": [
+                        9,
+                        9
+                    ],
+                    "$condition": "§c§h§e§s§t§8§1",
+                    "ignored": "$disable_81_slots_layout"
+                }
+            },
+            {
+                "108@chest_ui.chest_ui_template": {
+                    "$grid_size": [
+                        9,
+                        12
+                    ],
+                    "$condition": "§e§m§m§z§1§0§8§r",
+                    "ignored": "$disable_108_slots_layout"
+                }
+            },
+            {
+                "162@chest_ui.chest_ui_template": {
+                    "$grid_size": [
+                        9,
+                        18
+                    ],
+                    "$condition": "§e§m§m§z§1§6§2§r",
+                    "ignored": "$disable_162_slots_layout"
+                }
             }
         ]
     },
@@ -258,7 +289,6 @@
                 "binding_collection_name": "form_buttons"
             },
             {
-                "binding_name": "#null",
                 "binding_type": "view",
                 "source_property_name": "(not (#form_button_text = ''))",
                 "target_property_name": "#visible"
@@ -272,31 +302,19 @@
             },
             {
                 "binding_type": "view",
-                "source_property_name": "(not ((#form_button_texture = '') or (#form_button_texture = 'loading') or (('%.8s' * #form_button_texture) = 'textures')))",
+                "source_property_name": "(not (('%.8s' * #form_button_texture) = 'textures'))",
                 "target_property_name": "#visible"
             },
             {
                 "binding_type": "view",
-                "source_property_name": "((#form_button_texture * 1) / 65536)",
-                "target_property_name": "#item_id_aux"
-            }
-        ],
-        "$enchanted_glint": [
-            {
-                "binding_name": "#form_button_text",
-                "binding_type": "collection",
-                "binding_collection_name": "form_buttons"
-            },
-            {
-                "binding_name": "#form_button_texture",
-                "binding_type": "collection",
-                "binding_collection_name": "form_buttons"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "(not ((#form_button_texture = '') or (#form_button_texture = 'loading')) and (('%.8s' * #form_button_texture) = 'textures') and (not ((#form_button_text - 'ench#01') = #form_button_text)))",
+                "source_property_name": "(not ((#texture = '') or (#texture = 'loading')))",
                 "target_property_name": "#visible"
-            }
+            },
+            {
+            	"binding_type": "view",
+				"source_property_name": "((#form_button_texture - (#form_button_texture % 65536)) / 65536)",
+				"target_property_name": "#item_id_aux"
+			}
         ],
         "default_control": "default",
         "hover_control": "hover",
@@ -335,18 +353,6 @@
             },
             {
                 "non_renderer_item@chest_ui.non_renderer_item": {}
-            },
-            {
-                "enchanted_glint": {
-                    "type": "image",
-                    "size": [
-                        16,
-                        16
-                    ],
-                    "layer": 5,
-                    "texture": "textures/misc/enchanted_item_glint",
-                    "bindings": "$enchanted_glint"
-                }
             }
         ]
     },
@@ -383,22 +389,6 @@
                 "non_renderer_item@chest_ui.non_renderer_item": {}
             },
             {
-                "enchanted_glint": {
-                    "type": "image",
-                    "size": [
-                        16,
-                        16
-                    ],
-                    "layer": 5,
-                    "texture": "textures/misc/enchanted_item_glint",
-                    "bindings": "$enchanted_glint",
-                    "offset": [
-                        1,
-                        1
-                    ]
-                }
-            },
-            {
                 "item_details@chest_ui.item_details": {}
             },
             {
@@ -431,18 +421,6 @@
             },
             {
                 "non_renderer_item@chest_ui.non_renderer_item": {}
-            },
-            {
-                "enchanted_glint": {
-                    "type": "image",
-                    "size": [
-                        16,
-                        16
-                    ],
-                    "layer": 5,
-                    "texture": "textures/misc/enchanted_item_glint",
-                    "bindings": "$enchanted_glint"
-                }
             },
             {
                 "focus_border@chest_ui.focus_border": {}
@@ -480,12 +458,17 @@
             },
             {
                 "binding_type": "view",
-                "source_property_name": "((#form_button_text - ('%.14s' * #form_button_text)) - 'ench#01')",
+                "source_property_name": "(#form_button_text - ('%.18s' * #form_button_text))",
                 "target_property_name": "#hover_text"
             },
             {
                 "binding_type": "collection_details",
                 "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "( not (#form_button_text - ('%.18s' * #form_button_text) = '§r'))",
+                "target_property_name": "#visible"
             }
         ]
     },
@@ -549,7 +532,7 @@
                         },
                         {
                             "binding_type": "view",
-                            "source_property_name": "((%.14s * #form_button_text) - (%.12s * #form_button_text))",
+                            "source_property_name": "((%.18s * #form_button_text) - (%.16s * #form_button_text))",
                             "target_property_name": "#ratio"
                         },
                         {
@@ -604,13 +587,13 @@
                         {
                             "binding_name": "#null",
                             "binding_type": "view",
-                            "source_property_name": "((#form_button_text - 'stack#01') = #form_button_text)",
+                            "source_property_name": "((#form_button_text - 'stk§r      ') = #form_button_text)",
                             "target_property_name": "#visible"
                         },
                         {
                             "binding_name": "#null",
                             "binding_type": "view",
-                            "source_property_name": "(('§z') + (('%.8s' * #form_button_text) - ('%.6s' * #form_button_text)))",
+                            "source_property_name": "(('§z') + (('%.12s' * #form_button_text) - ('%.3s' * #form_button_text)))",
                             "target_property_name": "#stack_size"
                         }
                     ]

@@ -5,8 +5,8 @@ export default {
 
 	// Spawnpoints por id (string o number, pero consistente)
 	spawnpoints: {
-		"1": { dimension: "minecraft:overworld", x: 0, y: 100, z: 0 }, // default
-		// "2": { dimension: "minecraft:overworld", x: 200, y: 80, z: -50 },
+		"1": { dimension: "minecraft:overworld", x: -2, y: 5, z: -191 }, // default -2 5 -191
+		"2": { dimension: "minecraft:overworld", x: 0, y: 30, z: 0 },
 	},
 
 	defaultSpawnpointId: "1",

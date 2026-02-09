@@ -202,6 +202,10 @@
     },
     "netherite_boots": {
       "textures": "textures/items/netherite_boots"
+    },
+
+    "rotten_flesh": {
+      "textures": "textures/items/rotten_flesh"
     }
   },
   "texture_name": "atlas.items"
