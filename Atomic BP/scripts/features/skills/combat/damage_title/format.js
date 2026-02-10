@@ -1,4 +1,4 @@
-import { clampMin0Int } from "../../calc/utilMath.js";
+import { clampMin0Int } from "../calc/utilMath.js";
 import { applyCustomEmojisToText } from "../../../custom-emojis/index.js";
 
 const SECTION = String.fromCharCode(167); // '§'

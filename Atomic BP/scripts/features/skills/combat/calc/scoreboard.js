@@ -8,7 +8,7 @@ function safeString(v) {
 export function debugLog(config, msg) {
 	if (!config || !config.debug || !config.debug.enabled || !config.debug.console) return;
 	try {
-		console.log(`[skills/calc] ${safeString(msg)}`);
+		console.log(`[skills/combat/calc] ${safeString(msg)}`);
 	} catch (e) {
 		void e;
 	}
@@ -38,7 +38,6 @@ export function ensureObjectiveBestEffort(dimension, objectiveId, criteria = "du
 		if (existing) return true;
 	} catch (e) {
 		void e;
-		// seguimos a fallback
 	}
 
 	// Creación migrada a scripts/scoreboards (init central)
@@ -88,8 +87,6 @@ export function getScoreIdentityOrNameBestEffort(objectiveId, identity, playerNa
 	}
 
 	// Preferimos identity, pero si es 0 y el nombre tiene un valor != 0, usamos el del nombre.
-	// Esto mitiga el caso común: el admin seteó scores por nombre cuando el jugador no estaba
-	// resuelto y se creó un participante string con el valor, dejando el identity en 0.
 	if (identityValue !== undefined) {
 		if (identityValue !== 0) return identityValue;
 		if (nameValue !== undefined && nameValue !== 0) return nameValue;
@@ -112,15 +109,12 @@ export function setScoreIdentityBestEffort(dimension, objectiveId, identity, pla
 		}
 	} catch (e) {
 		void e;
-		// seguimos fallback
 	}
 
 	// 2) Fallback comando
 	try {
 		if (!dimension || typeof dimension.runCommandAsync !== "function") return false;
 		if (!playerName) return false;
-		// Ejecuta como el entity real para evitar escribirle score a un "fake player" por string.
-		// Sigue dependiendo del nombre (limitación del comando), pero @s asegura el target correcto si el selector matchea.
 		const selector = `@a[name=${quoteForCommand(playerName)}]`;
 		const cmd = `execute as ${selector} run scoreboard players set @s ${safeString(objectiveId)} ${Math.trunc(v)}`;
 		void dimension.runCommandAsync(cmd).catch(() => {});

@@ -4,7 +4,7 @@
     "description": "Atomic tres 1.0",
     "name": "Atomic3 Functions",
     "uuid": "21bf0072-c1c9-4d89-a9c2-2665016f86be",
-    "version": [1, 0, 0],
+    "version": [1, 0, 1],
     "min_engine_version": [1, 21, 93]
   },
   "metadata": {
@@ -18,14 +18,14 @@
       "description": "§r",
       "type": "data",
       "uuid": "7a60a7ed-cf5e-4e7d-b530-5d5f72846562",
-      "version": [1, 0, 0]
+      "version": [1, 0, 1]
     },
     {
       "description": "Atomic3 Scripts",
       "type": "script",
       "language": "javascript",
       "uuid": "54ef1c6b-02e4-4260-b23b-a627c14792c5",
-      "version": [1, 0, 0],
+      "version": [1, 0, 1],
       "entry": "scripts/main.js"
     }
   ],

@@ -4,9 +4,11 @@ import {
 	OBJ_DANO_CC,
 	OBJ_DANO_SC,
 	OBJ_DEF_TOTAL,
+	OBJ_DEF_TOTAL_TOTAL,
 	OBJ_LAST_KILLER_ID,
 	OBJ_LAST_KILL_TICK,
 	OBJ_PROB_CRIT,
+	OBJ_PROB_CRIT_TOTAL,
 	OBJ_VIDA,
 	OBJ_VIDA_MAX,
 	debugTellBestEffort,
@@ -63,7 +65,12 @@ export function initByPlayerDamageDealt(world, config = undefined) {
 			// Asegurar Vida/VidaMax para que el hit sea inmediato
 			ensureTargetVidaInitializedBestEffort(target, config);
 
-			const probCrit = getScore(attacker, OBJ_PROB_CRIT, 0);
+			let probCritSrc = "ProbCritTotalH";
+			let probCrit = getScore(attacker, OBJ_PROB_CRIT_TOTAL, undefined);
+			if (probCrit === undefined) {
+				probCritSrc = "ProbabilidadCriticaTotal";
+				probCrit = getScore(attacker, OBJ_PROB_CRIT, 0);
+			}
 			const isCrit = rollCrit(probCrit);
 
 			const danoSC = getScore(attacker, OBJ_DANO_SC, 0);
@@ -71,7 +78,12 @@ export function initByPlayerDamageDealt(world, config = undefined) {
 			const danoBase = isCrit ? danoCC : danoSC;
 			if (danoBase <= 0) return;
 
-			const defensa = getScore(target, OBJ_DEF_TOTAL, 0);
+			let defensaSrc = "DefensaTotalH";
+			let defensa = getScore(target, OBJ_DEF_TOTAL_TOTAL, undefined);
+			if (defensa === undefined) {
+				defensaSrc = "DtotalH";
+				defensa = getScore(target, OBJ_DEF_TOTAL, 0);
+			}
 			const danoRealFloat = applyDefenseMultiplier(danoBase, defensa);
 			let danoReal = floorInt(danoRealFloat);
 			danoReal = clampMin0(danoReal);
@@ -123,7 +135,8 @@ export function initByPlayerDamageDealt(world, config = undefined) {
 			if (config?.debug === true) {
 				debugTellBestEffort(
 					attacker,
-					`[DamageDealtDbg] ${source} crit=${isCrit} probCrit=${probCrit} danoSC=${danoSC} danoCC=${danoCC} danoBase=${danoBase} def=${defensa} danoReal=${danoReal}`
+					`[DamageDealtDbg] ${source} crit=${isCrit} probCrit=${probCrit}(${probCritSrc}) ` +
+						`danoSC=${danoSC} danoCC=${danoCC} danoBase=${danoBase} def=${defensa}(${defensaSrc}) danoReal=${danoReal}`
 				);
 			}
 		} catch (e) {

@@ -21,12 +21,3 @@ export function toNumberOr(value, fallback = 0) {
 	const n = Number(value);
 	return Number.isFinite(n) ? n : fallback;
 }
-
-export function parseNumberLoose(text) {
-	// Acepta coma o punto como decimal. Devuelve number o null.
-	const s = String(text != null ? text : "").trim();
-	if (!s) return null;
-	const normalized = s.replace(/,/g, ".");
-	const n = Number(normalized);
-	return Number.isFinite(n) ? n : null;
-}

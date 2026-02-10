@@ -1,5 +1,6 @@
 import { anticheatConfig } from "../features/anticheat/anticheat.config.js";
-import { damageCalcConfig } from "../features/skills/calc/config.js";
+import { damageCalcConfig } from "../features/skills/combat/calc/config.js";
+import { STAT_REGISTRY } from "../features/skills/lecture/statRegistry.js";
 import { skillRegenConfig } from "../features/skills/regeneration/config.js";
 import achievementsConfig from "../features/achievements/config.js";
 
@@ -57,7 +58,7 @@ export function buildScoreboardCatalog() {
 		addObjective(list, seen, sb?.banSanction?.scoreboard ?? "ac_ban_sanction", sb?.banSanction?.display ?? "ac_ban_sanction");
 	}
 
-	// --- Skills / Calc (configurable) ---
+	// --- Skills / Combat / Calc (configurable) ---
 	{
 		const o = damageCalcConfig?.objectives || {};
 		const d = damageCalcConfig?.displayNames || {};
@@ -76,6 +77,18 @@ export function buildScoreboardCatalog() {
 		addObjective(list, seen, o.outDefenseTotal, d.outDefenseTotal);
 		addObjective(list, seen, o.outManaTotal, d.outManaTotal);
 		addObjective(list, seen, o.outVidaMaxTotal, d.outVidaMaxTotal);
+	}
+
+	// --- Skills / Lecture (data-driven) ---
+	{
+		const registry = Array.isArray(STAT_REGISTRY) ? STAT_REGISTRY : [];
+		for (const stat of registry) {
+			if (!stat || typeof stat !== "object") continue;
+			addObjective(list, seen, stat.personal, stat.personal);
+			addObjective(list, seen, stat.equipamiento, stat.equipamiento);
+			addObjective(list, seen, stat.otros, stat.otros);
+			addObjective(list, seen, stat.total, stat.total);
+		}
 	}
 
 	// --- Combat / Health ---

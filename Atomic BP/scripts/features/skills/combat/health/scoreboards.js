@@ -1,5 +1,14 @@
 import { world } from "@minecraft/server";
 
+const INT32_MAX = 2147483647;
+const INT32_MIN = -2147483648;
+
+function clampInt32(value) {
+	const n = Number(value);
+	if (!Number.isFinite(n)) return 0;
+	return Math.max(INT32_MIN, Math.min(INT32_MAX, Math.trunc(n)));
+}
+
 export const OBJ_H = "H";
 export const OBJ_VIDA = "Vida";
 export const OBJ_VIDA_MAX_BASE = "VidaMaxH";
@@ -11,14 +20,18 @@ export const OBJ_H_DEAD = "HDead";
 const objectiveCache = new Map();
 
 function getObjectiveCached(objectiveId) {
-	if (objectiveCache.has(objectiveId)) return objectiveCache.get(objectiveId) ?? null;
+	// IMPORTANTE: durante worldLoad los objectives pueden no existir aún.
+	// No cacheamos null permanentemente; si está null, reintentamos.
+	if (objectiveCache.has(objectiveId)) {
+		const cached = objectiveCache.get(objectiveId) ?? null;
+		if (cached) return cached;
+	}
 	try {
 		const obj = world.scoreboard.getObjective(objectiveId) ?? null;
-		objectiveCache.set(objectiveId, obj);
+		if (obj) objectiveCache.set(objectiveId, obj);
 		return obj;
 	} catch (e) {
 		void e;
-		objectiveCache.set(objectiveId, null);
 		return null;
 	}
 }
@@ -34,7 +47,6 @@ export function ensureObjectiveBestEffort(objectiveId, displayName = undefined) 
 		void e;
 	}
 	// Creación migrada a scripts/scoreboards (init central)
-	objectiveCache.set(objectiveId, null);
 	void displayName;
 	return null;
 }
@@ -68,7 +80,7 @@ export function setScoreBestEffort(objectiveId, entityOrPlayer, value) {
 		if (!obj) return false;
 		const p = getParticipant(entityOrPlayer);
 		if (!p) return false;
-		obj.setScore(p, Math.trunc(Number(value)));
+		obj.setScore(p, clampInt32(value));
 		return true;
 	} catch (e) {
 		void e;

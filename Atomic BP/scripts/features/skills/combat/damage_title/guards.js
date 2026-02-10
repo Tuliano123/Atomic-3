@@ -4,14 +4,17 @@ import { world } from "@minecraft/server";
 const objectiveCache = new Map();
 
 function getObjectiveCached(objectiveId) {
-	if (objectiveCache.has(objectiveId)) return objectiveCache.get(objectiveId) ?? null;
+	// No cacheamos null permanentemente; algunos servers crean objectives tras worldLoad.
+	if (objectiveCache.has(objectiveId)) {
+		const cached = objectiveCache.get(objectiveId) ?? null;
+		if (cached) return cached;
+	}
 	try {
 		const obj = world.scoreboard.getObjective(objectiveId) ?? null;
-		objectiveCache.set(objectiveId, obj);
+		if (obj) objectiveCache.set(objectiveId, obj);
 		return obj;
 	} catch (e) {
 		void e;
-		objectiveCache.set(objectiveId, null);
 		return null;
 	}
 }

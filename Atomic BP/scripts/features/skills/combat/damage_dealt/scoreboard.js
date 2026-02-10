@@ -1,5 +1,14 @@
 import { world } from "@minecraft/server";
 
+const INT32_MAX = 2147483647;
+const INT32_MIN = -2147483648;
+
+function clampInt32(value) {
+	const n = Number(value);
+	if (!Number.isFinite(n)) return 0;
+	return Math.max(INT32_MIN, Math.min(INT32_MAX, Math.trunc(n)));
+}
+
 /** @type {Map<string, any>} */
 const objectiveCache = new Map();
 
@@ -10,8 +19,10 @@ export const OBJ_VIDA_MAX = "VidaMaxTotalH";
 export const OBJ_DANO_SC = "DanoFinalSC";
 export const OBJ_DANO_CC = "DanoFinalCC";
 export const OBJ_PROB_CRIT = "ProbabilidadCriticaTotal";
+export const OBJ_PROB_CRIT_TOTAL = "ProbCritTotalH";
 
 export const OBJ_DEF_TOTAL = "DtotalH";
+export const OBJ_DEF_TOTAL_TOTAL = "DefensaTotalH";
 export const OBJ_DMGH = "DMGH";
 
 export const OBJ_LAST_KILLER_ID = "LastKillerId";
@@ -27,14 +38,18 @@ function getParticipant(entity) {
 }
 
 function getObjectiveCached(objectiveId) {
-	if (objectiveCache.has(objectiveId)) return objectiveCache.get(objectiveId) ?? null;
+	// IMPORTANTE: durante worldLoad los objectives pueden no existir aún.
+	// No cacheamos null permanentemente; si está null, reintentamos.
+	if (objectiveCache.has(objectiveId)) {
+		const cached = objectiveCache.get(objectiveId) ?? null;
+		if (cached) return cached;
+	}
 	try {
 		const obj = world.scoreboard.getObjective(objectiveId) ?? null;
-		objectiveCache.set(objectiveId, obj);
+		if (obj) objectiveCache.set(objectiveId, obj);
 		return obj;
 	} catch (e) {
 		void e;
-		objectiveCache.set(objectiveId, null);
 		return null;
 	}
 }
@@ -50,7 +65,6 @@ export function ensureObjectiveBestEffort(objectiveId, displayName = undefined) 
 		void e;
 	}
 	// Creación migrada a scripts/scoreboards (init central)
-	objectiveCache.set(objectiveId, null);
 	void displayName;
 	return null;
 }
@@ -96,7 +110,7 @@ export function setScore(entity, objectiveId, value) {
 		if (!obj) return false;
 		const p = getParticipant(entity);
 		if (!p) return false;
-		obj.setScore(p, Math.trunc(Number(value)));
+		obj.setScore(p, clampInt32(value));
 		return true;
 	} catch (e) {
 		void e;

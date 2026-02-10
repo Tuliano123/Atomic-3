@@ -2,6 +2,7 @@ import { emitDamageTitle } from "../damage_title_hook.js";
 import { canApplyDamageFromAttacker } from "../cooldown.js";
 import {
 	OBJ_DEF_TOTAL,
+	OBJ_DEF_TOTAL_TOTAL,
 	OBJ_DMGH,
 	OBJ_VIDA,
 	OBJ_VIDA_MAX,
@@ -49,7 +50,12 @@ export function initByMobDamageDealt(world, config = undefined) {
 				}
 			}
 
-			const defPlayer = getScore(target, OBJ_DEF_TOTAL, 0);
+			let defSrc = "DefensaTotalH";
+			let defPlayer = getScore(target, OBJ_DEF_TOTAL_TOTAL, undefined);
+			if (defPlayer === undefined) {
+				defSrc = "DtotalH";
+				defPlayer = getScore(target, OBJ_DEF_TOTAL, 0);
+			}
 			const danoRealFloat = applyDefenseMultiplier(dmgMob, defPlayer);
 			let danoReal = floorInt(danoRealFloat);
 			danoReal = clampMin0(danoReal);
@@ -74,7 +80,7 @@ export function initByMobDamageDealt(world, config = undefined) {
 			if (config?.debug === true) {
 				debugTellBestEffort(
 					target,
-					`[DamageDealtDbg] by_mob dmgMob=${dmgMob} def=${defPlayer} danoReal=${danoReal}`
+					`[DamageDealtDbg] by_mob dmgMob=${dmgMob} def=${defPlayer}(${defSrc}) danoReal=${danoReal}`
 				);
 			}
 		} catch (e) {
