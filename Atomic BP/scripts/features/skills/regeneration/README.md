@@ -1,4 +1,5 @@
 # Sistema de Regeneración de Bloques (Skills) — Bedrock Script API
+## Outdated ----------------------------
 
 Guía del sistema de regeneración por bloques (multi-skill) usando Bedrock Script API.
 

@@ -13,6 +13,14 @@ Adoptar un flujo de trabajo más profesional sin complicar el proyecto: mantener
 
 ---
 
+> **📖 NOTA:** Si es tu primera vez con GitFlow o necesitas instrucciones paso a paso MUY detalladas (con capturas, verificaciones en VSCode/GitHub, troubleshooting), consulta:
+> 
+> **[GUIA_DESARROLLO_GITHUB_GITFLOW_DETALLADA.md](GUIA_DESARROLLO_GITHUB_GITFLOW_DETALLADA.md)**
+> 
+> Este archivo es un resumen ejecutivo; la guía detallada tiene instrucciones completas para cada paso.
+
+---
+
 ## 1) Principios (lo mínimo que cambia el juego)
 
 1. **`main` siempre estable**
@@ -54,27 +62,133 @@ Adoptar un flujo de trabajo más profesional sin complicar el proyecto: mantener
 
 > Esta migración evita `rebase`/reescritura de historia: se conserva todo lo ya commiteado en `main`.
 
-1. **Crear `develop` desde el estado actual de `main`**
-   ```bash
+---
+
+### PASO 1: Crear rama `develop` desde `main`
+
+#### 1.1 Asegúrate de tener todo el trabajo guardado
+Antes de empezar, **NO debe haber cambios sin commit** en tu workspace.
+
+**En VSCode:**
+- Abre el panel Source Control (Ctrl+Shift+G).
+- Si ves archivos en "Changes", haz commit o descártalos antes de continuar.
+
+**En PowerShell:**
+```powershell
+git status
+```
+- Debe decir: `nothing to commit, working tree clean`
+- Si hay cambios, commitea primero o `git stash` temporalmente.
+
+---
+
+#### 1.2 Ir a la rama `main` y actualizarla
+```powershell
+git checkout main
+git pull origin main
+```
+
+**Qué esperar:**
+- `git checkout main` → "Switched to branch 'main'" (o "Already on 'main'")
+- `git pull origin main` → "Already up to date" (o descarga commits si hay nuevos)
+
+**En VSCode:**
+- Abajo a la izquierda verás el nombre de la rama: debe decir `main`.
+
+---
+
+#### 1.3 Crear la rama `develop` localmente
+```powershell
+git checkout -b develop
+```
+
+**Qué esperar:**
+- Verás: `Switched to a new branch 'develop'`
+- En VSCode, abajo a la izquierda ahora dice: `develop`
+
+**¿Por qué no se ve aún en GitHub?**
+- La rama `develop` ahora SOLO existe en tu máquina local.
+- GitHub no la conoce hasta que la empujes (next step).
+
+---
+
+#### 1.4 Subir `develop` a GitHub (primera vez)
+```powershell
+git push -u origin develop
+```
+
+**Qué esperar:**
+- Verás algo como:
+  ```
+  Total 0 (delta 0), reused 0 (delta 0)
+  To https://github.com/<tu-usuario>/<tu-repo>.git
+   * [new branch]      develop -> develop
+  Branch 'develop' set up to track remote branch 'develop' from 'origin'.
+  ```
+
+**Verificar en GitHub:**
+1. Ve a tu repo en GitHub.
+2. Click en el dropdown de ramas (arriba a la izquierda, donde dice `main`).
+3. Ahora deberías ver: `main` y `develop`.
+
+**¿Por qué pusimos `-u origin develop`?**
+- `-u` (o `--set-upstream`) "vincula" tu rama local `develop` con `origin/develop` (GitHub).
+- A partir de ahora, un simple `git push` o `git pull` desde `develop` sabrá dónde ir automáticamente.
+
+---
+
+#### 1.5 (Opcional) Establecer `develop` como rama por defecto en GitHub
+Si quieres que los PRs nuevos apunten por defecto a `develop`:
+1. En GitHub: Settings → Branches.
+2. En "Default branch", cambiar de `main` a `develop`.
+3. Confirmar.
+
+> **Nota:** esto no es estrictamente necesario si eres explícito al abrir PRs, pero ayuda a prevenir errores.
+
+---
+
+### PASO 2: Configurar protecciones de rama en GitHub
+
+**Objetivo:** impedir que tú o tu compañero hagan `git push` directo a `main` o `develop` sin pasar por PR.
+
+#### 2.1 Proteger `main`
+1. Ve a tu repo en GitHub.
+2. Click en **Settings** (tab superior derecho).
+3. En el menú izquierdo: **Branches**.
+4. Click en **Add branch protection rule** (o si ya hay reglas, edita `main`).
+5. En "Branch name pattern": escribe `main`.
+6. Activa:
+   - ☑ **Require a pull request before merging**
+     - Sub-opción: **Require approvals** → mínimo 1 (si trabajas con alguien más).
+   - ☑ **Require status checks to pass before merging** (cuando tengas Actions, activa esto).
+   - ☑ **Do not allow bypassing the above settings** (incluye a admins).
+   - ☑ **Block force pushes** (evita reescribir historia).
+7. Click **Create** o **Save changes**.
+
+#### 2.2 Proteger `develop` (mismo procedimiento)
+Repetir el paso anterior, pero con "Branch name pattern": `develop`.
+
+**Resultado:**
+- Ahora, si intentas `git push origin main` sin PR, GitHub lo rechazará.
+- Deberás abrir un Pull Request para mergear cambios.
+
+---
+
+### PASO 3: Cambiar la disciplina desde hoy
+
+**Regla nueva:**
+- ❌ NO más `git checkout main` + `git commit` + `git push`.
+- ✅ SÍ: rama `feature/*` → commit → push → PR → merge a `develop`.
+
+**¿Qué hago si ya commiteé en `main` por error?**
+1. Si **NO has hecho push aún**:
+   ```powershell
+   git checkout develop
+   git cherry-pick <commit-id>
    git checkout main
-   git pull
-   git checkout -b develop
-   git push -u origin develop
+   git reset --hard origin/main
    ```
-
-2. **Cambiar la disciplina desde hoy**
-   - Desde este punto, **no más commits directos** en `main`.
-   - Nuevo trabajo:
-     - ramas `feature/*` desde `develop`
-     - PR hacia `develop`
-
-3. **Configurar protecciones de rama en GitHub**
-   - En GitHub: Settings → Branches
-   - Proteger `main` y `develop`:
-     - Require a pull request before merging
-     - Require status checks to pass before merging
-     - (Opcional) Require approvals (mínimo 1)
-     - Block force pushes
+2. Si **YA hiciste push**, déjalo (por esta vez) y sigue la nueva disciplina de ahora en adelante.
 
 ---
 
