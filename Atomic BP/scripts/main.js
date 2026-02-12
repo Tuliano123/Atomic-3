@@ -26,6 +26,8 @@ import { initSpawnpointsSystem } from "./systems/spawnpoints/index.js";
 import spawnpointsConfig from "./systems/spawnpoints/config.js";
 import { initOnJoinFirstTime } from "./systems/onJoinFirstTime/index.js";
 import onJoinFirstTimeConfig from "./systems/onJoinFirstTime/config.js";
+import { initTitlesPrioritySystem } from "./systems/titlesPriority/index.js";
+import titlesPriorityConfig from "./systems/titlesPriority/config.js";
 
 initAllScoreboards();
 initChestUi();
@@ -34,6 +36,7 @@ initAntiCheat();
 initCustomEmojis();
 initCustomItems(customItemsConfig);
 initHolograms(hologramsConfig);
+initTitlesPrioritySystem(titlesPriorityConfig);
 initSkillRegeneration(skillRegenConfig);
 // Orden estricto (scoreboards -> lecture -> calc -> combat)
 initLecture(lectureConfig);

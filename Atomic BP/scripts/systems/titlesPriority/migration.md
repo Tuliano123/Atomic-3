@@ -1,63 +1,133 @@
-# Objetivo
+# Sistema de Titles Priority (BP)
 
-Crear titleraws en actionbar con prioridad; Ya que solo se puede ver uno a la vez entonces estableceriamos un contrato donde declarariamos en un arreglo la prioridad de cada uno con variables; Usando un archivo de config.js para añadir; quitar titleraws
+Ruta: `Atomic BP/scripts/systems/titlesPriority/`
 
-# Migración
+## Objetivo
+Estandarizar la visualización de `titleraw` en **actionbar** con un sistema de **prioridad numérica**.
 
-Anteriormente se utilizaba "Coo" o "CooMayor" para la prioridad; el problema es la falta de orden ya que todo se encuentra revuelto y tiende a fallar si hay dos activos a la vez; Por eso es mejor migrarlo a una prioridad numerica y por jerarquia temporal
+- En Minecraft Bedrock solo se puede ver **un** actionbar a la vez.
+- Si un jugador cumple condiciones para múltiples “titles”, se muestra **solo uno**: el de **mayor prioridad**.
+- La lista de “titles” se define como contrato en un `config.js` para poder añadir/quitar entradas sin tocar el resolver.
 
-## Plan
+## Contexto de migración
+Anteriormente se utilizaba `Coo` o `CooMayor` como “prioridad”. El problema es que no existía un orden estable, quedaba revuelto y podía fallar cuando había más de un title activo.
 
-crear un archivo de config para colocar los diversos titleraws con formatos, serán titleraws debido a que es posible incluir selectores y scoreboards dentro del texto sin tener que implementar logica por parte de script y ahorrar codigo
+Este sistema migra a:
+- **Prioridad numérica** (p. ej. 10, 20, 100…)
+- **Regla determinística** de selección (si varios aplican, gana el de prioridad más alta)
 
-Si se tiene una mejor solución o propuesta este sistema puede cambiar, así que considerar que este se encuentra en continuo cambio y hay que considerar escalabilidad
+## Contrato de configuración (propuesto)
+Archivo: `Atomic BP/scripts/systems/titlesPriority/config.js`
 
-Ejemplo de config en pseudocodigo (Considerar que es una ejemplificación de uso)
+### Diseño de datos (por qué `titles` es un array)
+`titles` se define como `Array` por ser:
+- Fácil de leer y editar (orden natural en el archivo).
+- Natural para aplicar la regla “seleccionar el mejor candidato” (filtrar → ordenar/recorrer por prioridad).
 
+#### Alternativa equivalente (más intuitiva para evitar IDs repetidos)
+Si en el proyecto te resulta más cómodo, se puede representar como un **objeto indexado por `id`** y luego convertirlo a array internamente. Esto no cambia el comportamiento del sistema: solo cambia la forma de escribir el config.
+
+Ejemplo de shape alternativa (conceptual):
+```js
+export default {
+	titles: {
+		Lobby: {
+			content: ["..."],
+			priority: 10,
+			display_if: { /* ... */ },
+		},
+	},
+};
+```
+
+Esta forma hace que “`id` único” sea más difícil de romper por accidente.
+
+### Estructura
 ```js
 export default {
 	debug: false,
 
 	emojis: {
-		// Import obligatorio del sistema de emojis custom (depende de tu proyecto)
+		// Depende del sistema de emojis del proyecto
 		enabled: true,
 	},
 
-    titles: [
-        {
-            id: "Lobby",
-            content: ["Este es un titleraw que se usara en un lobby","Y este es otra linea", "Y aquí podemos ver un scoreboard: ${D:@s}"]
-			priority: 10
+	titles: [
+		{
+			id: "Lobby",
+			content: [
+				"Este es un titleraw que se usará en un lobby",
+				"Y esta es otra línea",
+				"Y aquí podemos ver un scoreboard: ${D:@s}",
+			],
+			priority: 10,
 			display_if: {
 				area: {
-					to:{x: 100, y: 100, z: 100}, 
-					at: {x: 0, y: 0, z: 0}
+					at: { x: 0, y: 0, z: 0 },
+					to: { x: 100, y: 100, z: 100 },
 				},
 				score: {
 					objective: "D",
 					condition: ">=",
-					int: 100
-				}
-			}
+					int: 100,
+				},
+			},
 		},
-    ]
-}
+	],
+};
 ```
 
-### Sobre el ejemplo
+### Campos
+#### `titles[].id`
+- **Tipo:** string
+- **Rol:** identificador único del title.
 
-En el ejemplo podemos ver un codigo burdo sobre como sería la configuración, explicando de eso; vemos un id, que funge como identificador unico para cada uno de los titles; De allí tenemos el contenido que es un array debido a que puede llegar a tener saltos de linea.
-La prioridad es una variable que usaremos para presentar el display; si el jugador cumple con condiciones para multiples titles solo se reflejara UNO; El que tenga la prioridad más alta
+#### `titles[].content`
+- **Tipo:** `string[]`
+- **Rol:** líneas que componen el actionbar.
+- **Nota:** el resolver trata el contenido como “titleraw” (permite selectores y scores). El ejemplo usa la forma `${<objective>:<selector>}` para representar un score (p. ej. `${D:@s}`).
 
-De allí tenemos las condiciones para ver el title en actionbar; siempre en actionbar
-Tenemos 2 tipos de consideraciones dentro del display_if; la area y el score
-sobre el area: esta es una condición que es true si el jugador esta dentro de esa area en la dimensión del overworld (Considerar solo overworld; No es necesario considerar nether o end)
-sobre el score: Consideraremos el nombre del objective y además un operador condicionante como lo son "==, !=, >=, <=, >, <" y el valor a comparar; La comparación será personal; Extrapolandolo al ejemplo:
-El title del ejemplo solo se mostraría si el jugador esta en el area indicada y su scoreboard en "D" es mayor o igual a 100; Y solo si no hay otro title con condiciones cumplidas con una prioridad más alta
+#### `titles[].priority`
+- **Tipo:** number
+- **Regla:** a mayor número, mayor prioridad.
 
-Dentro del content podemos ver ${D:@s}
-basicamente se elige el scoreboard "D" y el selector del scoreboard es "@s", entonces ahí debería mostrar el numero que el jugador tiene en el scoreboard D, así que todos los que vean este title verían su valor de D
+#### `titles[].display_if`
+- **Tipo:** object
+- **Rol:** condiciones que deben cumplirse para que el title aplique.
+- **Evaluación:** si hay múltiples condiciones dentro de `display_if`, todas deben ser verdaderas (AND).
+
+## Condiciones soportadas
+### `display_if.area`
+Condición verdadera si el jugador está dentro de un área (AABB) en **overworld**.
+
+- `at`: `{ x, y, z }` esquina A
+- `to`: `{ x, y, z }` esquina B
+
+### `display_if.score`
+Condición verdadera si el score del jugador cumple la comparación.
+
+- `objective`: nombre del objective (p. ej. `"D"`)
+- `condition`: uno de `==`, `!=`, `>=`, `<=`, `>`, `<`
+- `int`: número a comparar
+
+Ejemplo interpretado:
+- Se muestra el title si el jugador está en el área y además su score `D` es `>= 100`.
+
+## Regla de prioridad
+- Si varios titles aplican al mismo tiempo, se muestra **solo** el de mayor `priority`.
+
+### Desempate (mismo `priority`)
+Para que el resultado sea 100% determinista, si dos o más titles empatan en `priority`, debe ganar el **primero** que aparezca definido en el config (orden estable).
 
 ## Consideraciones
+- El output es siempre **actionbar**.
+- El chequeo de `area` se limita a **overworld** (no se considera nether/end).
+- Mantener `id` como único para evitar colisiones.
 
-Aplicar buenas practicas y considerar escalabilidad
+## Entrypoint
+- Se inicializa desde [Atomic BP/scripts/main.js](../../main.js).
+
+## Notas de implementación (para evitar bugs)
+- `display_if` se evalúa como AND: si hay varias condiciones, todas deben cumplirse.
+- `area`: conviene normalizar el AABB con `min/max` (por si `at` y `to` vienen invertidos).
+- `score`: si el objective no existe o el jugador no tiene score, tratar la condición como **false** (evita mostrar titles por datos faltantes).
