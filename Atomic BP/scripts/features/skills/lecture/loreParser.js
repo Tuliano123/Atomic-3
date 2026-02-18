@@ -19,7 +19,7 @@ function parseNumberLoose(text) {
 
 function extractTotalNumber(normalizedLine) {
 	// primer número después de ':' con + opcional y decimales opcionales
-	const m = /[:]\s*\+?\s*([0-9]+(?:[.,][0-9]+)?)/.exec(normalizedLine);
+	const m = /[:]\s*\+?\s*([0-9]+(?:[., ][0-9]+)?)/.exec(normalizedLine);
 	if (!m) return null;
 	return parseNumberLoose(m[1]);
 }

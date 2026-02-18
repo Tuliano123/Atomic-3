@@ -264,3 +264,19 @@ Recomendadas para dividir y que Copilot complete:
 
 ## Notas
 - Los scoreboards se actualizan preferiblemente via API (`world.scoreboard`) y si falla, cae a comandos (best-effort).
+
+También recuerda considerar que es posible colocar el 
+
+                    scoreboardAddsOnBreak: {
+                        DINERO: 2,
+                    },
+
+*Ese es un ejemplo
+
+Además consiera que puede haber casos dentro de los casos; Porqué puede ser necesario crear anidaciones, para evitar complicaciones de codigo; Solo se pueden tener 3 casos anidados; Aunque lo necesario por el momento son solo 2
+
+Respecto a las mejoras en scoreboardAddsOnBreak vamos a añadir la funcionalidad relacionada a la experiencia 
+
+Funcionara de la siguiente manera
+
+Vamos a poder configurar la "Experiencia Minera, Experiencia de Tala, Experiencia de Cosecha"

@@ -3,6 +3,7 @@ import { damageCalcConfig } from "../features/skills/combat/calc/config.js";
 import { STAT_REGISTRY } from "../features/skills/lecture/statRegistry.js";
 import { skillRegenConfig } from "../features/skills/regeneration/config.js";
 import achievementsConfig from "../features/achievements/config.js";
+import titlesPriorityConfig from "../systems/titlesPriority/config.js";
 
 function safeString(value) {
 	return String(value != null ? value : "").trim();
@@ -39,6 +40,39 @@ function addRegenObjectives(list, seen, config) {
 		if (!modifiers) continue;
 		for (const mod of Object.values(modifiers)) {
 			addObjectivesFromMap(list, seen, mod?.scoreboardAddsOnBreak);
+		}
+	}
+}
+
+const PLACEHOLDER_RE = /\$\{([^:}]+):([^}]+)\}/g;
+
+function addTitlesPriorityObjectives(list, seen, config) {
+	const t = config?.titles;
+	let titles = [];
+	if (Array.isArray(t)) titles = t;
+	else if (t && typeof t === "object") {
+		for (const [id, def] of Object.entries(t)) {
+			if (!def || typeof def !== "object") continue;
+			titles.push({ id, ...def });
+		}
+	}
+
+	for (const entry of titles) {
+		if (!entry || typeof entry !== "object") continue;
+		const score = entry?.display_if?.score;
+		const obj = score && typeof score === "object" ? safeString(score.objective) : "";
+		if (obj) addObjective(list, seen, obj, obj);
+
+		const content = entry.content;
+		const lines = Array.isArray(content) ? content : [content];
+		for (const line of lines) {
+			const s = safeString(line);
+			if (!s) continue;
+			PLACEHOLDER_RE.lastIndex = 0;
+			for (let m = PLACEHOLDER_RE.exec(s); m; m = PLACEHOLDER_RE.exec(s)) {
+				const placeholderObj = safeString(m[1]);
+				if (placeholderObj) addObjective(list, seen, placeholderObj, placeholderObj);
+			}
 		}
 	}
 }
@@ -168,6 +202,9 @@ export function buildScoreboardCatalog() {
 
 	// --- Regeneration (configurable) ---
 	addRegenObjectives(list, seen, skillRegenConfig);
+
+	// --- Systems / Titles Priority (configurable) ---
+	addTitlesPriorityObjectives(list, seen, titlesPriorityConfig);
 
 	return list;
 }
