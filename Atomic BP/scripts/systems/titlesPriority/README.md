@@ -135,11 +135,10 @@ Retorna `boolean`.
 Limpia titles temporales.
 - Sin filtro: elimina todos.
 - Filtro opcional: `{ source?, target? }`.
+	- Si envías solo `source`, limpia ese `source` en **todos** los targets.
+	- Si envías `target`, limpia solo en ese target (con o sin `source`).
 
 Retorna `number` (cantidad eliminada).
-
-### `getTemporaryTitlesDebugSnapshot()`
-Snapshot debug best-effort del estado temporal activo.
 
 ## Flujo recomendado para features externas
 1. Definir un `source` fijo por feature (ej: `"skills_regen"`).

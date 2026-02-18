@@ -4,6 +4,7 @@ import { applyCustomEmojisToText } from "../../features/custom-emojis/index.js";
 
 let didInit = false;
 let activeConfig = configDefault;
+let tickInProgress = false;
 const TEMP_DEFAULT_DURATION_MS = 3000;
 const TARGET_GLOBAL = "*";
 const LOOP_TICKS_DEFAULT = 10;
@@ -270,6 +271,35 @@ async function sendActionbarTitleraw(player, rawtext) {
 	}
 }
 
+function rawtextToPlainText(rawtext) {
+	if (!Array.isArray(rawtext)) return null;
+	let out = "";
+	for (const part of rawtext) {
+		if (!part || typeof part !== "object") return null;
+		if (typeof part.text === "string") {
+			out += part.text;
+			continue;
+		}
+		// Si hay score/selectores no podemos convertir de forma fiable.
+		return null;
+	}
+	return out;
+}
+
+function sendActionbarPlainBestEffort(player, rawtext) {
+	try {
+		const plain = rawtextToPlainText(rawtext);
+		if (plain == null) return false;
+		const display = player?.onScreenDisplay;
+		if (!display || typeof display.setActionBar !== "function") return false;
+		display.setActionBar(plain);
+		return true;
+	} catch (e) {
+		void e;
+		return false;
+	}
+}
+
 function getPlayerId(player) {
 	try {
 		return safeString(player?.id) || safeString(player?.name);
@@ -477,9 +507,9 @@ export function removeTemporaryTitle(input = undefined) {
 
 export function clearTemporaryTitles(filter = undefined) {
 	const src = filter && typeof filter === "object" ? filter : null;
-	const hasFilter = !!src;
 	const sourceFilter = safeString(src?.source);
-	const targetFilter = hasFilter ? resolveTargetKey(src?.target) : "";
+	const hasTargetFilter = src && Object.prototype.hasOwnProperty.call(src, "target");
+	const targetFilter = hasTargetFilter ? resolveTargetKey(src?.target) : "";
 
 	let deletedCount = 0;
 	for (const [targetKey, store] of temporaryTitlesByTarget.entries()) {
@@ -493,24 +523,6 @@ export function clearTemporaryTitles(filter = undefined) {
 	}
 
 	return deletedCount;
-}
-
-export function getTemporaryTitlesDebugSnapshot() {
-	pruneExpiredTemporaryTitles(Date.now());
-	const snapshot = [];
-	for (const [targetKey, store] of temporaryTitlesByTarget.entries()) {
-		for (const [storeKey, entry] of store.entries()) {
-			snapshot.push({
-				target: targetKey,
-				key: storeKey,
-				id: safeString(entry?.id),
-				source: safeString(entry?.source),
-				priority: Number(entry?.priority) || 0,
-				expiresAtMs: Number(entry?.expiresAtMs) || 0,
-			});
-		}
-	}
-	return snapshot;
 }
 
 async function tickTitlesPriority(cfg) {
@@ -529,7 +541,11 @@ async function tickTitlesPriority(cfg) {
 		// Importante: el actionbar se desvanece y los scores se resuelven al ejecutar el comando.
 		// Por eso se re-emite el titleraw en cada tick del loop.
 		const rawtext = buildActionbarRawtext(cfg, best.content ?? "");
-		await sendActionbarTitleraw(player, rawtext);
+		const ok = await sendActionbarTitleraw(player, rawtext);
+		if (!ok) {
+			const fallbackOk = sendActionbarPlainBestEffort(player, rawtext);
+			if (!fallbackOk) debugLog(cfg, `sendActionbar failed player=${safeString(player?.name) || safeString(player?.id) || "?"} title=${safeString(best?.id)}`);
+		}
 	}
 }
 
@@ -543,10 +559,14 @@ export function initTitlesPrioritySystem(userConfig = undefined) {
 	debugLog(cfg, `init loopTicks=${loopTicks}`);
 
 	system.runInterval(() => {
-		try {
-			void tickTitlesPriority(cfg);
-		} catch (e) {
-			void e;
-		}
+		if (tickInProgress) return;
+		tickInProgress = true;
+		void tickTitlesPriority(cfg)
+			.catch((e) => {
+				void e;
+			})
+			.finally(() => {
+				tickInProgress = false;
+			});
 	}, loopTicks);
 }
