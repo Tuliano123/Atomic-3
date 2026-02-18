@@ -3,6 +3,17 @@ import configDefault from "./config.js";
 import { applyCustomEmojisToText } from "../../features/custom-emojis/index.js";
 
 let didInit = false;
+let activeConfig = configDefault;
+const TEMP_DEFAULT_DURATION_MS = 3000;
+const TARGET_GLOBAL = "*";
+const LOOP_TICKS_DEFAULT = 10;
+const TEMP_SOURCE_DEFAULT = "anonymous";
+
+let tempOrderCounter = 0;
+let tempAutoIdCounter = 0;
+
+/** @type {Map<string, Map<string, any>>} */
+const temporaryTitlesByTarget = new Map();
 
 function asStr(v) {
 	return String(v != null ? v : "");
@@ -33,6 +44,23 @@ function applyEmojisIfEnabled(cfg, text) {
 		void e;
 		return asStr(text);
 	}
+}
+
+function getRuntimeLoopTicks(cfg) {
+	const raw = Number(cfg?.runtime?.loopTicks);
+	if (!Number.isFinite(raw) || raw <= 0) return LOOP_TICKS_DEFAULT;
+	return Math.max(1, Math.trunc(raw));
+}
+
+function getRuntimeTempDefaultDurationMs(cfg) {
+	const raw = Number(cfg?.runtime?.temporary?.defaultDurationMs);
+	if (!Number.isFinite(raw) || raw <= 0) return TEMP_DEFAULT_DURATION_MS;
+	return Math.max(1, Math.trunc(raw));
+}
+
+function getRuntimeTempDefaultSource(cfg) {
+	const value = safeString(cfg?.runtime?.temporary?.defaultSource);
+	return value || TEMP_SOURCE_DEFAULT;
 }
 
 function normalizeTitles(config) {
@@ -106,11 +134,10 @@ function getObjectiveCached(id) {
 	if (objectiveCache.has(objectiveId)) return objectiveCache.get(objectiveId) ?? null;
 	try {
 		const obj = world.scoreboard.getObjective(objectiveId) ?? null;
-		objectiveCache.set(objectiveId, obj);
+		if (obj) objectiveCache.set(objectiveId, obj);
 		return obj;
 	} catch (e) {
 		void e;
-		objectiveCache.set(objectiveId, null);
 		return null;
 	}
 }
@@ -252,13 +279,251 @@ function getPlayerId(player) {
 	}
 }
 
+function nextTempAutoId() {
+	tempAutoIdCounter += 1;
+	return `tmp_${tempAutoIdCounter}`;
+}
+
+function nextTempOrder() {
+	tempOrderCounter += 1;
+	return tempOrderCounter;
+}
+
+function resolveTargetKey(target) {
+	if (target == null) return TARGET_GLOBAL;
+	if (typeof target === "string") {
+		const fromString = safeString(target);
+		return fromString || TARGET_GLOBAL;
+	}
+	const fromPlayer = getPlayerId(target);
+	return fromPlayer || TARGET_GLOBAL;
+}
+
+function getTemporaryStoreByTarget(targetKey, create = false) {
+	if (!temporaryTitlesByTarget.has(targetKey)) {
+		if (!create) return null;
+		temporaryTitlesByTarget.set(targetKey, new Map());
+	}
+	return temporaryTitlesByTarget.get(targetKey) ?? null;
+}
+
+function normalizeTemporaryContent(content) {
+	if (Array.isArray(content)) return content.map((line) => asStr(line));
+	return [asStr(content ?? "")];
+}
+
+function normalizeTemporaryDurationMs(cfg, input) {
+	const expiresAt = Number(input?.expiresAtMs);
+	if (Number.isFinite(expiresAt) && expiresAt > 0) {
+		const msLeft = Math.trunc(expiresAt - Date.now());
+		return msLeft > 0 ? msLeft : 0;
+	}
+
+	const durationMs = Number(input?.durationMs);
+	if (Number.isFinite(durationMs) && durationMs > 0) return Math.trunc(durationMs);
+
+	const durationTicks = Number(input?.durationTicks);
+	if (Number.isFinite(durationTicks) && durationTicks > 0) return Math.trunc(durationTicks * 50);
+
+	return getRuntimeTempDefaultDurationMs(cfg);
+}
+
+function normalizeTemporaryTitleInput(cfg, input) {
+	const src = input && typeof input === "object" ? input : null;
+	if (!src) return null;
+
+	const id = safeString(src.id) || nextTempAutoId();
+	const source = safeString(src.source) || getRuntimeTempDefaultSource(cfg);
+	const priorityRaw = Number(src.priority);
+	const priority = isFiniteNumber(priorityRaw) ? priorityRaw : 0;
+	const content = normalizeTemporaryContent(src.content);
+	const displayIf = src.display_if && typeof src.display_if === "object" ? src.display_if : undefined;
+	const durationMs = normalizeTemporaryDurationMs(cfg, src);
+	if (durationMs <= 0) return null;
+
+	return {
+		id,
+		source,
+		priority,
+		content,
+		display_if: displayIf,
+		durationMs,
+	};
+}
+
+function buildTempStoreKey(source, id) {
+	return `${safeString(source)}:${safeString(id)}`;
+}
+
+function buildTempHandle(targetKey, storeKey) {
+	return `${safeString(targetKey)}::${safeString(storeKey)}`;
+}
+
+function parseTempHandle(handle) {
+	const raw = safeString(handle);
+	if (!raw) return null;
+	const sep = raw.indexOf("::");
+	if (sep <= 0) return null;
+	const targetKey = safeString(raw.slice(0, sep));
+	const storeKey = safeString(raw.slice(sep + 2));
+	if (!targetKey || !storeKey) return null;
+	return { targetKey, storeKey };
+}
+
+function pruneExpiredInStore(store, nowMs) {
+	if (!store || store.size === 0) return;
+	for (const [storeKey, entry] of store.entries()) {
+		if (!entry || typeof entry !== "object") {
+			store.delete(storeKey);
+			continue;
+		}
+		const expiresAtMs = Number(entry.expiresAtMs);
+		if (!Number.isFinite(expiresAtMs) || expiresAtMs <= nowMs) store.delete(storeKey);
+	}
+}
+
+function pruneExpiredTemporaryTitles(nowMs = Date.now()) {
+	for (const [targetKey, store] of temporaryTitlesByTarget.entries()) {
+		pruneExpiredInStore(store, nowMs);
+		if (!store || store.size === 0) temporaryTitlesByTarget.delete(targetKey);
+	}
+}
+
+function getTemporaryTitlesForPlayer(player, nowMs = Date.now()) {
+	pruneExpiredTemporaryTitles(nowMs);
+
+	const out = [];
+	const globalStore = getTemporaryStoreByTarget(TARGET_GLOBAL, false);
+	if (globalStore && globalStore.size > 0) {
+		for (const entry of globalStore.values()) out.push(entry);
+	}
+
+	const playerKey = getPlayerId(player);
+	if (!playerKey) return out;
+
+	const playerStore = getTemporaryStoreByTarget(playerKey, false);
+	if (playerStore && playerStore.size > 0) {
+		for (const entry of playerStore.values()) out.push(entry);
+	}
+
+	return out;
+}
+
+function getActiveConfig() {
+	return didInit && activeConfig && typeof activeConfig === "object" ? activeConfig : configDefault;
+}
+
+export function upsertTemporaryTitle(request = undefined) {
+	const cfg = getActiveConfig();
+	const normalized = normalizeTemporaryTitleInput(cfg, request);
+	if (!normalized) return null;
+
+	const targetKey = resolveTargetKey(request?.target);
+	const store = getTemporaryStoreByTarget(targetKey, true);
+	if (!store) return null;
+
+	const storeKey = buildTempStoreKey(normalized.source, normalized.id);
+	const existing = store.get(storeKey);
+	const createdOrder = Number(existing?.createdOrder);
+	const nowMs = Date.now();
+
+	store.set(storeKey, {
+		id: normalized.id,
+		source: normalized.source,
+		priority: normalized.priority,
+		content: normalized.content,
+		display_if: normalized.display_if,
+		createdOrder: Number.isFinite(createdOrder) ? createdOrder : nextTempOrder(),
+		expiresAtMs: nowMs + normalized.durationMs,
+		temp: true,
+	});
+
+	return {
+		handle: buildTempHandle(targetKey, storeKey),
+		target: targetKey,
+		id: normalized.id,
+		source: normalized.source,
+		expiresAtMs: nowMs + normalized.durationMs,
+	};
+}
+
+export function removeTemporaryTitle(input = undefined) {
+	const cfg = getActiveConfig();
+	if (typeof input === "string") {
+		const parsed = parseTempHandle(input);
+		if (!parsed) return false;
+		const store = getTemporaryStoreByTarget(parsed.targetKey, false);
+		if (!store) return false;
+		const deleted = store.delete(parsed.storeKey);
+		if (store.size === 0) temporaryTitlesByTarget.delete(parsed.targetKey);
+		return deleted;
+	}
+
+	const src = input && typeof input === "object" ? input : null;
+	if (!src) return false;
+	const id = safeString(src.id);
+	const source = safeString(src.source) || getRuntimeTempDefaultSource(cfg);
+	if (!id) return false;
+
+	const targetKey = resolveTargetKey(src.target);
+	const store = getTemporaryStoreByTarget(targetKey, false);
+	if (!store) return false;
+
+	const storeKey = buildTempStoreKey(source, id);
+	const deleted = store.delete(storeKey);
+	if (store.size === 0) temporaryTitlesByTarget.delete(targetKey);
+	return deleted;
+}
+
+export function clearTemporaryTitles(filter = undefined) {
+	const src = filter && typeof filter === "object" ? filter : null;
+	const hasFilter = !!src;
+	const sourceFilter = safeString(src?.source);
+	const targetFilter = hasFilter ? resolveTargetKey(src?.target) : "";
+
+	let deletedCount = 0;
+	for (const [targetKey, store] of temporaryTitlesByTarget.entries()) {
+		if (targetFilter && targetKey !== targetFilter) continue;
+		for (const [storeKey, entry] of store.entries()) {
+			if (sourceFilter && safeString(entry?.source) !== sourceFilter) continue;
+			store.delete(storeKey);
+			deletedCount += 1;
+		}
+		if (store.size === 0) temporaryTitlesByTarget.delete(targetKey);
+	}
+
+	return deletedCount;
+}
+
+export function getTemporaryTitlesDebugSnapshot() {
+	pruneExpiredTemporaryTitles(Date.now());
+	const snapshot = [];
+	for (const [targetKey, store] of temporaryTitlesByTarget.entries()) {
+		for (const [storeKey, entry] of store.entries()) {
+			snapshot.push({
+				target: targetKey,
+				key: storeKey,
+				id: safeString(entry?.id),
+				source: safeString(entry?.source),
+				priority: Number(entry?.priority) || 0,
+				expiresAtMs: Number(entry?.expiresAtMs) || 0,
+			});
+		}
+	}
+	return snapshot;
+}
+
 async function tickTitlesPriority(cfg) {
-	const titles = normalizeTitles(cfg);
-	if (!titles.length) return;
+	const staticTitles = normalizeTitles(cfg);
+	const nowMs = Date.now();
 
 	const players = world.getAllPlayers();
 	for (const player of players) {
-		const best = pickBestTitle(cfg, titles, player);
+		const temporaryTitles = getTemporaryTitlesForPlayer(player, nowMs);
+		const candidates = staticTitles.length > 0 ? [...staticTitles, ...temporaryTitles] : temporaryTitles;
+		if (!candidates.length) continue;
+
+		const best = pickBestTitle(cfg, candidates, player);
 		if (!best) continue;
 
 		// Importante: el actionbar se desvanece y los scores se resuelven al ejecutar el comando.
@@ -273,7 +538,8 @@ export function initTitlesPrioritySystem(userConfig = undefined) {
 	didInit = true;
 
 	const cfg = userConfig && typeof userConfig === "object" ? userConfig : configDefault;
-	const loopTicks = 10; // actionbar requiere refresco; mantener constante para evitar scope extra en config
+	activeConfig = cfg;
+	const loopTicks = getRuntimeLoopTicks(cfg);
 	debugLog(cfg, `init loopTicks=${loopTicks}`);
 
 	system.runInterval(() => {
