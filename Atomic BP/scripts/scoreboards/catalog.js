@@ -36,12 +36,36 @@ function addRegenObjectives(list, seen, config) {
 	for (const block of blocks) {
 		addObjectivesFromMap(list, seen, block?.scoreboardAddsOnBreak);
 
-		const modifiers = block?.modifiers && typeof block.modifiers === "object" ? block.modifiers : null;
+		const modifiers = block?.modifiers;
 		if (!modifiers) continue;
-		for (const mod of Object.values(modifiers)) {
-			addObjectivesFromMap(list, seen, mod?.scoreboardAddsOnBreak);
+
+		if (Array.isArray(modifiers)) {
+			for (const rule of modifiers) {
+				if (!rule || typeof rule !== "object") continue;
+				const effects = rule?.effects && typeof rule.effects === "object" ? rule.effects : rule;
+				addObjectivesFromMap(list, seen, effects?.scoreboardAddsOnBreak);
+
+				const xp = effects?.xp && typeof effects.xp === "object" ? effects.xp : null;
+				const gainObjective = xp ? safeString(xp.gainObjective) : "";
+				if (gainObjective) addObjective(list, seen, gainObjective, gainObjective);
+			}
+			continue;
+		}
+
+		if (typeof modifiers === "object") {
+			for (const mod of Object.values(modifiers)) {
+				addObjectivesFromMap(list, seen, mod?.scoreboardAddsOnBreak);
+			}
 		}
 	}
+
+	// Skill progression objectives (inicialización base para rework de regeneration)
+	addObjective(list, seen, "SkillXpMineria", "SkillXpMineria");
+	addObjective(list, seen, "SkillXpTala", "SkillXpTala");
+	addObjective(list, seen, "SkillXpCosecha", "SkillXpCosecha");
+	addObjective(list, seen, "SkillLvlMineria", "SkillLvlMineria");
+	addObjective(list, seen, "SkillLvlTala", "SkillLvlTala");
+	addObjective(list, seen, "SkillLvlCosecha", "SkillLvlCosecha");
 }
 
 const PLACEHOLDER_RE = /\$\{([^:}]+):([^}]+)\}/g;

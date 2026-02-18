@@ -170,6 +170,84 @@ function normalizeModifierEntry(value) {
 	};
 }
 
+function normalizeWhenTree(node) {
+	if (!node || typeof node !== "object") return undefined;
+	const out = {};
+
+	if (node.score && typeof node.score === "object") {
+		const score = {};
+		const objective = normalizeString(node.score.objective);
+		if (objective) score.objective = objective;
+		if (node.score.range && typeof node.score.range === "object") {
+			const range = {};
+			if (Number.isFinite(Number(node.score.range.min))) range.min = Math.trunc(Number(node.score.range.min));
+			if (Number.isFinite(Number(node.score.range.max))) range.max = Math.trunc(Number(node.score.range.max));
+			if (Object.keys(range).length) score.range = range;
+		}
+		if (node.score.condition != null) score.condition = normalizeString(node.score.condition);
+		if (Number.isFinite(Number(node.score.value))) score.value = Math.trunc(Number(node.score.value));
+		if (Number.isFinite(Number(node.score.int))) score.int = Math.trunc(Number(node.score.int));
+		if (Object.keys(score).length) out.score = score;
+	}
+
+	if (node.area && typeof node.area === "object") {
+		const area = {};
+		const id = normalizeString(node.area.id);
+		if (id) area.id = id;
+		if (node.area.aabb && typeof node.area.aabb === "object") {
+			const min = node.area.aabb.min;
+			const max = node.area.aabb.max;
+			if (min && max) area.aabb = { min, max };
+		}
+		if (Object.keys(area).length) out.area = area;
+	}
+
+	if (node.skill != null) {
+		if (typeof node.skill === "string") out.skill = normalizeString(node.skill);
+		else if (node.skill && typeof node.skill === "object") {
+			const s = normalizeString(node.skill.equals ?? node.skill.id);
+			if (s) out.skill = { equals: s };
+		}
+	}
+
+	if (Array.isArray(node.all)) out.all = node.all.map(normalizeWhenTree).filter(Boolean);
+	if (Array.isArray(node.all) && out.all.length === 0) return undefined;
+	if (Array.isArray(node.any)) out.any = node.any.map(normalizeWhenTree).filter(Boolean);
+	if (Array.isArray(node.any) && out.any.length === 0) return undefined;
+	if (node.not && typeof node.not === "object") out.not = normalizeWhenTree(node.not);
+	if (node.not && !out.not) return undefined;
+
+	return Object.keys(out).length ? out : undefined;
+}
+
+function normalizeModifierRuleEntry(value, index = 0) {
+	if (!value || typeof value !== "object") return null;
+	const id = normalizeString(value.id) || `rule_${index}`;
+	const priority = Number.isFinite(Number(value.priority)) ? Number(value.priority) : 0;
+	const modeRaw = String(value.mode != null ? value.mode : "override").toLowerCase();
+	const mode = modeRaw === "add" ? "add" : "override";
+
+	const effectsSrc = value.effects && typeof value.effects === "object" ? value.effects : value;
+	const effects = {};
+
+	if (Array.isArray(effectsSrc.drops)) effects.drops = effectsSrc.drops;
+	const adds = normalizeScoreboardAdds(effectsSrc.scoreboardAddsOnBreak);
+	if (adds) effects.scoreboardAddsOnBreak = adds;
+	if (effectsSrc.xp && typeof effectsSrc.xp === "object") effects.xp = effectsSrc.xp;
+	if (effectsSrc.title && typeof effectsSrc.title === "object") effects.title = effectsSrc.title;
+
+	const when = normalizeWhenTree(value.when);
+	if (value.when != null && !when) return null;
+
+	return {
+		id,
+		priority,
+		mode,
+		...(when ? { when } : null),
+		...(Object.keys(effects).length ? { effects } : null),
+	};
+}
+
 function normalizeModifiersObject(value) {
 	if (!value || typeof value !== "object") return undefined;
 	/** @type {Record<string, any>} */
@@ -182,6 +260,14 @@ function normalizeModifiersObject(value) {
 		out[key] = norm;
 	}
 	return Object.keys(out).length ? out : undefined;
+}
+
+function normalizeModifiers(value) {
+	if (Array.isArray(value)) {
+		const out = value.map((entry, i) => normalizeModifierRuleEntry(entry, i)).filter(Boolean);
+		return out.length ? out : undefined;
+	}
+	return normalizeModifiersObject(value);
 }
 
 /**
@@ -214,7 +300,7 @@ export function normalizeBlockDefinition(blockDef, config) {
 	const areaIds = normalizeAreaIds(blockDef && blockDef.areas);
 
 	const drops = Array.isArray(blockDef && blockDef.drops) ? blockDef.drops : [];
-	const modifiers = normalizeModifiersObject(blockDef && blockDef.modifiers);
+	const modifiers = normalizeModifiers(blockDef && blockDef.modifiers);
 
 	return {
 		id,

@@ -48,6 +48,48 @@ function validateScoreboardAddsObject(adds, label, warnings) {
 	}
 }
 
+function validateModifierRule(rule, label, warnings) {
+	if (!isObj(rule)) {
+		warnings.push(`${label}: regla inválida (no es objeto)`);
+		return;
+	}
+	const id = asStr(rule.id);
+	if (!id) warnings.push(`${label}: id recomendado (si no, se autogenera)`);
+	if (rule.priority != null && !isFiniteNumber(rule.priority)) warnings.push(`${label}: priority debería ser numérico`);
+	if (rule.mode != null) {
+		const mode = asStr(rule.mode).toLowerCase();
+		if (mode !== "override" && mode !== "add") warnings.push(`${label}: mode debería ser 'override' o 'add'`);
+	}
+
+	if (rule.when != null && !isObj(rule.when)) warnings.push(`${label}: when debería ser objeto`);
+	if (isObj(rule.when)) {
+		if (rule.when.score != null) {
+			if (!isObj(rule.when.score)) warnings.push(`${label}: when.score debería ser objeto`);
+			else {
+				if (!asStr(rule.when.score.objective)) warnings.push(`${label}: when.score.objective es requerido`);
+				const hasRange = isObj(rule.when.score.range) && (rule.when.score.range.min != null || rule.when.score.range.max != null);
+				const hasCompare = asStr(rule.when.score.condition) && isFiniteNumber(rule.when.score.value ?? rule.when.score.int);
+				if (!hasRange && !hasCompare) warnings.push(`${label}: when.score requiere range o condition+value`);
+			}
+		}
+		if (Array.isArray(rule.when.all) && rule.when.all.length === 0) warnings.push(`${label}: when.all no debería estar vacío`);
+		if (Array.isArray(rule.when.any) && rule.when.any.length === 0) warnings.push(`${label}: when.any no debería estar vacío`);
+		if (rule.when.not != null && !isObj(rule.when.not)) warnings.push(`${label}: when.not debería ser objeto`);
+	}
+
+	const effects = isObj(rule.effects) ? rule.effects : rule;
+	if (effects.drops != null && !Array.isArray(effects.drops)) warnings.push(`${label}: effects.drops debería ser array`);
+	if (effects.scoreboardAddsOnBreak != null) {
+		validateScoreboardAddsObject(effects.scoreboardAddsOnBreak, `${label} effects`, warnings);
+	}
+	if (effects.xp != null && !isObj(effects.xp)) warnings.push(`${label}: effects.xp debería ser objeto`);
+	if (isObj(effects.xp)) {
+		if (!isFiniteNumber(effects.xp.base) || Number(effects.xp.base) <= 0) warnings.push(`${label}: effects.xp.base debería ser > 0`);
+		if (!asStr(effects.xp.scalingObjective)) warnings.push(`${label}: effects.xp.scalingObjective es requerido`);
+	}
+	if (effects.title != null && !isObj(effects.title)) warnings.push(`${label}: effects.title debería ser objeto`);
+}
+
 /**
  * @param {any} config
  * @returns {{ warnings: string[], errors: string[] }}
@@ -178,9 +220,15 @@ export function validateSkillRegenConfig(config) {
 
 		// Métricas por-modifier
 		if (b.modifiers != null) {
-			if (!isObj(b.modifiers)) {
-				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): modifiers debería ser un objeto`);
-			} else {
+			if (Array.isArray(b.modifiers)) {
+				for (let ruleIndex = 0; ruleIndex < b.modifiers.length; ruleIndex++) {
+					validateModifierRule(
+						b.modifiers[ruleIndex],
+						`Block[${i}] (${asStr(b.id) || "?"}) modifiers[${ruleIndex}]`,
+						warnings
+					);
+				}
+			} else if (isObj(b.modifiers)) {
 				for (const [mk, mv] of Object.entries(b.modifiers)) {
 					if (!isObj(mv)) continue;
 					validateScoreboardAddsObject(
@@ -189,6 +237,8 @@ export function validateSkillRegenConfig(config) {
 						warnings
 					);
 				}
+			} else {
+				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): modifiers debería ser objeto (legacy) o array (nuevo)`);
 			}
 		}
 

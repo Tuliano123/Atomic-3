@@ -9,9 +9,17 @@ import { GameMode, system, world } from "@minecraft/server";
 
 import { isInAnyArea } from "./area.js";
 import { buildBlockRegistry, getBlockDefinition } from "./registry.js";
-import { getNormalizedToolLore, selectActiveModifier, resolveDropsTable } from "./modifiers.js";
+import {
+	getModifierScoreboardAdds,
+	getModifierTitleRule,
+	getModifierXpRule,
+	getNormalizedToolLore,
+	resolveDropsTable,
+	selectActiveModifier,
+} from "./modifiers.js";
 import { runDropsTable } from "./drops.js";
 import { validateMiningRegenConfig } from "./validate.js";
+import { upsertTemporaryTitle } from "../../../systems/titlesPriority/index.js";
 import {
 	computeRemainingTicks,
 	initSkillRegenDynamicProperties,
@@ -56,6 +64,39 @@ function debugTraceBreak(config) {
 
 function metricsEnabled(config) {
 	return Boolean(config?.metrics?.enabled);
+}
+
+function compatLegacyLoreModifiersEnabled(config) {
+	const value = config?.compat?.legacyLoreModifiers;
+	return value !== false;
+}
+
+function getPersistenceRetryDelayMs(config) {
+	const ms = Number(config?.persistence?.retryDelayMs);
+	if (!Number.isFinite(ms) || ms <= 0) return 2000;
+	return Math.trunc(ms);
+}
+
+function getXpOrbsMaxSpawnPerBreak(config) {
+	const cap = Number(config?.runtime?.xpOrbs?.maxSpawnPerBreak);
+	if (!Number.isFinite(cap) || cap <= 0) return 25;
+	return Math.max(1, Math.trunc(cap));
+}
+
+function getParticleTriggerModifierKeys(config) {
+	const raw = config?.compat?.particlesOnModifierKeys;
+	if (!Array.isArray(raw) || raw.length === 0) return ["silk_touch_1"];
+	return raw.map((v) => String(v ?? "").trim()).filter(Boolean);
+}
+
+function getTitleDefaults(config) {
+	const defaults = config?.runtime?.titles ?? {};
+	return {
+		source: String(defaults.source ?? "regen_xp"),
+		priority: Number.isFinite(Number(defaults.priority)) ? Number(defaults.priority) : 40,
+		durationTicks: Number.isFinite(Number(defaults.durationTicks)) ? Number(defaults.durationTicks) : 40,
+		contentTemplate: Array.isArray(defaults.contentTemplate) && defaults.contentTemplate.length > 0 ? defaults.contentTemplate : ["+${xpGain}"],
+	};
 }
 
 function getScoreboardAddsOnBreak(config) {
@@ -136,6 +177,72 @@ function mergeScoreboardAdds(a, b) {
 		}
 	}
 	return Object.keys(out).length ? out : null;
+}
+
+function getScoreBestEffort(player, objectiveId) {
+	try {
+		const objective = String(objectiveId ?? "").trim();
+		if (!objective) return null;
+		const obj = world.scoreboard.getObjective(objective);
+		if (!obj) return null;
+		const identity = player?.scoreboardIdentity;
+		if (!identity) return null;
+		const value = obj.getScore(identity);
+		if (value == null) return null;
+		const n = Math.trunc(Number(value));
+		return Number.isFinite(n) ? n : null;
+	} catch (e) {
+		void e;
+		return null;
+	}
+}
+
+function resolveXpGain(xpRule, player) {
+	if (!xpRule || typeof xpRule !== "object") return null;
+	const base = Math.trunc(Number(xpRule.base));
+	if (!Number.isFinite(base) || base <= 0) return null;
+
+	const per = Math.max(1, Math.trunc(Number(xpRule.stepPerPoints ?? xpRule.perPoints ?? 10) || 10));
+	const objective = String(xpRule.scalingObjective ?? "").trim();
+	if (!objective) return { gain: base, stat: 0, multiplier: 1 };
+
+	const stat = getScoreBestEffort(player, objective) ?? 0;
+	const multiplier = Math.max(1, Math.trunc(stat / per));
+	const gain = Math.max(0, Math.trunc(base * multiplier));
+	return { gain, stat, multiplier };
+}
+
+function renderTitleContent(templateLines, payload) {
+	const lines = Array.isArray(templateLines) ? templateLines : [String(templateLines ?? "")];
+	return lines.map((line) => {
+		let out = String(line ?? "");
+		for (const [k, v] of Object.entries(payload || {})) {
+			out = out.replaceAll("${" + String(k) + "}", String(v));
+		}
+		return out;
+	});
+}
+
+function emitXpTitleBestEffort(config, player, blockDef, selected, xpGain) {
+	if (!player || !selected || !xpGain || xpGain.gain <= 0) return;
+	const titleRule = getModifierTitleRule(selected);
+	if (!titleRule || titleRule.enabled !== true) return;
+	const defaults = getTitleDefaults(config);
+
+	const content = renderTitleContent(titleRule.content ?? defaults.contentTemplate, {
+		xpGain: xpGain.gain,
+		skill: blockDef?.skill ?? "",
+	});
+
+	upsertTemporaryTitle({
+		target: player,
+		source: String(titleRule.source ?? defaults.source),
+		id: String(titleRule.id ?? `xp_${String(blockDef?.skill ?? "unknown")}`),
+		priority: Number.isFinite(Number(titleRule.priority)) ? Number(titleRule.priority) : defaults.priority,
+		durationTicks: Number.isFinite(Number(titleRule.durationTicks)) ? Number(titleRule.durationTicks) : defaults.durationTicks,
+		durationMs: Number.isFinite(Number(titleRule.durationMs)) ? Number(titleRule.durationMs) : undefined,
+		content,
+	});
 }
 
 function dbg(config, message) {
@@ -262,7 +369,7 @@ function spawnXpOrbsBestEffort(config, dimension, blockPos, oreDef) {
 		if (amount <= 0) return;
 
 		// Cap para evitar spam de entidades si alguien configura valores grandes.
-		const cap = 25;
+		const cap = getXpOrbsMaxSpawnPerBreak(config);
 		if (amount > cap) {
 			dbg(config, `xpOrbs cap aplicado: ${amount} -> ${cap}`);
 			amount = cap;
@@ -437,7 +544,7 @@ export function initMiningRegen(userConfig) {
 				const dim = safeGetDimension(entry.dimensionId);
 				if (!dim) {
 					// Si la dimensión no existe, reintentar más adelante.
-					entry.restoreAt = nowMs() + 2000;
+					entry.restoreAt = nowMs() + getPersistenceRetryDelayMs(config);
 					scheduleRestore(entry);
 					persist();
 					return;
@@ -457,7 +564,7 @@ export function initMiningRegen(userConfig) {
 				void e;
 				// Reintento suave
 				try {
-					entry.restoreAt = nowMs() + 2000;
+					entry.restoreAt = nowMs() + getPersistenceRetryDelayMs(config);
 					pendingByKey.set(key, entry);
 					scheduleRestore(entry);
 					persist();
@@ -652,13 +759,22 @@ export function initMiningRegen(userConfig) {
 						// Sonido configurable: ya se intentó inmediato arriba.
 						// (No lo repetimos aquí para evitar doble sonido.)
 
-					// Resolver modifier por lore
-					const selected = selectActiveModifier(blockDef, loreNorm);
+					// Resolver modifier (nuevo: scoreboard-driven; legacy: lore opcional)
+					const selected = selectActiveModifier(blockDef, {
+						player,
+						blockDef,
+						dimensionId,
+						blockPos,
+						areas: Array.isArray(config?.areas) ? config.areas : [],
+						normalizedLoreLines: loreNorm,
+						compatLegacyLoreModifiers: compatLegacyLoreModifiersEnabled(config),
+					});
 					const dropsTable = resolveDropsTable(blockDef, selected);
 
-					// Partículas: solo en Silk Touch (ejemplo)
+					// Partículas: best-effort (keys configurables)
 					try {
-						if (selected && selected.key === "silk_touch_1") {
+						const triggerKeys = getParticleTriggerModifierKeys(config);
+						if (selected && triggerKeys.includes(String(selected.key))) {
 							const p = blockDef && blockDef.particlesOnSilkTouch && typeof blockDef.particlesOnSilkTouch === "object" ? blockDef.particlesOnSilkTouch : null;
 							if (p && typeof p.fn === "function") {
 								const off = p.offset || { x: 0.5, y: 0.5, z: 0.5 };
@@ -679,15 +795,22 @@ export function initMiningRegen(userConfig) {
 							tell(player, `§7[mining] drops=${spawned} skill=${blockDef.skill} regen=${blockDef.regenSeconds}s`);
 					}
 
-					// Métricas (scoreboards) - best-effort
+					// Métricas (scoreboards) + XP skill-aware - best-effort
 					{
 						const globalAdds = metricsEnabled(config) ? getScoreboardAddsOnBreak(config) : null;
 						const blockAdds = blockDef && blockDef.scoreboardAddsOnBreak && typeof blockDef.scoreboardAddsOnBreak === "object" ? blockDef.scoreboardAddsOnBreak : null;
-						const modifierAdds =
-							selected && selected.def && selected.def.scoreboardAddsOnBreak && typeof selected.def.scoreboardAddsOnBreak === "object"
-								? selected.def.scoreboardAddsOnBreak
-								: null;
-						const merged = mergeScoreboardAdds(mergeScoreboardAdds(globalAdds, blockAdds), modifierAdds);
+						const modifierAdds = getModifierScoreboardAdds(selected);
+
+						let xpAdds = null;
+						const xpRule = getModifierXpRule(selected);
+						const xpGain = resolveXpGain(xpRule, player);
+							if (xpRule && xpGain && xpGain.gain > 0) {
+							const gainObjective = String(xpRule.gainObjective ?? "").trim();
+							if (gainObjective) xpAdds = { [gainObjective]: xpGain.gain };
+								emitXpTitleBestEffort(config, player, blockDef, selected, xpGain);
+						}
+
+						const merged = mergeScoreboardAdds(mergeScoreboardAdds(mergeScoreboardAdds(globalAdds, blockAdds), modifierAdds), xpAdds);
 						if (merged) applyScoreboardAddsBestEffort(config, dim, player, merged);
 					}
 

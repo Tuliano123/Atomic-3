@@ -14,13 +14,32 @@
  * @typedef {[number|string, string, number, number, number, (string|null|undefined), (string|string[]|null|undefined)]} DropEntryTuple
  *
  * @typedef {{
+ *  id: string,
+ *  priority?: number,
+ *  mode?: "override"|"add",
+ *  when?: {
+ *    all?: any[],
+ *    any?: any[],
+ *    not?: any,
+ *    score?: { objective: string, range?: {min?:number,max?:number}, condition?: string, value?: number },
+ *    area?: { id?: string, aabb?: { min: Vec3, max: Vec3 } },
+ *    skill?: string|{ equals: string },
+ *  },
+ *  effects?: {
+ *    drops?: DropEntryTuple[],
+ *    scoreboardAddsOnBreak?: Record<string, number>,
+ *    xp?: { base:number, scalingObjective:string, gainObjective?:string, stepPerPoints?:number },
+ *    title?: { enabled:boolean, source?:string, id?:string, priority?:number, durationTicks?:number, content?:string[] },
+ *  },
+ * }} ModifierRule
+ *
+ * @typedef {{
  *  match: string[],
  *  priority: number,
  *  mode: "override"|"add",
  *  drops?: DropEntryTuple[],
- *  // Métricas extra si este modifier aplica (scoreboard players add)
  *  scoreboardAddsOnBreak?: Record<string, number>,
- * }} OreModifier
+ * }} LegacyOreModifier
  *
  * @typedef {{
  *  id: string,
@@ -58,7 +77,7 @@
  *  // - Formato: { "OBJETIVO": numeroAAgregar }
  *  scoreboardAddsOnBreak?: Record<string, number>,
  *  drops: DropEntryTuple[],
- *  modifiers?: Record<string, OreModifier>
+ *  modifiers?: ModifierRule[] | Record<string, LegacyOreModifier>
  * }} BlockDefinition
  */
 
@@ -81,6 +100,26 @@ export const skillRegenConfig = {
 		tellPlayer: false,
 		// Traza: manda info del bloque detectado en cada intento de minado dentro de áreas
 		traceBreak: false,
+	},
+
+	compat: {
+		// Nuevo contrato por scoreboard-driven.
+		// Poner en true solo durante una migración controlada.
+		legacyLoreModifiers: false,
+		// Permite mapear qué modifiers disparan particlesOnSilkTouch.
+		particlesOnModifierKeys: ["silk_touch_1"],
+	},
+
+	runtime: {
+		xpOrbs: {
+			maxSpawnPerBreak: 25,
+		},
+		titles: {
+			source: "regen_xp",
+			priority: 40,
+			durationTicks: 40,
+			contentTemplate: ["+${xpGain}"],
+		},
 	},
 
 	// Métricas (scoreboard players add)
@@ -123,6 +162,8 @@ export const skillRegenConfig = {
 	persistence: {
 		// Key del mundo para guardar pendientes (JSON)
 		key: "atomic3:mining_regen_pending",
+		// Delay de reintento al fallar restore (ms)
+		retryDelayMs: 2000,
 		// Longitud máxima del string guardado (limita tamaño del JSON).
 		// Si crece mucho, se recorta en runtime para no romper DP.
 		maxStringLength: 30000,
@@ -172,39 +213,51 @@ export const skillRegenConfig = {
 				// Drop extra raro: 10% 1 pepita de hierro (solo para probar  tabla)
 				[2, "minecraft:iron_nugget", 1, 1, 70, "§fPepita", ["§7Drop de prueba"]],
 			],
-			modifiers: {
-				// Silk Touch: reemplaza por el bloque (para comprobar override)
-				silk_touch_1: {
-					match: ["silk touch i", "toque de seda i"],
-					priority: 100,
-					mode: "override",
-					drops: [[1, "minecraft:coal_ore", 1, 1, 100, "§8Carbón (Silk)", ["§7Toque de seda"]]],
-				},
-
-				// Fortuna (override): aumenta cantidades y chance
-				fortune_1: {
-					match: ["fortuna i", "fortune i"],
-					priority: 10,
-					mode: "override",
-					drops: [[1, "minecraft:coal", 1, 3, 65, "§jCarbón", ["§7Fortuna I"]]],
-				},
-				fortune_2: {
-					match: ["fortuna ii", "fortune ii"],
+			modifiers: [
+				{
+					id: "FortunaMinera_A",
 					priority: 20,
 					mode: "override",
-					drops: [[1, "minecraft:coal", 2, 4, 75, "§jCarbón", ["§7Fortuna II"]]],
-				},
-				fortune_3: {
-					match: ["fortuna iii", "fortune iii"],
-					priority: 30,
-					mode: "override",
-					// Ejemplo: bonus extra SOLO con fortuna III
-					scoreboardAddsOnBreak: {
-						DINERO: 2,
+					when: {
+						all: [
+							{ score: { objective: "FortMinTotalH", range: { min: 10, max: 99 } } },
+						],
 					},
-					drops: [[1, "minecraft:coal", 2, 6, 85, "§jCarbón", ["§7Fortuna III"]]],
+					effects: {
+						drops: [[1, "minecraft:coal", 1, 3, 65, "§jCarbón", ["§7Fortuna Minera A"]]],
+						xp: {
+							base: 8,
+							scalingObjective: "ExpMinTotalH",
+							gainObjective: "SkillXpMineria",
+							stepPerPoints: 10,
+						},
+						title: {
+							enabled: true,
+							source: "regen_xp",
+							id: "mining_xp_a",
+							priority: 40,
+							durationTicks: 40,
+							content: ["+${xpGain}"],
+						},
+					},
 				},
-			},
+				{
+					id: "FortunaMinera_B",
+					priority: 21,
+					mode: "override",
+					when: {
+						all: [
+							{ score: { objective: "FortMinTotalH", range: { min: 100, max: 200 } } },
+						],
+					},
+					effects: {
+						drops: [[1, "minecraft:coal", 2, 6, 85, "§jCarbón", ["§7Fortuna Minera B"]]],
+						scoreboardAddsOnBreak: {
+							DINERO: 2,
+						},
+					},
+				},
+			],
 		}
 		,
 		// TEST: tronco de roble (skill: foraging)
@@ -224,25 +277,38 @@ export const skillRegenConfig = {
 				[1, "minecraft:oak_log", 1, 1, 50, "MaderaTest", ["Madera."]],
 				[2, "minecraft:oak_leaves", 1, 3, 33, "Hojitas", ["hojita :D"]],
 			],
-			modifiers: {
-				// Silk Touch: para testear override
-				silk_touch_1: {
-					match: ["silk touch i", "toque de seda i"],
-					priority: 100,
-					mode: "override",
-					drops: [[1, "minecraft:oak_log", 1, 1, 100, "MaderaTest (Silk)", ["§7Test: Silk Touch"]]],
-				},
-				// Fortuna: para testear otra tabla
-				fortune_1: {
-					match: ["fortuna i", "fortune i"],
+			modifiers: [
+				{
+					id: "FortunaTala_A",
 					priority: 10,
 					mode: "override",
-					drops: [
-						[1, "minecraft:oak_log", 1, 2, 65, "MaderaTest", ["§7Test: Fortune I"]],
-						[2, "minecraft:oak_leaves", 1, 4, 40, "Hojitas", ["§7Test: Fortune I"]],
-					],
+					when: {
+						all: [
+							{ score: { objective: "FortTalTotalH", range: { min: 10, max: 120 } } },
+						],
+					},
+					effects: {
+						drops: [
+							[1, "minecraft:oak_log", 1, 2, 65, "MaderaTest", ["§7Fortuna Tala A"]],
+							[2, "minecraft:oak_leaves", 1, 4, 40, "Hojitas", ["§7Fortuna Tala A"]],
+						],
+						xp: {
+							base: 6,
+							scalingObjective: "ExpTalTotalH",
+							gainObjective: "SkillXpTala",
+							stepPerPoints: 10,
+						},
+						title: {
+							enabled: true,
+							source: "regen_xp",
+							id: "foraging_xp_a",
+							priority: 35,
+							durationTicks: 30,
+							content: ["+${xpGain}"],
+						},
+					},
 				},
-			},
+			],
 		},
 
 		// TEST: cultivo de zanahoria (skill: farming)
@@ -264,22 +330,35 @@ export const skillRegenConfig = {
 				[1, "minecraft:carrot", 1, 3, 80, "Zanahoria", ["§7Test crop"]],
 				[2, "minecraft:bone_meal", 1, 1, 15, "Fertilizante", ["§7Test crop"]],
 			],
-			modifiers: {
-				// "Cosecha I": modo add para testear stacking
-				harvest_1: {
-					match: ["cosecha i", "harvest i"],
+			modifiers: [
+				{
+					id: "FortunaCosecha_A",
 					priority: 10,
 					mode: "add",
-					drops: [[99, "minecraft:carrot", 1, 1, 100, "Bonus", ["§7Test: +1"]]],
+					when: {
+						all: [
+							{ score: { objective: "FortCosTotalH", range: { min: 10, max: 200 } } },
+						],
+					},
+					effects: {
+						drops: [[99, "minecraft:carrot", 1, 1, 100, "Bonus", ["§7Fortuna Cosecha A"]]],
+						xp: {
+							base: 4,
+							scalingObjective: "ExpCosTotalH",
+							gainObjective: "SkillXpCosecha",
+							stepPerPoints: 10,
+						},
+						title: {
+							enabled: true,
+							source: "regen_xp",
+							id: "farming_xp_a",
+							priority: 30,
+							durationTicks: 30,
+							content: ["+${xpGain}"],
+						},
+					},
 				},
-				// Silk Touch: override (solo test)
-				silk_touch_1: {
-					match: ["silk touch i", "toque de seda i"],
-					priority: 100,
-					mode: "override",
-					drops: [[1, "minecraft:carrot", 1, 1, 100, "Zanahoria (Silk)", ["§7Test: Silk Touch"]]],
-				},
-			},
+			],
 		},
 	],
 };
