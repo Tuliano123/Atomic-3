@@ -115,6 +115,7 @@ export const skillRegenConfig = {
 			maxSpawnPerBreak: 25,
 		},
 		titles: {
+			enabledByDefault: true,
 			source: "regen_xp",
 			priority: 40,
 			durationTicks: 40,
@@ -254,6 +255,20 @@ export const skillRegenConfig = {
 						drops: [[1, "minecraft:coal", 2, 6, 85, "§jCarbón", ["§7Fortuna Minera B"]]],
 						scoreboardAddsOnBreak: {
 							DINERO: 2,
+						},
+						xp: {
+							base: 12,
+							scalingObjective: "ExpMinTotalH",
+							gainObjective: "SkillXpMineria",
+							stepPerPoints: 10,
+						},
+						title: {
+							enabled: true,
+							source: "regen_xp",
+							id: "mining_xp_b",
+							priority: 41,
+							durationTicks: 40,
+							content: ["+${xpGain}"],
 						},
 					},
 				},

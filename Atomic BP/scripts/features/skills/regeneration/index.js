@@ -92,6 +92,7 @@ function getParticleTriggerModifierKeys(config) {
 function getTitleDefaults(config) {
 	const defaults = config?.runtime?.titles ?? {};
 	return {
+		enabledByDefault: defaults.enabledByDefault !== false,
 		source: String(defaults.source ?? "regen_xp"),
 		priority: Number.isFinite(Number(defaults.priority)) ? Number(defaults.priority) : 40,
 		durationTicks: Number.isFinite(Number(defaults.durationTicks)) ? Number(defaults.durationTicks) : 40,
@@ -226,8 +227,9 @@ function renderTitleContent(templateLines, payload) {
 function emitXpTitleBestEffort(config, player, blockDef, selected, xpGain) {
 	if (!player || !selected || !xpGain || xpGain.gain <= 0) return;
 	const titleRule = getModifierTitleRule(selected);
-	if (!titleRule || titleRule.enabled !== true) return;
 	const defaults = getTitleDefaults(config);
+	if (titleRule && titleRule.enabled !== true) return;
+	if (!titleRule && !defaults.enabledByDefault) return;
 
 	const content = renderTitleContent(titleRule.content ?? defaults.contentTemplate, {
 		xpGain: xpGain.gain,
