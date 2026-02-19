@@ -13,7 +13,6 @@ import {
 	getModifierScoreboardAdds,
 	getModifierTitleRule,
 	getModifierXpRule,
-	getNormalizedToolLore,
 	resolveDropsTable,
 	selectActiveModifier,
 } from "./modifiers.js";
@@ -66,11 +65,6 @@ function metricsEnabled(config) {
 	return Boolean(config?.metrics?.enabled);
 }
 
-function compatLegacyLoreModifiersEnabled(config) {
-	const value = config?.compat?.legacyLoreModifiers;
-	return value !== false;
-}
-
 function getPersistenceRetryDelayMs(config) {
 	const ms = Number(config?.persistence?.retryDelayMs);
 	if (!Number.isFinite(ms) || ms <= 0) return 2000;
@@ -84,7 +78,7 @@ function getXpOrbsMaxSpawnPerBreak(config) {
 }
 
 function getParticleTriggerModifierKeys(config) {
-	const raw = config?.compat?.particlesOnModifierKeys;
+	const raw = config?.runtime?.particles?.triggerModifierKeys;
 	if (!Array.isArray(raw) || raw.length === 0) return ["silk_touch_1"];
 	return raw.map((v) => String(v ?? "").trim()).filter(Boolean);
 }
@@ -508,9 +502,7 @@ export function initMiningRegen(userConfig) {
 			ticksPerSecond = Number(config.ticksPerSecond != null ? config.ticksPerSecond : 20) || 20;
 			const blocksCount = Array.isArray(config.blocks)
 				? config.blocks.length
-				: Array.isArray(config.ores)
-					? config.ores.length
-					: 0;
+				: 0;
 			dbg(config, `Config recargada: areas=${Array.isArray(config.areas) ? config.areas.length : 0} blocks=${blocksCount}`);
 		}
 	}
@@ -681,9 +673,7 @@ export function initMiningRegen(userConfig) {
 				const areasCount = Array.isArray(config.areas) ? config.areas.length : 0;
 				const blocksCount = Array.isArray(config.blocks)
 					? config.blocks.length
-					: Array.isArray(config.ores)
-						? config.ores.length
-						: 0;
+					: 0;
 				tell(player, `§8[mining] cfg areas=${areasCount} blocks=${blocksCount}`);
 			}
 
@@ -725,9 +715,6 @@ export function initMiningRegen(userConfig) {
 			// En modo trace, mostramos qué ruta se usó.
 			playMineSoundBestEffort(config, player, dim, blockPos, blockDef, isTargetTrace);
 
-			// Snapshot de lore en el tick actual (ev.itemStack puede ser undefined en el siguiente tick).
-			const loreNorm = getNormalizedToolLore(ev.itemStack);
-
 			system.run(() => {
 				try {
 					if (!config || !config.enabled) {
@@ -761,15 +748,13 @@ export function initMiningRegen(userConfig) {
 						// Sonido configurable: ya se intentó inmediato arriba.
 						// (No lo repetimos aquí para evitar doble sonido.)
 
-					// Resolver modifier (nuevo: scoreboard-driven; legacy: lore opcional)
+					// Resolver modifier scoreboard-driven.
 					const selected = selectActiveModifier(blockDef, {
 						player,
 						blockDef,
 						dimensionId,
 						blockPos,
 						areas: Array.isArray(config?.areas) ? config.areas : [],
-						normalizedLoreLines: loreNorm,
-						compatLegacyLoreModifiers: compatLegacyLoreModifiersEnabled(config),
 					});
 					const dropsTable = resolveDropsTable(blockDef, selected);
 
@@ -824,8 +809,6 @@ export function initMiningRegen(userConfig) {
 						z: blockPos.z,
 						// Guardamos el bloque original real (importante para matches prefix/any)
 						blockId: originalBlockTypeId,
-						// Compat con versiones anteriores (por si se downgradea)
-						oreBlockId: originalBlockTypeId,
 						minedBlockId: blockDef.minedBlockId,
 						restoreAt: nowMs() + blockDef.regenSeconds * 1000,
 					};

@@ -34,14 +34,6 @@
  * }} ModifierRule
  *
  * @typedef {{
- *  match: string[],
- *  priority: number,
- *  mode: "override"|"add",
- *  drops?: DropEntryTuple[],
- *  scoreboardAddsOnBreak?: Record<string, number>,
- * }} LegacyOreModifier
- *
- * @typedef {{
  *  id: string,
  *  // Identificador de skill asociada al bloque (ej: "mining", "farming", "foraging", ...)
  *  skill: string,
@@ -55,8 +47,6 @@
  *  // - array: ["A", "B"]
  *  // - "*" para permitir todas
  *  areas?: string | string[],
- *  // Compat (legacy): oreBlockId (equivalente a blockId exacto)
- *  oreBlockId?: string,
  *  regenSeconds?: number,
  *  minedBlockId?: string,
  *  // Sonidos a reproducir al minar (opcional)
@@ -77,7 +67,7 @@
  *  // - Formato: { "OBJETIVO": numeroAAgregar }
  *  scoreboardAddsOnBreak?: Record<string, number>,
  *  drops: DropEntryTuple[],
- *  modifiers?: ModifierRule[] | Record<string, LegacyOreModifier>
+	 *  modifiers?: ModifierRule[]
  * }} BlockDefinition
  */
 
@@ -102,17 +92,13 @@ export const skillRegenConfig = {
 		traceBreak: false,
 	},
 
-	compat: {
-		// Nuevo contrato por scoreboard-driven.
-		// Poner en true solo durante una migración controlada.
-		legacyLoreModifiers: false,
-		// Permite mapear qué modifiers disparan particlesOnSilkTouch.
-		particlesOnModifierKeys: ["silk_touch_1"],
-	},
-
 	runtime: {
 		xpOrbs: {
 			maxSpawnPerBreak: 25,
+		},
+		particles: {
+			// Keys de modifiers que disparan particlesOnSilkTouch.
+			triggerModifierKeys: ["silk_touch_1"],
 		},
 		titles: {
 			enabledByDefault: true,

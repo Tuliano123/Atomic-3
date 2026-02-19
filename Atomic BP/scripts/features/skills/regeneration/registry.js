@@ -51,7 +51,6 @@ function compileGlobToRegExp(glob) {
 }
 
 function normalizeSoundEntry(value) {
-	// Nuevo formato recomendado: { id, volume?, pitch? }
 	if (value && typeof value === "object") {
 		const id = normalizeString(value.id);
 		if (!id) return null;
@@ -62,12 +61,6 @@ function normalizeSoundEntry(value) {
 		return { id, volume, pitch };
 	}
 
-	// Legacy: string
-	if (typeof value === "string") {
-		const id = normalizeString(value);
-		return id ? { id, volume: 1, pitch: 1 } : null;
-	}
-
 	return null;
 }
 
@@ -76,9 +69,7 @@ function normalizeSoundsList(value) {
 	if (Array.isArray(value)) {
 		return value.map(normalizeSoundEntry).filter((v) => v && v.id);
 	}
-	// Legacy: sound: "..."
-	const single = normalizeSoundEntry(value);
-	return single ? [single] : [];
+	return [];
 }
 
 function normalizeAreaId(value) {
@@ -150,24 +141,6 @@ function normalizeScoreboardAdds(value) {
 		out[obj] = Math.trunc(delta);
 	}
 	return Object.keys(out).length ? out : null;
-}
-
-function normalizeModifierEntry(value) {
-	if (!value || typeof value !== "object") return null;
-	const match = Array.isArray(value.match) ? value.match.filter((x) => typeof x === "string") : [];
-	const priority = Number.isFinite(Number(value.priority)) ? Number(value.priority) : 0;
-	const modeRaw = String(value.mode != null ? value.mode : "override").toLowerCase();
-	const mode = modeRaw === "add" ? "add" : "override";
-	const drops = Array.isArray(value.drops) ? value.drops : undefined;
-	const scoreboardAddsOnBreak = normalizeScoreboardAdds(value.scoreboardAddsOnBreak);
-
-	return {
-		match,
-		priority,
-		mode,
-		...(drops ? { drops } : null),
-		...(scoreboardAddsOnBreak ? { scoreboardAddsOnBreak } : null),
-	};
 }
 
 function normalizeWhenTree(node) {
@@ -248,26 +221,10 @@ function normalizeModifierRuleEntry(value, index = 0) {
 	};
 }
 
-function normalizeModifiersObject(value) {
-	if (!value || typeof value !== "object") return undefined;
-	/** @type {Record<string, any>} */
-	const out = {};
-	for (const [k, v] of Object.entries(value)) {
-		const key = String(k != null ? k : "").trim();
-		if (!key) continue;
-		const norm = normalizeModifierEntry(v);
-		if (!norm) continue;
-		out[key] = norm;
-	}
-	return Object.keys(out).length ? out : undefined;
-}
-
 function normalizeModifiers(value) {
-	if (Array.isArray(value)) {
-		const out = value.map((entry, i) => normalizeModifierRuleEntry(entry, i)).filter(Boolean);
-		return out.length ? out : undefined;
-	}
-	return normalizeModifiersObject(value);
+	if (!Array.isArray(value)) return undefined;
+	const out = value.map((entry, i) => normalizeModifierRuleEntry(entry, i)).filter(Boolean);
+	return out.length ? out : undefined;
 }
 
 /**
@@ -277,11 +234,9 @@ function normalizeModifiers(value) {
  */
 export function normalizeBlockDefinition(blockDef, config) {
 	const id = normalizeString(blockDef && blockDef.id);
-	// Compat: configs antiguas (ores) no tenían skill; asumimos "mining" si no se define.
 	const skill = normalizeSkill(blockDef && blockDef.skill) || normalizeSkill(config && config.defaultSkill) || "mining";
 
-	// Compat: aceptar oreBlockId como equivalente a blockId exacto
-	const blockIdRaw = normalizeString(blockDef && (blockDef.blockId ?? blockDef.oreBlockId));
+	const blockIdRaw = normalizeString(blockDef && blockDef.blockId);
 	const match = normalizeBlockMatch(blockIdRaw || "");
 	if (!id || !match || !skill) return null;
 
@@ -290,10 +245,7 @@ export function normalizeBlockDefinition(blockDef, config) {
 	const minedBlockId =
 		normalizeString(blockDef && blockDef.minedBlockId) || normalizeString(config && config.defaultMinedBlockId) || "minecraft:black_concrete";
 
-	// Sonidos:
-	// - Nuevo: oreDef.sounds: Array<{id, volume?, pitch?}>
-	// - Legacy soportado: oreDef.sound (string) o oreDef.sounds (string[])
-	const sounds = normalizeSoundsList(blockDef && (blockDef.sounds ?? blockDef.sound));
+	const sounds = normalizeSoundsList(blockDef && blockDef.sounds);
 	const xpOrbs = normalizeXpOrbs(blockDef && blockDef.xpOrbs);
 	const particlesOnSilkTouch = normalizeParticlesOnSilkTouch(blockDef && blockDef.particlesOnSilkTouch);
 	const scoreboardAddsOnBreak = normalizeScoreboardAdds(blockDef && blockDef.scoreboardAddsOnBreak);
@@ -322,7 +274,7 @@ export function normalizeBlockDefinition(blockDef, config) {
 }
 
 /**
- * Construye un Map oreBlockId -> oreDef normalizado.
+ * Construye un registro de blockId -> blockDef normalizado.
  * @param {any} config
  */
 export function buildBlockRegistry(config) {
@@ -330,12 +282,7 @@ export function buildBlockRegistry(config) {
 	const exact = new Map();
 	/** @type {any[]} */
 	const patterns = [];
-	// Compat: aceptar config.ores (legacy) además de config.blocks
-	const blocks = Array.isArray(config && config.blocks)
-		? config.blocks
-		: Array.isArray(config && config.ores)
-			? config.ores
-			: [];
+	const blocks = Array.isArray(config && config.blocks) ? config.blocks : [];
 
 	for (const b of blocks) {
 		const norm = normalizeBlockDefinition(b, config);

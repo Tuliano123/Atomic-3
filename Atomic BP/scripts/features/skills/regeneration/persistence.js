@@ -30,8 +30,7 @@ function nowMs() {
 function normalizeEntry(e) {
 	if (!e || typeof e !== "object") return null;
 	const dimensionId = String(e.dimensionId != null ? e.dimensionId : "").trim();
-	// Compat: aceptar oreBlockId (legacy) o blockId (nuevo)
-	const blockId = String((e.blockId ?? e.oreBlockId) != null ? (e.blockId ?? e.oreBlockId) : "").trim();
+	const blockId = String(e.blockId != null ? e.blockId : "").trim();
 	const minedBlockId = String(e.minedBlockId != null ? e.minedBlockId : "").trim();
 
 	const x = Number(e.x);

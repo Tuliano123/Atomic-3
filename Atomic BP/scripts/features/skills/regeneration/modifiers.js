@@ -1,6 +1,4 @@
-// Modifiers resolver:
-// - Nuevo: reglas scoreboard-driven (modifiers como array)
-// - Legacy: detección por lore (modifiers como objeto)
+// Modifiers resolver scoreboard-driven (modifiers como array).
 // Responsabilidad: NO spawnear drops ni tocar bloques; solo decidir qué efectos aplican.
 
 import { world } from "@minecraft/server";
@@ -8,15 +6,6 @@ import { isInArea } from "./area.js";
 
 /** @type {Map<string, any>} */
 const objectiveCache = new Map();
-
-function stripFormatting(text) {
-	// Quita códigos de color/format de Bedrock (ej: §a, §l, etc.)
-	return String(text != null ? text : "").replace(/§[0-9a-fklmnor]/gi, "");
-}
-
-function normalizeLine(line) {
-	return stripFormatting(line).trim().toLowerCase().replace(/\s+/g, " ");
-}
 
 function safeString(v) {
 	return String(v != null ? v : "").trim();
@@ -199,83 +188,6 @@ function normalizeRuleEffects(rule) {
 	};
 	return out;
 }
-
-/**
- * Extrae lore en formato normalizado (lowercase, sin §, sin espacios dobles).
- * @param {any} toolItemStack
- * @returns {string[]}
- */
-export function getNormalizedToolLore(toolItemStack) {
-	let lore = [];
-	try {
-		lore = toolItemStack && typeof toolItemStack.getLore === "function" ? toolItemStack.getLore() : [];
-	} catch (e) {
-		void e;
-		lore = [];
-	}
-	if (!Array.isArray(lore) || lore.length === 0) return [];
-	return lore.map(normalizeLine).filter(Boolean);
-}
-
-/**
- * Parser de estado simple para futuras decisiones (sin depender de la config).
- * Nota: el sistema final decide por config/modifiers; esto es solo útil para debug/extensión.
- * @param {string[]} normalizedLoreLines
- */
-export function parseFakeEnchantmentsFromLore(normalizedLoreLines) {
-	const lines = Array.isArray(normalizedLoreLines) ? normalizedLoreLines : [];
-	const joined = lines.join("\n");
-
-	const hasSilk = /\b(silk touch i|toque de seda i)\b/.test(joined);
-	let fortuneLevel = 0;
-	if (/\b(fortuna iii|fortune iii)\b/.test(joined)) fortuneLevel = 3;
-	else if (/\b(fortuna ii|fortune ii)\b/.test(joined)) fortuneLevel = 2;
-	else if (/\b(fortuna i|fortune i)\b/.test(joined)) fortuneLevel = 1;
-
-	return {
-		silkTouchLevel: hasSilk ? 1 : 0,
-		fortuneLevel,
-	};
-}
-
-function matchesAny(joinedLore, matchList) {
-	if (!Array.isArray(matchList) || matchList.length === 0) return false;
-	for (const m of matchList) {
-		const needle = normalizeLine(m);
-		if (!needle) continue;
-		if (joinedLore.includes(needle)) return true;
-	}
-	return false;
-}
-
-function pickBestLegacyModifier(modifiers, normalizedLoreLines) {
-	const joinedLore = (Array.isArray(normalizedLoreLines) ? normalizedLoreLines : []).join("\n");
-	if (!joinedLore) return null;
-
-	let best = null;
-	let bestPriority = -Infinity;
-
-	for (const [key, def] of Object.entries(modifiers)) {
-		if (!def || typeof def !== "object") continue;
-		const priority = Number(def.priority != null ? def.priority : 0);
-		const match = Array.isArray(def.match) ? def.match : [];
-		if (!matchesAny(joinedLore, match)) continue;
-		if (priority > bestPriority) {
-			bestPriority = priority;
-			best = {
-				key,
-				id: key,
-				mode: safeString(def.mode || "override") || "override",
-				def,
-				effects: normalizeRuleEffects(def),
-				source: "legacy-lore",
-			};
-		}
-	}
-
-	return best;
-}
-
 function pickBestScoreboardRule(modifierRules, context) {
 	let best = null;
 	let bestPriority = -Infinity;
@@ -304,10 +216,7 @@ function pickBestScoreboardRule(modifierRules, context) {
 }
 
 /**
- * Elige el modifier activo según contrato nuevo (scoreboard-rules) o legacy (lore).
- * Compat:
- * - modifiers como array => reglas por condiciones/scoreboard.
- * - modifiers como objeto => legacy por lore.
+ * Elige el modifier activo según reglas scoreboard-driven.
  *
  * @param {any} oreDef
  * @param {{
@@ -316,37 +225,21 @@ function pickBestScoreboardRule(modifierRules, context) {
  *  dimensionId?: string,
  *  blockPos?: {x:number,y:number,z:number},
  *  areas?: any[],
- *  normalizedLoreLines?: string[],
- *  compatLegacyLoreModifiers?: boolean,
- * }|string[]|undefined} contextOrLore
+ * }|undefined} context
  * @returns {{ key: string, id:string, mode:string, def: any, effects:any, source:string } | null}
  */
 export function selectActiveModifier(oreDef, contextOrLore) {
 	const modifiers = oreDef?.modifiers;
-	if (!modifiers) return null;
+	if (!Array.isArray(modifiers) || modifiers.length === 0) return null;
 
-	const ctx = Array.isArray(contextOrLore) ? { normalizedLoreLines: contextOrLore } : contextOrLore || {};
-
-	if (Array.isArray(modifiers)) {
-		const bestByRules = pickBestScoreboardRule(modifiers, {
-			player: ctx.player,
-			blockDef: ctx.blockDef || oreDef,
-			dimensionId: ctx.dimensionId,
-			blockPos: ctx.blockPos,
-			areas: ctx.areas,
-		});
-		if (bestByRules) return bestByRules;
-
-		if (ctx.compatLegacyLoreModifiers !== true) return null;
-		return null;
-	}
-
-	if (modifiers && typeof modifiers === "object") {
-		if (ctx.compatLegacyLoreModifiers === false) return null;
-		return pickBestLegacyModifier(modifiers, ctx.normalizedLoreLines);
-	}
-
-	return null;
+	const ctx = contextOrLore && typeof contextOrLore === "object" ? contextOrLore : {};
+	return pickBestScoreboardRule(modifiers, {
+		player: ctx.player,
+		blockDef: ctx.blockDef || oreDef,
+		dimensionId: ctx.dimensionId,
+		blockPos: ctx.blockPos,
+		areas: ctx.areas,
+	});
 }
 
 /**
@@ -377,8 +270,8 @@ export function getModifierScoreboardAdds(selected) {
 	if (!selected || typeof selected !== "object") return null;
 	const fromEffects = selected.effects?.scoreboardAddsOnBreak;
 	if (fromEffects && typeof fromEffects === "object") return fromEffects;
-	const fromLegacy = selected.def?.scoreboardAddsOnBreak;
-	if (fromLegacy && typeof fromLegacy === "object") return fromLegacy;
+	const fromDef = selected.def?.scoreboardAddsOnBreak;
+	if (fromDef && typeof fromDef === "object") return fromDef;
 	return null;
 }
 

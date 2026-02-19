@@ -100,7 +100,6 @@ export function validateMiningRegenConfig(config) {
 
 /**
  * Valida la config del sistema de regeneración (global para skills).
- * Compat: acepta config.ores/oreBlockId (legacy).
  * @param {any} config
  * @returns {{ warnings: string[], errors: string[] }}
  */
@@ -140,11 +139,7 @@ export function validateSkillRegenConfig(config) {
 		if (areaId) definedAreaIds.add(areaId);
 	}
 
-	const isLegacy = Array.isArray(config.ores) && !Array.isArray(config.blocks);
-	const blocks = Array.isArray(config.blocks) ? config.blocks : Array.isArray(config.ores) ? config.ores : [];
-	if (isLegacy) {
-		warnings.push("Config: 'ores' está deprecado; usa 'blocks' (compat: seguirá funcionando)");
-	}
+	const blocks = Array.isArray(config.blocks) ? config.blocks : [];
 	if (blocks.length === 0) warnings.push("Config: blocks está vacío (no hay bloques regenerables registrados)");
 	let usesAreaFilters = false;
 	for (const [i, b] of blocks.entries()) {
@@ -153,11 +148,8 @@ export function validateSkillRegenConfig(config) {
 			continue;
 		}
 		if (!asStr(b.id)) errors.push(`Block[${i}]: id vacío`);
-		if (!asStr(b.skill)) {
-			if (isLegacy) warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): skill vacío (legacy) => se asumirá 'mining'`);
-			else errors.push(`Block[${i}] (${asStr(b.id) || "?"}): skill vacío`);
-		}
-		const blockId = asStr(b.blockId || b.oreBlockId);
+		if (!asStr(b.skill)) errors.push(`Block[${i}] (${asStr(b.id) || "?"}): skill vacío`);
+		const blockId = asStr(b.blockId);
 		if (!blockId) errors.push(`Block[${i}] (${asStr(b.id) || "?"}): blockId vacío`);
 		// '*' soportado (exact/prefix/glob) por registry.js
 
@@ -179,15 +171,8 @@ export function validateSkillRegenConfig(config) {
 		}
 
 		// Sonidos (opcional)
-		if (b.sound != null) {
-			// legacy
-			if (typeof b.sound !== "string") warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): sound (legacy) debería ser string`);
-			else warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): sound (legacy) está deprecado, usa sounds:[{id,volume,pitch}]`);
-		}
 		if (b.sounds != null) {
-			if (isStringArray(b.sounds)) {
-				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): sounds como string[] está deprecado, usa sounds:[{id,volume,pitch}]`);
-			} else if (!isSoundObjArray(b.sounds)) {
+			if (!isSoundObjArray(b.sounds)) {
 				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): sounds debería ser Array<{id,volume?,pitch?}>`);
 			}
 		}
@@ -228,17 +213,8 @@ export function validateSkillRegenConfig(config) {
 						warnings
 					);
 				}
-			} else if (isObj(b.modifiers)) {
-				for (const [mk, mv] of Object.entries(b.modifiers)) {
-					if (!isObj(mv)) continue;
-					validateScoreboardAddsObject(
-						mv.scoreboardAddsOnBreak,
-						`Block[${i}] (${asStr(b.id) || "?"}) modifier '${asStr(mk) || "?"}'`,
-						warnings
-					);
-				}
 			} else {
-				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): modifiers debería ser objeto (legacy) o array (nuevo)`);
+				warnings.push(`Block[${i}] (${asStr(b.id) || "?"}): modifiers debería ser array de reglas`);
 			}
 		}
 
